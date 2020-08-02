@@ -1,0 +1,62 @@
+
+feiji.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jishen
+  rotate: false
+  xy: 0, 27
+  size: 620, 155
+  orig: 620, 155
+  offset: 0, 0
+  index: -1
+shizi
+  rotate: true
+  xy: 1273, 503
+  size: 510, 556
+  orig: 510, 556
+  offset: 0, 0
+  index: -1
+tiankong
+  rotate: false
+  xy: 670, 212
+  size: 601, 801
+  orig: 601, 801
+  offset: 0, 0
+  index: -1
+weiyi_n
+  rotate: false
+  xy: 94, 0
+  size: 60, 25
+  orig: 60, 25
+  offset: 0, 0
+  index: -1
+weiyi_w
+  rotate: false
+  xy: 0, 9
+  size: 92, 16
+  orig: 92, 16
+  offset: 0, 0
+  index: -1
+yi_n
+  rotate: false
+  xy: 622, 44
+  size: 164, 78
+  orig: 164, 78
+  offset: 0, 0
+  index: -1
+yi_w
+  rotate: false
+  xy: 622, 124
+  size: 264, 58
+  orig: 264, 58
+  offset: 0, 0
+  index: -1
+yun
+  rotate: true
+  xy: 0, 184
+  size: 829, 668
+  orig: 829, 668
+  offset: 0, 0
+  index: -1

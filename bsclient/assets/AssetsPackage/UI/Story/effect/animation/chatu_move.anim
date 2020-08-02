@@ -1,0 +1,44 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "chatu_item",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.5,
+  "sample": 60,
+  "speed": 0.6,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "sprChatu": {
+        "props": {
+          "x": [
+            {
+              "frame": 0,
+              "value": -800
+            },
+            {
+              "frame": 0.3333333333333333,
+              "value": 0
+            },
+            {
+              "frame": 0.5,
+              "value": 800
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0.3333333333333333,
+      "func": "_showChatuPause",
+      "params": []
+    },
+    {
+      "frame": 0.5,
+      "func": "_showChatuEnd",
+      "params": []
+    }
+  ]
+}

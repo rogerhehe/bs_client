@@ -1,0 +1,243 @@
+
+yangxiaozhan.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fa1
+  rotate: false
+  xy: 459, 77
+  size: 58, 47
+  orig: 58, 47
+  offset: 0, 0
+  index: -1
+fa2
+  rotate: false
+  xy: 297, 72
+  size: 160, 83
+  orig: 160, 83
+  offset: 0, 0
+  index: -1
+kua
+  rotate: false
+  xy: 531, 196
+  size: 319, 246
+  orig: 319, 246
+  offset: 0, 0
+  index: -1
+kuzidaizi
+  rotate: false
+  xy: 961, 796
+  size: 50, 228
+  orig: 50, 228
+  offset: 0, 0
+  index: -1
+maozi1
+  rotate: true
+  xy: 961, 639
+  size: 155, 60
+  orig: 155, 60
+  offset: 0, 0
+  index: -1
+pijin
+  rotate: false
+  xy: 961, 455
+  size: 52, 44
+  orig: 52, 44
+  offset: 0, 0
+  index: -1
+pijin2
+  rotate: false
+  xy: 210, 51
+  size: 79, 74
+  orig: 79, 74
+  offset: 0, 0
+  index: -1
+shangchun
+  rotate: false
+  xy: 459, 126
+  size: 70, 29
+  orig: 70, 29
+  offset: 0, 0
+  index: -1
+shangya
+  rotate: false
+  xy: 353, 36
+  size: 40, 14
+  orig: 40, 14
+  offset: 0, 0
+  index: -1
+she
+  rotate: false
+  xy: 291, 36
+  size: 60, 34
+  orig: 60, 34
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 531, 444
+  size: 428, 580
+  orig: 428, 580
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 852, 214
+  size: 158, 228
+  orig: 158, 228
+  offset: 0, 0
+  index: -1
+xiachun
+  rotate: false
+  xy: 210, 14
+  size: 66, 35
+  orig: 66, 35
+  offset: 0, 0
+  index: -1
+xiaya
+  rotate: false
+  xy: 124, 12
+  size: 35, 19
+  orig: 35, 19
+  offset: 0, 0
+  index: -1
+yaodai
+  rotate: false
+  xy: 961, 501
+  size: 55, 136
+  orig: 55, 136
+  offset: 0, 0
+  index: -1
+youmei
+  rotate: false
+  xy: 353, 52
+  size: 49, 18
+  orig: 49, 18
+  offset: 0, 0
+  index: -1
+youshangbi
+  rotate: true
+  xy: 0, 33
+  size: 92, 208
+  orig: 92, 208
+  offset: 0, 0
+  index: -1
+youshangbi2
+  rotate: false
+  xy: 892, 67
+  size: 129, 145
+  orig: 129, 145
+  offset: 0, 0
+  index: -1
+youtui
+  rotate: false
+  xy: 0, 127
+  size: 295, 897
+  orig: 295, 897
+  offset: 0, 0
+  index: -1
+youxiaobi
+  rotate: true
+  xy: 531, 58
+  size: 136, 359
+  orig: 136, 359
+  offset: 0, 0
+  index: -1
+youyanbai
+  rotate: false
+  xy: 52, 3
+  size: 36, 28
+  orig: 36, 28
+  offset: 0, 0
+  index: -1
+youyankuang
+  rotate: false
+  xy: 325, 0
+  size: 42, 34
+  orig: 42, 34
+  offset: 0, 0
+  index: -1
+youyanqiu
+  rotate: false
+  xy: 404, 53
+  size: 17, 17
+  orig: 17, 17
+  offset: 0, 0
+  index: -1
+zuomei
+  rotate: false
+  xy: 0, 11
+  size: 50, 20
+  orig: 50, 20
+  offset: 0, 0
+  index: -1
+zuotui
+  rotate: false
+  xy: 297, 157
+  size: 232, 867
+  orig: 232, 867
+  offset: 0, 0
+  index: -1
+zuoyanbai
+  rotate: false
+  xy: 90, 5
+  size: 32, 26
+  orig: 32, 26
+  offset: 0, 0
+  index: -1
+zuoyankuang
+  rotate: false
+  xy: 278, 0
+  size: 45, 34
+  orig: 45, 34
+  offset: 0, 0
+  index: -1
+zuoyanqiu
+  rotate: false
+  xy: 852, 196
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: -1
+
+yangxiaozhan2.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+youshou2
+  rotate: false
+  xy: 113, 7
+  size: 106, 100
+  orig: 106, 100
+  offset: 0, 0
+  index: -1
+youxiaobi2
+  rotate: true
+  xy: 754, 50
+  size: 206, 245
+  orig: 206, 245
+  offset: 0, 0
+  index: -1
+youxiu
+  rotate: true
+  xy: 500, 105
+  size: 151, 252
+  orig: 151, 252
+  offset: 0, 0
+  index: -1
+youxiu21
+  rotate: true
+  xy: 0, 0
+  size: 107, 111
+  orig: 107, 111
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: true
+  xy: 0, 109
+  size: 147, 498
+  orig: 147, 498
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,41 @@
+
+guku.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: true
+  xy: 0, 394
+  size: 616, 1292
+  orig: 616, 1292
+  offset: 0, 0
+  index: -1
+g
+  rotate: false
+  xy: 0, 1012
+  size: 1014, 898
+  orig: 1014, 898
+  offset: 0, 0
+  index: -1
+guangyun
+  rotate: true
+  xy: 1016, 1294
+  size: 616, 907
+  orig: 616, 907
+  offset: 0, 0
+  index: -1
+lei
+  rotate: false
+  xy: 1925, 1844
+  size: 22, 66
+  orig: 22, 66
+  offset: 0, 0
+  index: -1
+ren
+  rotate: false
+  xy: 1294, 0
+  size: 616, 1292
+  orig: 616, 1292
+  offset: 0, 0
+  index: -1

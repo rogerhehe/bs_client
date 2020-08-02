@@ -1,0 +1,55 @@
+
+fengmian.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+di
+  rotate: false
+  xy: 0, 874
+  size: 649, 1054
+  orig: 649, 1054
+  offset: 0, 0
+  index: -1
+g
+  rotate: false
+  xy: 1302, 1423
+  size: 570, 505
+  orig: 570, 505
+  offset: 0, 0
+  index: -1
+jin
+  rotate: false
+  xy: 651, 874
+  size: 649, 1054
+  orig: 649, 1054
+  offset: 0, 0
+  index: -1
+jinguang
+  rotate: false
+  xy: 1302, 1400
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: -1
+languang
+  rotate: false
+  xy: 0, 0
+  size: 90, 221
+  orig: 90, 221
+  offset: 0, 0
+  index: -1
+lvguang
+  rotate: false
+  xy: 1056, 651
+  size: 90, 221
+  orig: 90, 221
+  offset: 0, 0
+  index: -1
+yuan
+  rotate: true
+  xy: 0, 223
+  size: 649, 1054
+  orig: 649, 1054
+  offset: 0, 0
+  index: -1
