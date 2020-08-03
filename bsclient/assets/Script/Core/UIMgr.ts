@@ -141,7 +141,9 @@ export default class UIMgr {
         this._openUIObjMap[uiCfg.prefab] = null;
         this._openUICfgMap[uiCfg.prefab] = null;
         ResMgr.getInstance().removeAsset(uiCfg.assetBundle, uiCfg.prefab, cc.Prefab);
-        ResMgr.getInstance().removeAssetBundle(uiCfg.assetBundle);
+        if (uiCfg.removeAB) {
+            ResMgr.getInstance().removeAssetBundle(uiCfg.assetBundle);
+        }
         console.log("UiMgr closeUI: ", uiCfg.prefab, " ok!");
     }
 

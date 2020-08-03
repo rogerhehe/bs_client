@@ -10,11 +10,11 @@ declare interface IUICfg {
 	/** 预制资源路径 */
 	prefab: string;
 	/** AssetBundle路径 */
-	assetBundle: string;
+	AB: string;
+	/** 是否卸载AB */
+	delAB?: boolean;
 	/** 贴图资源路径 */
 	atlas?: string;
-	/** 附加参数 */
-	customParam?: any;
 	/** 展示动画 */
 	action?: boolean;
 	/** 层级 */
