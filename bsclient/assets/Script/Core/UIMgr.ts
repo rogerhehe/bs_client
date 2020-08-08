@@ -101,14 +101,14 @@ export default class UIMgr {
 
         // 加载AssetBundle
         let loadBundleCallback = (bundle: cc.AssetManager.Bundle) => {
-            ResMgr.getInstance().getAsset(uiCfg.assetBundle, uiCfg.prefab, cc.Prefab, loadPrefabCallback);
+            ResMgr.getInstance().getAsset(uiCfg.AB, uiCfg.prefab, cc.Prefab, loadPrefabCallback);
         }
 
-        if (uiCfg.assetBundle) {
-            ResMgr.getInstance().getAssetBundle(uiCfg.assetBundle, loadBundleCallback)
+        if (uiCfg.AB) {
+            ResMgr.getInstance().getAssetBundle(uiCfg.AB, loadBundleCallback)
             console.log("UiMgr openUI: ", uiCfg.prefab, " ok!");
         } else {
-            console.log("UiMgr openUI: ", uiCfg.prefab, " fail!");
+            console.warn("UiMgr openUI: ", uiCfg.prefab, " fail!");
         }
     }
 
@@ -140,9 +140,9 @@ export default class UIMgr {
         this._openUIObjMap[uiCfg.prefab].destroy();
         this._openUIObjMap[uiCfg.prefab] = null;
         this._openUICfgMap[uiCfg.prefab] = null;
-        ResMgr.getInstance().removeAsset(uiCfg.assetBundle, uiCfg.prefab, cc.Prefab);
-        if (uiCfg.removeAB) {
-            ResMgr.getInstance().removeAssetBundle(uiCfg.assetBundle);
+        ResMgr.getInstance().removeAsset(uiCfg.AB, uiCfg.prefab, cc.Prefab);
+        if (uiCfg.delAB != undefined && uiCfg.delAB) {
+            ResMgr.getInstance().removeAssetBundle(uiCfg.AB);
         }
         console.log("UiMgr closeUI: ", uiCfg.prefab, " ok!");
     }

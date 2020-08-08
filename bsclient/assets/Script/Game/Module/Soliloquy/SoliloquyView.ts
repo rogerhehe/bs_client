@@ -1,8 +1,10 @@
+import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import CfgMgr from "../../Config/CfgMgr";
+import UIConfig from "../../../UIConfig"
 
 /**
- * @name SoliloquyItem.ts
+ * @name SoliloquyView.ts
  * @description 独白界面
  * @author Created by jun on 2020.4.4
  */
@@ -10,11 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class SoliloquyItem extends cc.Component {
-
-    /** 背景 */
-    @property(cc.Sprite)
-    sprBg: cc.Sprite = null;
+export default class SoliloquyView extends BaseView {
 
     /** 声音图标 */
     @property(cc.Sprite)
@@ -28,37 +26,31 @@ export default class SoliloquyItem extends cc.Component {
     @property(cc.Sprite)
     sprAsideTip: cc.Sprite = null;
 
-    _canNext: boolean = false;
-    _end: boolean = false;
-    _currId: number = 0;
-    _bgUrl: string = "textures/ui/hf_bg";
+    private _canNext: boolean = false;
+    private _end: boolean = false;
+    private _currId: number = 0;
 
     onLoad() {
+        GameMgr.soliloquyCtr.view = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClickNext.bind(this))
     }
 
     start() {
-        if (this.node["customParam"]) {
-            this._showSoliloquy(<number>this.node["customParam"]);
-        } else {
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiSoliloquyPanel);
-            GameMgr.storyCtr.doStory({ "donext": true });
-        }
+        this._showSoliloquy(GameMgr.soliloquyCtr.soliloquyId);
     }
 
     onDestroy() {
         this.unscheduleAllCallbacks();
-        this.sprBg.spriteFrame = null;
-        GameMgr.releaseImage(this._bgUrl);
+        GameMgr.soliloquyCtr.view = null;
     }
 
     onClickNext(event: any) {
         event.stopPropagation();
         if (this._canNext) {
             if (this._end) {
-                GameMgr.audioMgr.stopSound();
+                this._audioMgr.stopSound();
                 // 切换分支
-                GameMgr.uiMgr.closeUI(GameMgr.cfg.uiSoliloquyPanel);
+                this._uiMgr.closeUI(UIConfig.UISoliloquyPanel);
                 GameMgr.storyCtr.doStory({ "donext": true });
             } else {
                 this._showContent();
@@ -66,25 +58,21 @@ export default class SoliloquyItem extends cc.Component {
         }
     }
 
-    _showSoliloquy(soliloquyId: number) {
+    private _showSoliloquy(soliloquyId: number) {
         this._currId = soliloquyId;
         this._canNext = false;
         this._end = false;
         this.txtDialogue.string = "";
-
-        cc.loader.loadRes(this._bgUrl, cc.SpriteFrame, (err, spriteFrame) => {
-            this.sprBg.spriteFrame = spriteFrame;
-            this._showContent();
-        });
+        this._showContent();
     }
 
-    _showContent() {
+    private _showContent() {
         this.unscheduleAllCallbacks();
         this.txtDialogue.string = "";
         let soliloquyObj = CfgMgr.CfgSoliloquy.soliloquy[this._currId];
         if (soliloquyObj.sound != "") {
-            GameMgr.audioMgr.stopSound();
-            GameMgr.audioMgr.playSound("audios/" + soliloquyObj.sound);
+            this._audioMgr.stopSound();
+            this._audioMgr.playSound(UIConfig.UISoliloquyPanel.AB, soliloquyObj.sound);
         }
 
         let content = soliloquyObj.txt;

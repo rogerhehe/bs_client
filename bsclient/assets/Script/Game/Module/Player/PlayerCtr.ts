@@ -29,6 +29,7 @@ export default class PlayerCtr extends BaseController {
     public static getInstance(): PlayerCtr {
         if (!PlayerCtr._instance) {
             PlayerCtr._instance = new PlayerCtr();
+            PlayerCtr._instance.init();
         }
         return PlayerCtr._instance;
     }

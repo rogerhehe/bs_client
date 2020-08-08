@@ -44,6 +44,8 @@ export default class AudioMgr {
      * @param assetPath 音乐资源地址
      */
     public playMusic(bundleName: string, assetPath: string) {
+        assetPath = "audio/" + assetPath;
+
         if (this._currMusicPath == assetPath && cc.audioEngine.getState(this._currMusicID) > 0) {
             return;
         }
@@ -78,6 +80,8 @@ export default class AudioMgr {
      * @param assetPath 音乐资源地址
      */
     public playSound(bundleName: string, assetPath: string) {
+        assetPath = "audio/" + assetPath;
+        
         if (cc.audioEngine.getState(this._currSoundID) > 0) {
             return
         }
@@ -108,6 +112,7 @@ export default class AudioMgr {
             tempBundleName = bundleName;
         }
         if (assetPath) {
+            assetPath = "audio/" + assetPath;
             tempAssetPath = assetPath;
         }
         this.playSound(tempBundleName, tempAssetPath);

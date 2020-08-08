@@ -1,4 +1,5 @@
 import BaseController from "../../../Core/BaseController";
+import LoadingCtr from "../Loading/LoadingCtr";
 
 /**
  * @name LoginCtr.ts
@@ -16,6 +17,7 @@ export default class LoginCtr extends BaseController {
     public static getInstance(): LoginCtr {
         if (!LoginCtr._instance) {
             LoginCtr._instance = new LoginCtr();
+            LoginCtr._instance.init();
         }
         return LoginCtr._instance;
     }

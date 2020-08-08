@@ -2,6 +2,7 @@ import UIMgr from "../../Core/UIMgr"
 import UIConfig from "../../UIConfig"
 import GameMgr from "../../GameMgr"
 import Config from "../../Config"
+import ResMgr from "../../Core/ResMgr"
 
 /**
  * @name GameScene.ts
@@ -20,7 +21,18 @@ export default class GameScene extends cc.Component {
             UIMgr.getInstance().openUI(UIConfig.UILoginPanel);
             UIMgr.getInstance().openUI(UIConfig.UIStoryPanel);
         }
-        // // 女主
+        // 女主
+        let loadBundleCallback = (bundle: cc.AssetManager.Bundle) => {
+            // this._resMgr.getAsset(UIConfig.UILoadingPanel.AB, this._bgUrl, cc.SpriteFrame, (spriteFrame) => {
+            //     this.sprBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
+            // })
+        }
+        ResMgr.getInstance().getAssetBundle("malisu", loadBundleCallback)
+        ResMgr.getInstance().getAssetBundle("yangxiaozhan")
+        ResMgr.getInstance().getAssetBundle("gutingwei")
+        ResMgr.getInstance().getAssetBundle("chengyuchuan")
+        ResMgr.getInstance().getAssetBundle("bowenlang")
+
         // cc.loader.loadRes("spines/role/malisu/malisu", sp.SkeletonData, (err, skeletonData) => {
         //     GameMgr.resCache.addSkeletonData("malisu", skeletonData);
         // });

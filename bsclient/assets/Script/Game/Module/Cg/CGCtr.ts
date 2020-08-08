@@ -16,6 +16,7 @@ export default class CGCtr extends BaseController {
     public static getInstance(): CGCtr {
         if (!CGCtr._instance) {
             CGCtr._instance = new CGCtr();
+            CGCtr._instance.init();
         }
         return CGCtr._instance;
     }

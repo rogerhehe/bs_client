@@ -16,6 +16,7 @@ export default class AsideCtr extends BaseController {
     public static getInstance(): AsideCtr {
         if (!AsideCtr._instance) {
             AsideCtr._instance = new AsideCtr();
+            AsideCtr._instance.init();
         }
         return AsideCtr._instance;
     }

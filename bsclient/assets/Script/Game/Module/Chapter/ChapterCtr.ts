@@ -16,6 +16,7 @@ export default class ChapterCtr extends BaseController {
     public static getInstance(): ChapterCtr {
         if (!ChapterCtr._instance) {
             ChapterCtr._instance = new ChapterCtr();
+            ChapterCtr._instance.init();
         }
         return ChapterCtr._instance;
     }

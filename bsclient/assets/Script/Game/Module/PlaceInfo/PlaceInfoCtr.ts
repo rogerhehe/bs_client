@@ -16,6 +16,7 @@ export default class PlaceInfoCtr extends BaseController {
     public static getInstance(): PlaceInfoCtr {
         if (!PlaceInfoCtr._instance) {
             PlaceInfoCtr._instance = new PlaceInfoCtr();
+            PlaceInfoCtr._instance.init();
         }
         return PlaceInfoCtr._instance;
     }

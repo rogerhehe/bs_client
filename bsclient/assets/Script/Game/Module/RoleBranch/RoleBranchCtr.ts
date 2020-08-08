@@ -16,6 +16,7 @@ export default class RoleBranchCtr extends BaseController {
     public static getInstance(): RoleBranchCtr {
         if (!RoleBranchCtr._instance) {
             RoleBranchCtr._instance = new RoleBranchCtr();
+            RoleBranchCtr._instance.init();
         }
         return RoleBranchCtr._instance;
     }

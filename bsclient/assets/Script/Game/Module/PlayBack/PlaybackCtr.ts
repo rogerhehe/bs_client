@@ -16,6 +16,7 @@ export default class PlaybackCtr extends BaseController {
     public static getInstance(): PlaybackCtr {
         if (!PlaybackCtr._instance) {
             PlaybackCtr._instance = new PlaybackCtr();
+            PlaybackCtr._instance.init();
         }
         return PlaybackCtr._instance;
     }

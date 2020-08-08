@@ -127,7 +127,7 @@ export default class ResourceCache {
      * @param bundleName AssetBundle名称
      * @param callbackFun 加载完成后回调函数
      */
-    public getAssetBundle(bundleName: string, callbackFun: any) {
+    public getAssetBundle(bundleName: string, callbackFun?: any) {
         let bundle: cc.AssetManager.Bundle = cc.assetManager.getBundle(bundleName);
         if (bundle && callbackFun) {
             callbackFun(bundle);
@@ -169,14 +169,9 @@ export default class ResourceCache {
                     callbackFun(asset);
                 }
             });
+        } else {
+            console.warn("[" + bundleName + "]asset bundle not exist, get asset [" + assetPath + "] fail");
         }
-        // let loadBundleCallback = (bundle: cc.AssetManager.Bundle) => {
-        //     bundle.load(assetPath, assetType, (err, asset: cc.Asset) => {
-        //         asset.addRef();
-        //         callbackFun(asset)
-        //     });
-        // }
-        // this.getAssetBundle(bundleName, loadBundleCallback);
     }
 
     /**

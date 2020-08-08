@@ -18,6 +18,7 @@ export default class PopupCtr extends BaseController {
     public static getInstance(): PopupCtr {
         if (!PopupCtr._instance) {
             PopupCtr._instance = new PopupCtr();
+            PopupCtr._instance.init();
         }
         return PopupCtr._instance;
     }

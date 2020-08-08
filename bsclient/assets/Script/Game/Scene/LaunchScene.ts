@@ -35,7 +35,7 @@ export default class LaunchScene extends cc.Component {
         console.log("=========onDestroy()=========" + this.name);
     }
 
-    _switchScene() {
+    private _switchScene() {
         SceneMgr.getInstance().switchScene(Config.LOADING_SCENE);
     }
 }

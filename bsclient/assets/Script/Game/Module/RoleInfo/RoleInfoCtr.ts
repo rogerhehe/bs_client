@@ -16,6 +16,7 @@ export default class RoleInfoCtr extends BaseController {
     public static getInstance(): RoleInfoCtr {
         if (!RoleInfoCtr._instance) {
             RoleInfoCtr._instance = new RoleInfoCtr();
+            RoleInfoCtr._instance.init();
         }
         return RoleInfoCtr._instance;
     }

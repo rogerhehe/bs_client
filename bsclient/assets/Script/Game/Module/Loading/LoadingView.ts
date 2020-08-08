@@ -61,7 +61,7 @@ export default class LaunchView extends BaseView {
         let bgID: number = Utils.random(1, 6);
         this._bgUrl = "texture/bg" + bgID.toString()
         if (bgID > 1) {
-            this._resMgr.getAsset(UIConfig.UILoadingPanel.assetBundle, this._bgUrl, cc.SpriteFrame, (spriteFrame) => {
+            this._resMgr.getAsset(UIConfig.UILoadingPanel.AB, this._bgUrl, cc.SpriteFrame, (spriteFrame) => {
                 this.sprBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
             })
         }
@@ -88,7 +88,7 @@ export default class LaunchView extends BaseView {
     }
 
     onDestroy() {
-        this._resMgr.removeAsset(UIConfig.UILoadingPanel.assetBundle, this._bgUrl, cc.SpriteFrame)
+        this._resMgr.removeAsset(UIConfig.UILoadingPanel.AB, this._bgUrl, cc.SpriteFrame)
     }
 
     update() {

@@ -16,6 +16,7 @@ export default class ClothCtr extends BaseController {
     public static getInstance(): ClothCtr {
         if (!ClothCtr._instance) {
             ClothCtr._instance = new ClothCtr();
+            ClothCtr._instance.init();
         }
         return ClothCtr._instance;
     }

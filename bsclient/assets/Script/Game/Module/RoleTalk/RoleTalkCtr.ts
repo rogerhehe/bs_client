@@ -16,6 +16,7 @@ export default class RoleTalkCtr extends BaseController {
     public static getInstance(): RoleTalkCtr {
         if (!RoleTalkCtr._instance) {
             RoleTalkCtr._instance = new RoleTalkCtr();
+            RoleTalkCtr._instance.init();
         }
         return RoleTalkCtr._instance;
     }

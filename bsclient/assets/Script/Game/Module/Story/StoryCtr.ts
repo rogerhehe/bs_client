@@ -18,36 +18,37 @@ export default class StoryCtr extends BaseController {
     public static getInstance(): StoryCtr {
         if (!StoryCtr._instance) {
             StoryCtr._instance = new StoryCtr();
+            StoryCtr._instance.init();
         }
         return StoryCtr._instance;
     }
-
-    public view: StoryView = null;
 
     public init() {
         
     }
 
-    public setView(view: StoryView) {
-        this.view = view;
+    /** 叙事界面 */
+    private _view: StoryView = null;
+    set view(view: StoryView) {
+        this._view = view;
     }
 
     public doAuto(data: any) {
         if (data.pause) {
             // 暂停操作
-            cc.tween(this.view.node).stop();
-            this.view.canClick = false;
-            this.view.isAuto = false;
+            cc.tween(this._view.node).stop();
+            this._view.canClick = false;
+            this._view.isAuto = false;
         } else if (data.speed) {
             // 加速自动操作
             if (GameMgr.mainCtr.speed == 3) {
-                this.view.speed = 0.25;
+                this._view.speed = 0.25;
             } else if (GameMgr.mainCtr.speed == 2) {
-                this.view.speed = 0.55;
+                this._view.speed = 0.55;
             } else {
-                this.view.speed = 1.25;
+                this._view.speed = 1.25;
             }
-            this.view.isAuto = true;
+            this._view.isAuto = true;
             // (<MainView>GameMgr.mainCtr.viewComp).setAuto(true);
             this.doNext();
         }
@@ -55,73 +56,73 @@ export default class StoryCtr extends BaseController {
 
     public doStory(data: any) {
         console.log("story event = ", data);
-        this.view.canClick = true;
+        this._view.canClick = true;
         // GameMgr.audioMgr.playMusic("audios/" + this._currBgm);
         if (data.start > 0) {
             // 开始
-            if (this.view.currOperId == data.start) {
-                this.view.doingNext(null);
+            if (this._view.currOperId == data.start) {
+                this._view.doingNext(null);
                 return;
             }
-            this.view.nextOperId = Number(data.start);
+            this._view.nextOperId = Number(data.start);
         } else if (data.cloth) {
             // 换装
-            this.view.createNewMask(true);
+            this._view.createNewMask(true);
             // 存档
             if (data.branch > 0) {
-                this.view.nextOperId = Number(data.branch);
-                GameMgr.playerCtr.playerModel.currOperId = this.view.nextOperId;
+                this._view.nextOperId = Number(data.branch);
+                GameMgr.playerCtr.playerModel.currOperId = this._view.nextOperId;
                 GameMgr.playerCtr.saveChapterCurr();
             }
         } else if (data.phone && data.branch) {
             // 电话
-            this.view.createNewMask(true);
+            this._view.createNewMask(true);
             if (data.branch > 0) {
-                this.view.nextOperId = Number(data.branch);
+                this._view.nextOperId = Number(data.branch);
             }
         } else if (data.select && data.branch && data.branch > 0) {
             // 选择
             // GameMgr.mainCtr.viewComp.node.active = true;
-            this.view.nextOperId = Number(data.branch);
+            this._view.nextOperId = Number(data.branch);
         } else if (data.donext) {
             // 独白
         } else {
             GameMgr.popupCtr.openPopupMask("故事事件错误=" + data);
             return;
         }
-        this.view.doingNext(null);
+        this._view.doingNext(null);
     }
 
     public doNext() {
         // 是否自动执行下一次操作
-        if (this.view.isAuto) {
-            this.view.canClick = true;
-            cc.tween(this.view.node)
-                .delay(this.view.speed)
+        if (this._view.isAuto) {
+            this._view.canClick = true;
+            cc.tween(this._view.node)
+                .delay(this._view.speed)
                 .call(() => {
-                    if (this.view.checkEnd()) return;
-                    let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.view.currOperId];
+                    if (this._view.checkEnd()) return;
+                    let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this._view.currOperId];
                     if (currOperObj && currOperObj.doing != 4) {
                         this.doNext();
                     }
                 })
                 .start()
         } else {
-            cc.tween(this.view.node)
+            cc.tween(this._view.node)
                 .delay(0.5)
-                .call(() => { this.view.canClick = true; })
+                .call(() => { this._view.canClick = true; })
                 .start()
         }
     }
 
     public doMove(data: any) {
         if (data.left) {
-            cc.tween(this.view.sprBg.node)
-                .to(1, { position: cc.v3(this.view.sprBg.node.x - 40, this.view.sprBg.node.y) }, { easing: 'sineOut' })
+            cc.tween(this._view.sprBg.node)
+                .to(1, { position: cc.v3(this._view.sprBg.node.x - 40, this._view.sprBg.node.y) }, { easing: 'sineOut' })
                 .start()
         } else if (data.right) {
-            cc.tween(this.view.sprBg.node)
-                .to(1, { position: cc.v3(this.view.sprBg.node.x + 40, this.view.sprBg.node.y) }, { easing: 'sineOut' })
+            cc.tween(this._view.sprBg.node)
+                .to(1, { position: cc.v3(this._view.sprBg.node.x + 40, this._view.sprBg.node.y) }, { easing: 'sineOut' })
                 .start()
         }
     }

@@ -60,26 +60,7 @@ export default class GameMgr {
     public static soliloquyCtr: SoliloquyCtr = SoliloquyCtr.getInstance();
     public static asideCtr: AsideCtr = AsideCtr.getInstance();
 
-    //==================初始化控制器器==================//
     public init() {
-        GameMgr.popupCtr.init();
-        GameMgr.playerCtr.init();
-        GameMgr.loginCtr.init();
-        GameMgr.chapterCtr.init();
-        GameMgr.storyCtr.init();
-        GameMgr.callCtr.init();
-        GameMgr.mainCtr.init();
-        GameMgr.cgCtr.init();
-        GameMgr.endCtr.init();
-        GameMgr.maskCtr.init();
-        GameMgr.placeInfoCtr.init();
-        GameMgr.playbackCtr.init();
-        GameMgr.replacementCtr.init();
-        GameMgr.roleBranchCtr.init();
-        GameMgr.roleInfoCtr.init();
-        GameMgr.roleTalkCtr.init();
-        GameMgr.selectCtr.init();
-        GameMgr.soliloquyCtr.init();
-        GameMgr.asideCtr.init();
+
     }
 }

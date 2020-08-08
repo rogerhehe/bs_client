@@ -16,6 +16,7 @@ export default class EndCtr extends BaseController {
     public static getInstance(): EndCtr {
         if (!EndCtr._instance) {
             EndCtr._instance = new EndCtr();
+            EndCtr._instance.init();
         }
         return EndCtr._instance;
     }

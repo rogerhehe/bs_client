@@ -17,6 +17,7 @@ export default class MainCtr extends BaseController {
     public static getInstance(): MainCtr {
         if (!MainCtr._instance) {
             MainCtr._instance = new MainCtr();
+            MainCtr._instance.init();
         }
         return MainCtr._instance;
     }

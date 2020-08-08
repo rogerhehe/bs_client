@@ -16,6 +16,7 @@ export default class CallCtr extends BaseController {
     public static getInstance(): CallCtr {
         if (!CallCtr._instance) {
             CallCtr._instance = new CallCtr();
+            CallCtr._instance.init();
         }
         return CallCtr._instance;
     }

@@ -38,7 +38,6 @@ export default class LoginView extends BaseView {
     _logoUrl: string = "spines/ui/logo/logo";
 
     onLoad() {
-        GameMgr.loginCtr.viewComp = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClickStart.bind(this))
         this._animation = this.getComponent(cc.Animation);
         this._canNext = false;
@@ -66,7 +65,7 @@ export default class LoginView extends BaseView {
         if (GameMgr.GAME_INIT_FIN && !this._startGame && this._canNext) {
             this._startGame = true;
             this._uiMgr.closeUI(UIConfig.UILoadingPanel);
-            this._audioMgr.playMusic(UIConfig.UILoginPanel.assetBundle, "audio/title");
+            this._audioMgr.playMusic(UIConfig.UILoginPanel.AB, "title");
 
             this.spFengMian.setAnimation(0, 'jin_s', false);
             this.spFengMian.addAnimation(0, "jin_l", true);

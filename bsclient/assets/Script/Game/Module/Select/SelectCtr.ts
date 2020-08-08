@@ -16,6 +16,7 @@ export default class SelectCtr extends BaseController {
     public static getInstance(): SelectCtr {
         if (!SelectCtr._instance) {
             SelectCtr._instance = new SelectCtr();
+            SelectCtr._instance.init();
         }
         return SelectCtr._instance;
     }

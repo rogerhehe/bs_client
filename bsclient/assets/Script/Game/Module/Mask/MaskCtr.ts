@@ -17,6 +17,7 @@ export default class MaskCtr extends BaseController {
     public static getInstance(): MaskCtr {
         if (!MaskCtr._instance) {
             MaskCtr._instance = new MaskCtr();
+            MaskCtr._instance.init();
         }
         return MaskCtr._instance;
     }
