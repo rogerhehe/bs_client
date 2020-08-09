@@ -1,0 +1,13 @@
+
+yangtaisihui.png
+size: 1024,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+yangtaisihui
+  rotate: false
+  xy: 0, 0
+  size: 864, 1944
+  orig: 864, 1944
+  offset: 0, 0
+  index: -1

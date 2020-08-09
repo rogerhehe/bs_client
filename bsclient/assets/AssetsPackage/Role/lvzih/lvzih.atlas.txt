@@ -1,0 +1,55 @@
+
+lvzih.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bizi
+  rotate: false
+  xy: 0, 0
+  size: 166, 196
+  orig: 166, 196
+  offset: 0, 0
+  index: -1
+bozi
+  rotate: false
+  xy: 1130, 536
+  size: 256, 477
+  orig: 256, 477
+  offset: 0, 0
+  index: -1
+erduo
+  rotate: false
+  xy: 1388, 720
+  size: 360, 293
+  orig: 360, 293
+  offset: 0, 0
+  index: -1
+she
+  rotate: false
+  xy: 1388, 567
+  size: 94, 151
+  orig: 94, 151
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: true
+  xy: 0, 482
+  size: 531, 1128
+  orig: 531, 1128
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 0, 198
+  size: 282, 533
+  orig: 282, 533
+  offset: 0, 0
+  index: -1
+xiaba
+  rotate: false
+  xy: 535, 263
+  size: 128, 217
+  orig: 128, 217
+  offset: 0, 0
+  index: -1

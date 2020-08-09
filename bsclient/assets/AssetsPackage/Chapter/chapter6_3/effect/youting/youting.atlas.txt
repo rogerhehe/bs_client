@@ -1,0 +1,90 @@
+
+youting.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 0, 598
+  size: 851, 1405
+  orig: 851, 1405
+  offset: 0, 0
+  index: -1
+chuan
+  rotate: false
+  xy: 344, 0
+  size: 136, 205
+  orig: 136, 205
+  offset: 0, 0
+  index: -1
+lianyi
+  rotate: true
+  xy: 1306, 818
+  size: 413, 398
+  orig: 413, 398
+  offset: 0, 0
+  index: -1
+lianyi2
+  rotate: true
+  xy: 1706, 849
+  size: 393, 326
+  orig: 393, 326
+  offset: 0, 0
+  index: -1
+san
+  rotate: false
+  xy: 1213, 46
+  size: 422, 600
+  orig: 422, 600
+  offset: 0, 0
+  index: -1
+sheng
+  rotate: false
+  xy: 0, 61
+  size: 342, 144
+  orig: 342, 144
+  offset: 0, 0
+  index: -1
+shuibo
+  rotate: false
+  xy: 853, 1233
+  size: 851, 770
+  orig: 851, 770
+  offset: 0, 0
+  index: -1
+xingguang1
+  rotate: false
+  xy: 0, 207
+  size: 751, 389
+  orig: 751, 389
+  offset: 0, 0
+  index: -1
+xingguang2
+  rotate: true
+  xy: 1706, 1244
+  size: 759, 323
+  orig: 759, 323
+  offset: 0, 0
+  index: -1
+xingguang3
+  rotate: false
+  xy: 1637, 454
+  size: 373, 362
+  orig: 373, 362
+  offset: 0, 0
+  index: -1
+xingguang4
+  rotate: false
+  xy: 753, 15
+  size: 458, 581
+  orig: 458, 581
+  offset: 0, 0
+  index: -1
+xingguang5
+  rotate: true
+  xy: 853, 648
+  size: 583, 451
+  orig: 583, 451
+  offset: 0, 0
+  index: -1

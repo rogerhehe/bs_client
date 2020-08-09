@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "2b9e4c78-4ca9-414c-914b-8ae030974045",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 2160,
+  "height": 2340,
+  "platformSettings": {},
+  "subMetas": {
+    "hotelgate1": {
+      "ver": "1.0.4",
+      "uuid": "405e179e-da1c-4ffa-a77e-cbbe294bba8c",
+      "rawTextureUuid": "2b9e4c78-4ca9-414c-914b-8ae030974045",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 2160,
+      "height": 2340,
+      "rawWidth": 2160,
+      "rawHeight": 2340,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

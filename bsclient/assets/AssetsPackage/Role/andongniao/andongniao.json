@@ -1,0 +1,1 @@
+{"skeleton":{"hash":"wwz8FzKwaZSBXOGEBzHX6haJVs8","spine":"3.7.94","width":738,"height":1869,"images":"./images/","audio":""},"bones":[{"name":"root"}],"slots":[{"name":"andongniao","bone":"root","attachment":"andongniao"}],"skins":{"default":{"andongniao":{"andongniao":{"x":-27.17,"y":677.35,"width":738,"height":1869}}}},"animations":{"idle":{}}}

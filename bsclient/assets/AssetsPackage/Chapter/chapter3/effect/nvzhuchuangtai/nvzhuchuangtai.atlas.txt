@@ -1,0 +1,60 @@
+
+nvzhuchuangtai.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chuangkou
+  rotate: false
+  xy: 0, 407
+  size: 1154, 1615
+  orig: 1154, 1615
+  offset: 0, 0
+  index: -1
+qunzi
+  rotate: false
+  xy: 1549, 1522
+  size: 395, 500
+  orig: 395, 500
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: true
+  xy: 0, 0
+  size: 405, 1128
+  orig: 405, 1128
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 1156, 1445
+  size: 391, 577
+  orig: 391, 577
+  offset: 0, 0
+  index: -1
+
+nvzhuchuangtai2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chuanglian
+  rotate: false
+  xy: 0, 0
+  size: 1154, 1615
+  orig: 1154, 1615
+  offset: 0, 0
+  index: -1
+
+nvzhuchuangtai3.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hai
+  rotate: false
+  xy: 0, 0
+  size: 1154, 1615
+  orig: 1154, 1615
+  offset: 0, 0
+  index: -1

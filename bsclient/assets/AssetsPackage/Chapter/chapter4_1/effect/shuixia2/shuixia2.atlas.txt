@@ -1,0 +1,89 @@
+
+shuixia2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+paopao3
+  rotate: false
+  xy: 0, 0
+  size: 62, 60
+  orig: 62, 60
+  offset: 0, 0
+  index: -1
+paopao4
+  rotate: true
+  xy: 1306, 249
+  size: 127, 152
+  orig: 127, 152
+  offset: 0, 0
+  index: -1
+ren
+  rotate: false
+  xy: 0, 62
+  size: 992, 1959
+  orig: 992, 1959
+  offset: 0, 0
+  index: -1
+shuimian
+  rotate: true
+  xy: 994, 889
+  size: 1132, 1011
+  orig: 1132, 1011
+  offset: 0, 0
+  index: -1
+shuiwen2_1
+  rotate: false
+  xy: 994, 63
+  size: 166, 166
+  orig: 166, 166
+  offset: 0, 0
+  index: -1
+yu1
+  rotate: false
+  xy: 994, 622
+  size: 887, 265
+  orig: 887, 265
+  offset: 0, 0
+  index: -1
+yu3
+  rotate: false
+  xy: 994, 378
+  size: 466, 242
+  orig: 466, 242
+  offset: 0, 0
+  index: -1
+yu4
+  rotate: true
+  xy: 1883, 708
+  size: 179, 97
+  orig: 179, 97
+  offset: 0, 0
+  index: -1
+yu5
+  rotate: false
+  xy: 1462, 439
+  size: 214, 181
+  orig: 214, 181
+  offset: 0, 0
+  index: -1
+yu7
+  rotate: false
+  xy: 994, 231
+  size: 310, 145
+  orig: 310, 145
+  offset: 0, 0
+  index: -1
+
+shuixia22.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 0, 0
+  size: 1132, 1567
+  orig: 1132, 1567
+  offset: 0, 0
+  index: -1

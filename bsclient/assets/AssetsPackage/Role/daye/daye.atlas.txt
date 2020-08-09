@@ -1,0 +1,201 @@
+
+daye.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kua
+  rotate: false
+  xy: 469, 12
+  size: 326, 224
+  orig: 326, 224
+  offset: 0, 0
+  index: -1
+shangchun
+  rotate: true
+  xy: 438, 51
+  size: 75, 29
+  orig: 75, 29
+  offset: 0, 0
+  index: -1
+shangshen
+  rotate: false
+  xy: 0, 384
+  size: 434, 639
+  orig: 434, 639
+  offset: 0, 0
+  index: -1
+shangya
+  rotate: false
+  xy: 279, 20
+  size: 53, 18
+  orig: 53, 18
+  offset: 0, 0
+  index: -1
+she
+  rotate: true
+  xy: 975, 168
+  size: 68, 41
+  orig: 68, 41
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 689, 456
+  size: 176, 207
+  orig: 176, 207
+  offset: 0, 0
+  index: -1
+xiachun
+  rotate: true
+  xy: 975, 50
+  size: 67, 31
+  orig: 67, 31
+  offset: 0, 0
+  index: -1
+xiaya
+  rotate: false
+  xy: 223, 15
+  size: 54, 23
+  orig: 54, 23
+  offset: 0, 0
+  index: -1
+youku
+  rotate: true
+  xy: 0, 128
+  size: 254, 467
+  orig: 254, 467
+  offset: 0, 0
+  index: -1
+youku2
+  rotate: false
+  xy: 223, 40
+  size: 213, 86
+  orig: 213, 86
+  offset: 0, 0
+  index: -1
+youmei
+  rotate: false
+  xy: 975, 27
+  size: 45, 21
+  orig: 45, 21
+  offset: 0, 0
+  index: -1
+youtui
+  rotate: false
+  xy: 436, 449
+  size: 251, 574
+  orig: 251, 574
+  offset: 0, 0
+  index: -1
+youxiu
+  rotate: false
+  xy: 797, 0
+  size: 176, 236
+  orig: 176, 236
+  offset: 0, 0
+  index: -1
+youxiu2
+  rotate: false
+  xy: 875, 671
+  size: 119, 57
+  orig: 119, 57
+  offset: 0, 0
+  index: -1
+youyanbai
+  rotate: false
+  xy: 975, 0
+  size: 32, 25
+  orig: 32, 25
+  offset: 0, 0
+  index: -1
+youyankuang
+  rotate: true
+  xy: 436, 399
+  size: 48, 31
+  orig: 48, 31
+  offset: 0, 0
+  index: -1
+youyanqiu
+  rotate: false
+  xy: 353, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: false
+  xy: 875, 730
+  size: 145, 293
+  orig: 145, 293
+  offset: 0, 0
+  index: -1
+zuoku
+  rotate: false
+  xy: 689, 634
+  size: 184, 389
+  orig: 184, 389
+  offset: 0, 0
+  index: -1
+zuoku2
+  rotate: true
+  xy: 898, 488
+  size: 181, 84
+  orig: 181, 84
+  offset: 0, 0
+  index: -1
+zuomei
+  rotate: true
+  xy: 1008, 66
+  size: 51, 16
+  orig: 51, 16
+  offset: 0, 0
+  index: -1
+zuotui
+  rotate: true
+  xy: 469, 238
+  size: 209, 525
+  orig: 209, 525
+  offset: 0, 0
+  index: -1
+zuoxiu
+  rotate: true
+  xy: 0, 24
+  size: 102, 221
+  orig: 102, 221
+  offset: 0, 0
+  index: -1
+zuoyanbai
+  rotate: true
+  xy: 438, 14
+  size: 35, 24
+  orig: 35, 24
+  offset: 0, 0
+  index: -1
+zuoyankuang
+  rotate: true
+  xy: 975, 119
+  size: 47, 32
+  orig: 47, 32
+  offset: 0, 0
+  index: -1
+zuoyanqiu
+  rotate: false
+  xy: 334, 22
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: -1
+
+daye2.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+youbi
+  rotate: true
+  xy: 0, 0
+  size: 173, 289
+  orig: 173, 289
+  offset: 0, 0
+  index: -1

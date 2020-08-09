@@ -1,0 +1,53 @@
+
+jiuba.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 0, 0
+  size: 866, 1874
+  orig: 866, 1874
+  offset: 0, 0
+  index: -1
+guang
+  rotate: false
+  xy: 868, 0
+  size: 866, 1874
+  orig: 866, 1874
+  offset: 0, 0
+  index: -1
+
+jiuba2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gu
+  rotate: false
+  xy: 0, 0
+  size: 866, 1700
+  orig: 866, 1700
+  offset: 0, 0
+  index: -1
+renqun
+  rotate: false
+  xy: 868, 217
+  size: 866, 1483
+  orig: 866, 1483
+  offset: 0, 0
+  index: -1
+
+jiuba3.png
+size: 1024,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dashizi
+  rotate: false
+  xy: 0, 0
+  size: 866, 1090
+  orig: 866, 1090
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,83 @@
+
+huan.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fa_h
+  rotate: false
+  xy: 1658, 952
+  size: 47, 69
+  orig: 47, 69
+  offset: 0, 0
+  index: -1
+koudai
+  rotate: true
+  xy: 0, 0
+  size: 99, 122
+  orig: 99, 122
+  offset: 0, 0
+  index: -1
+shangshen
+  rotate: false
+  xy: 0, 101
+  size: 550, 517
+  orig: 550, 517
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 1032, 694
+  size: 191, 211
+  orig: 191, 211
+  offset: 0, 0
+  index: -1
+xiati
+  rotate: true
+  xy: 0, 620
+  size: 401, 1030
+  orig: 401, 1030
+  offset: 0, 0
+  index: -1
+youbi
+  rotate: false
+  xy: 552, 128
+  size: 225, 490
+  orig: 225, 490
+  offset: 0, 0
+  index: -1
+youyanbai
+  rotate: false
+  xy: 552, 111
+  size: 28, 15
+  orig: 28, 15
+  offset: 0, 0
+  index: -1
+youyanqiu
+  rotate: false
+  xy: 1032, 677
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: true
+  xy: 1032, 907
+  size: 114, 624
+  orig: 114, 624
+  offset: 0, 0
+  index: -1
+zuoyanbai
+  rotate: false
+  xy: 779, 604
+  size: 22, 14
+  orig: 22, 14
+  offset: 0, 0
+  index: -1
+zuoyanqiu
+  rotate: false
+  xy: 1225, 890
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1

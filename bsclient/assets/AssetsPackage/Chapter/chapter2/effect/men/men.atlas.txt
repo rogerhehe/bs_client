@@ -1,0 +1,20 @@
+
+men.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ditu
+  rotate: false
+  xy: 0, 0
+  size: 866, 1874
+  orig: 866, 1874
+  offset: 0, 0
+  index: -1
+men
+  rotate: false
+  xy: 868, 248
+  size: 768, 1626
+  orig: 768, 1626
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,131 @@
+
+daoyou.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+paizi
+  rotate: false
+  xy: 834, 38
+  size: 155, 363
+  orig: 155, 363
+  offset: 0, 0
+  index: -1
+shangchun
+  rotate: false
+  xy: 0, 0
+  size: 71, 19
+  orig: 71, 19
+  offset: 0, 0
+  index: -1
+shangya
+  rotate: false
+  xy: 73, 8
+  size: 56, 18
+  orig: 56, 18
+  offset: 0, 0
+  index: -1
+she
+  rotate: true
+  xy: 0, 46
+  size: 71, 43
+  orig: 71, 43
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 474, 333
+  size: 358, 688
+  orig: 358, 688
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 613, 156
+  size: 175, 212
+  orig: 175, 212
+  offset: 0, 0
+  index: -1
+xiachun
+  rotate: false
+  xy: 0, 21
+  size: 61, 23
+  orig: 61, 23
+  offset: 0, 0
+  index: -1
+xiashen
+  rotate: false
+  xy: 0, 119
+  size: 472, 902
+  orig: 472, 902
+  offset: 0, 0
+  index: -1
+xiaya
+  rotate: true
+  xy: 45, 60
+  size: 57, 24
+  orig: 57, 24
+  offset: 0, 0
+  index: -1
+youshangbi
+  rotate: false
+  xy: 474, 11
+  size: 137, 320
+  orig: 137, 320
+  offset: 0, 0
+  index: -1
+youxiaobi
+  rotate: true
+  xy: 613, 1
+  size: 153, 212
+  orig: 153, 212
+  offset: 0, 0
+  index: -1
+youyanbai
+  rotate: false
+  xy: 63, 28
+  size: 39, 30
+  orig: 39, 30
+  offset: 0, 0
+  index: -1
+youyanqiu
+  rotate: false
+  xy: 88, 61
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+zuoshangbi
+  rotate: false
+  xy: 834, 403
+  size: 157, 618
+  orig: 157, 618
+  offset: 0, 0
+  index: -1
+zuoyanbai
+  rotate: true
+  xy: 71, 78
+  size: 39, 30
+  orig: 39, 30
+  offset: 0, 0
+  index: -1
+zuoyanqiu
+  rotate: false
+  xy: 71, 60
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: -1
+
+daoyou2.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+zuoxiaobi
+  rotate: true
+  xy: 0, 0
+  size: 135, 361
+  orig: 135, 361
+  offset: 0, 0
+  index: -1

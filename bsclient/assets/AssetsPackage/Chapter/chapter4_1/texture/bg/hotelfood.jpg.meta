@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "af462c72-1b75-4a83-857b-92342db67cef",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 2160,
+  "height": 2340,
+  "platformSettings": {},
+  "subMetas": {
+    "hotelfood": {
+      "ver": "1.0.4",
+      "uuid": "54735a51-4818-469e-9b4c-4df26d042829",
+      "rawTextureUuid": "af462c72-1b75-4a83-857b-92342db67cef",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 2160,
+      "height": 2340,
+      "rawWidth": 2160,
+      "rawHeight": 2340,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -1,0 +1,33 @@
+
+xiannv.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 0, 0
+  size: 866, 1874
+  orig: 866, 1874
+  offset: 0, 0
+  index: -1
+ren
+  rotate: false
+  xy: 868, 0
+  size: 866, 1874
+  orig: 866, 1874
+  offset: 0, 0
+  index: -1
+
+xiannv2.png
+size: 1024,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+paopao
+  rotate: false
+  xy: 0, 0
+  size: 866, 1645
+  orig: 866, 1645
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,47 @@
+
+tianyuan.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bg
+  rotate: false
+  xy: 0, 8
+  size: 866, 1874
+  orig: 866, 1874
+  offset: 0, 0
+  index: -1
+gaoguang
+  rotate: false
+  xy: 0, 0
+  size: 6, 6
+  orig: 6, 6
+  offset: 0, 0
+  index: -1
+nv
+  rotate: false
+  xy: 868, 192
+  size: 866, 1690
+  orig: 866, 1690
+  offset: 0, 0
+  index: -1
+
+tianyuan2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bo
+  rotate: false
+  xy: 0, 88
+  size: 866, 1556
+  orig: 866, 1556
+  offset: 0, 0
+  index: -1
+lv
+  rotate: false
+  xy: 868, 0
+  size: 734, 1644
+  orig: 734, 1644
+  offset: 0, 0
+  index: -1

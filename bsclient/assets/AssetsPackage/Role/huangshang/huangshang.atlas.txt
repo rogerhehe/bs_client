@@ -1,0 +1,208 @@
+
+huangshang.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bozi
+  rotate: false
+  xy: 482, 219
+  size: 108, 187
+  orig: 108, 187
+  offset: 0, 0
+  index: -1
+chenyi
+  rotate: false
+  xy: 618, 21
+  size: 209, 385
+  orig: 209, 385
+  offset: 0, 0
+  index: -1
+shangchun
+  rotate: false
+  xy: 0, 26
+  size: 66, 36
+  orig: 66, 36
+  offset: 0, 0
+  index: -1
+shangshen
+  rotate: false
+  xy: 482, 408
+  size: 467, 616
+  orig: 467, 616
+  offset: 0, 0
+  index: -1
+shangya
+  rotate: false
+  xy: 236, 4
+  size: 43, 15
+  orig: 43, 15
+  offset: 0, 0
+  index: -1
+shetou
+  rotate: false
+  xy: 68, 7
+  size: 41, 21
+  orig: 41, 21
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 236, 21
+  size: 177, 204
+  orig: 177, 204
+  offset: 0, 0
+  index: -1
+xiachun
+  rotate: false
+  xy: 111, 32
+  size: 58, 30
+  orig: 58, 30
+  offset: 0, 0
+  index: -1
+xiaya
+  rotate: false
+  xy: 442, 12
+  size: 45, 18
+  orig: 45, 18
+  offset: 0, 0
+  index: -1
+youmei
+  rotate: false
+  xy: 183, 11
+  size: 51, 19
+  orig: 51, 19
+  offset: 0, 0
+  index: -1
+youtui
+  rotate: false
+  xy: 236, 200
+  size: 244, 824
+  orig: 244, 824
+  offset: 0, 0
+  index: -1
+youxiaobi
+  rotate: true
+  xy: 829, 80
+  size: 73, 160
+  orig: 73, 160
+  offset: 0, 0
+  index: -1
+youyanbai
+  rotate: false
+  xy: 143, 4
+  size: 38, 26
+  orig: 38, 26
+  offset: 0, 0
+  index: -1
+youyankuang
+  rotate: false
+  xy: 171, 32
+  size: 49, 30
+  orig: 49, 30
+  offset: 0, 0
+  index: -1
+youyanqiu
+  rotate: false
+  xy: 52, 10
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: -1
+zuoling
+  rotate: true
+  xy: 829, 12
+  size: 66, 116
+  orig: 66, 116
+  offset: 0, 0
+  index: -1
+zuoling2
+  rotate: false
+  xy: 442, 32
+  size: 174, 166
+  orig: 174, 166
+  offset: 0, 0
+  index: -1
+zuomei
+  rotate: false
+  xy: 0, 0
+  size: 50, 24
+  orig: 50, 24
+  offset: 0, 0
+  index: -1
+zuotui
+  rotate: false
+  xy: 0, 64
+  size: 219, 960
+  orig: 219, 960
+  offset: 0, 0
+  index: -1
+zuoxiaobi
+  rotate: false
+  xy: 829, 155
+  size: 136, 251
+  orig: 136, 251
+  offset: 0, 0
+  index: -1
+zuoyanbai
+  rotate: false
+  xy: 111, 3
+  size: 30, 27
+  orig: 30, 27
+  offset: 0, 0
+  index: -1
+zuoyankuang
+  rotate: false
+  xy: 68, 30
+  size: 41, 32
+  orig: 41, 32
+  offset: 0, 0
+  index: -1
+zuoyanqiu
+  rotate: false
+  xy: 281, 6
+  size: 13, 13
+  orig: 13, 13
+  offset: 0, 0
+  index: -1
+
+huangshang2.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+kua
+  rotate: false
+  xy: 0, 222
+  size: 301, 246
+  orig: 301, 246
+  offset: 0, 0
+  index: -1
+shangshen2
+  rotate: true
+  xy: 0, 0
+  size: 220, 287
+  orig: 220, 287
+  offset: 0, 0
+  index: -1
+youling
+  rotate: true
+  xy: 642, 337
+  size: 131, 233
+  orig: 131, 233
+  offset: 0, 0
+  index: -1
+youshangbi
+  rotate: true
+  xy: 303, 246
+  size: 102, 319
+  orig: 102, 319
+  offset: 0, 0
+  index: -1
+zuoshangbi
+  rotate: true
+  xy: 303, 350
+  size: 118, 337
+  orig: 118, 337
+  offset: 0, 0
+  index: -1

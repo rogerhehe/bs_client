@@ -1,0 +1,62 @@
+
+laotou.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+koudai
+  rotate: false
+  xy: 235, 391
+  size: 357, 113
+  orig: 357, 113
+  offset: 0, 0
+  index: -1
+shangchun
+  rotate: false
+  xy: 0, 0
+  size: 118, 39
+  orig: 118, 39
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 1062, 469
+  size: 609, 555
+  orig: 609, 555
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 1853, 823
+  size: 167, 201
+  orig: 167, 201
+  offset: 0, 0
+  index: -1
+tui
+  rotate: true
+  xy: 0, 506
+  size: 518, 1060
+  orig: 518, 1060
+  offset: 0, 0
+  index: -1
+xiachun
+  rotate: false
+  xy: 1673, 550
+  size: 67, 36
+  orig: 67, 36
+  offset: 0, 0
+  index: -1
+youbi
+  rotate: false
+  xy: 0, 41
+  size: 233, 463
+  orig: 233, 463
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: false
+  xy: 1673, 588
+  size: 178, 436
+  orig: 178, 436
+  offset: 0, 0
+  index: -1

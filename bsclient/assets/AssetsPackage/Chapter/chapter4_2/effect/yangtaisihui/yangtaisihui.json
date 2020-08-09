@@ -1,0 +1,1 @@
+{"skeleton":{"hash":"m1tREYD3zuBYKaG/5I1CnWeWwu8","spine":"3.7.94","width":1080,"height":2430,"images":"./images/","audio":""},"bones":[{"name":"root"}],"slots":[{"name":"yangtaisihui","bone":"root","attachment":"yangtaisihui"}],"skins":{"default":{"yangtaisihui":{"yangtaisihui":{"x":20.09,"y":1208.53,"width":1080,"height":2430}}}},"animations":{"cg_l":{},"cg_s":{}}}

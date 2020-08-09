@@ -1,0 +1,68 @@
+
+guqin.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ditu
+  rotate: false
+  xy: 0, 368
+  size: 777, 1654
+  orig: 777, 1654
+  offset: 0, 0
+  index: -1
+erduo
+  rotate: false
+  xy: 0, 0
+  size: 111, 68
+  orig: 111, 68
+  offset: 0, 0
+  index: -1
+guang1
+  rotate: false
+  xy: 779, 598
+  size: 676, 645
+  orig: 676, 645
+  offset: 0, 0
+  index: -1
+nvfa
+  rotate: true
+  xy: 779, 1245
+  size: 777, 1207
+  orig: 777, 1207
+  offset: 0, 0
+  index: -1
+waibi
+  rotate: true
+  xy: 0, 70
+  size: 296, 423
+  orig: 296, 423
+  offset: 0, 0
+  index: -1
+wehuan
+  rotate: false
+  xy: 1988, 1906
+  size: 53, 116
+  orig: 53, 116
+  offset: 0, 0
+  index: -1
+
+guqin2.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guang2
+  rotate: false
+  xy: 0, 0
+  size: 777, 1654
+  orig: 777, 1654
+  offset: 0, 0
+  index: -1
+ren
+  rotate: false
+  xy: 779, 238
+  size: 777, 1416
+  orig: 777, 1416
+  offset: 0, 0
+  index: -1

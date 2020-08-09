@@ -1,0 +1,173 @@
+
+yilianna.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+daizi
+  rotate: true
+  xy: 293, 43
+  size: 180, 207
+  orig: 180, 207
+  offset: 0, 0
+  index: -1
+fal
+  rotate: false
+  xy: 865, 142
+  size: 132, 274
+  orig: 132, 274
+  offset: 0, 0
+  index: -1
+far
+  rotate: true
+  xy: 502, 46
+  size: 117, 284
+  orig: 117, 284
+  offset: 0, 0
+  index: -1
+liuhai1
+  rotate: true
+  xy: 146, 19
+  size: 92, 127
+  orig: 92, 127
+  offset: 0, 0
+  index: -1
+liuhai2
+  rotate: true
+  xy: 0, 9
+  size: 102, 144
+  orig: 102, 144
+  offset: 0, 0
+  index: -1
+qunzi
+  rotate: false
+  xy: 557, 564
+  size: 331, 460
+  orig: 331, 460
+  offset: 0, 0
+  index: -1
+shangshen
+  rotate: false
+  xy: 557, 165
+  size: 306, 397
+  orig: 306, 397
+  offset: 0, 0
+  index: -1
+shangya2
+  rotate: true
+  xy: 999, 360
+  size: 56, 18
+  orig: 56, 18
+  offset: 0, 0
+  index: -1
+shangzuichun
+  rotate: false
+  xy: 788, 130
+  size: 75, 33
+  orig: 75, 33
+  offset: 0, 0
+  index: -1
+she
+  rotate: false
+  xy: 788, 85
+  size: 71, 43
+  orig: 71, 43
+  offset: 0, 0
+  index: -1
+xiaya
+  rotate: true
+  xy: 502, 166
+  size: 57, 24
+  orig: 57, 24
+  offset: 0, 0
+  index: -1
+xiazuichun
+  rotate: false
+  xy: 788, 50
+  size: 75, 33
+  orig: 75, 33
+  offset: 0, 0
+  index: -1
+youmei
+  rotate: true
+  xy: 275, 74
+  size: 37, 16
+  orig: 37, 16
+  offset: 0, 0
+  index: -1
+youtui
+  rotate: false
+  xy: 0, 113
+  size: 291, 911
+  orig: 291, 911
+  offset: 0, 0
+  index: -1
+youyanbai
+  rotate: true
+  xy: 865, 533
+  size: 29, 23
+  orig: 29, 23
+  offset: 0, 0
+  index: -1
+youyanqiu
+  rotate: false
+  xy: 275, 58
+  size: 16, 14
+  orig: 16, 14
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: false
+  xy: 890, 418
+  size: 130, 606
+  orig: 130, 606
+  offset: 0, 0
+  index: -1
+zuomei
+  rotate: false
+  xy: 146, 0
+  size: 44, 17
+  orig: 44, 17
+  offset: 0, 0
+  index: -1
+zuotui
+  rotate: false
+  xy: 293, 225
+  size: 262, 799
+  orig: 262, 799
+  offset: 0, 0
+  index: -1
+zuoyanbai
+  rotate: true
+  xy: 865, 503
+  size: 28, 23
+  orig: 28, 23
+  offset: 0, 0
+  index: -1
+zuoyanqiu
+  rotate: false
+  xy: 192, 2
+  size: 15, 15
+  orig: 15, 15
+  offset: 0, 0
+  index: -1
+
+yilianna2.png
+size: 1024,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+tou
+  rotate: true
+  xy: 583, 0
+  size: 174, 199
+  orig: 174, 199
+  offset: 0, 0
+  index: -1
+youbi
+  rotate: true
+  xy: 0, 20
+  size: 154, 581
+  orig: 154, 581
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,34 @@
+
+lvzil.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bozi
+  rotate: false
+  xy: 1031, 357
+  size: 230, 434
+  orig: 230, 434
+  offset: 0, 0
+  index: -1
+er
+  rotate: false
+  xy: 1263, 498
+  size: 360, 293
+  orig: 360, 293
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: true
+  xy: 0, 260
+  size: 531, 1029
+  orig: 531, 1029
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 0, 0
+  size: 258, 511
+  orig: 258, 511
+  offset: 0, 0
+  index: -1
