@@ -38,5 +38,4 @@ export default class SelectCtr extends BaseController {
         this._selectId = selectId;
         this._uiMgr.openUI(UIConfig.UISelectPanel);
     }
-
 }

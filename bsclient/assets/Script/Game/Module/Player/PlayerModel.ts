@@ -192,6 +192,15 @@ export default class PlayerModel {
     /** 购买选项列表 */
     public selectList = [];
 
+    /** 当前章节资源AB配置 */
+    public getCurrChapterAB(): any {
+        if (this._currChapter < 4) {
+            return "chapter" + this._currChapter.toString();
+        } else {
+            return "chapter" + this._currChapter.toString() + "_" + this._currStage.toString();
+        }
+    }
+
     /** 当前章节配置文件 */
     public getCurrChapterCfg(): any {
         if (this._currChapter < 4) {

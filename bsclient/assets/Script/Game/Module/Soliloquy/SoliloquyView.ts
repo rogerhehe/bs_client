@@ -51,7 +51,7 @@ export default class SoliloquyView extends BaseView {
                 this._audioMgr.stopSound();
                 // 切换分支
                 this._uiMgr.closeUI(UIConfig.UISoliloquyPanel);
-                GameMgr.storyCtr.doNextStory();
+                GameMgr.storyCtr.doingNextOperate();
             } else {
                 this._showContent();
             }

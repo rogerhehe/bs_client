@@ -59,6 +59,6 @@ export default class PlaceInfoView extends BaseView {
     _switchBranch() {
         // 切换分支
         this._uiMgr.closeUI(UIConfig.UIPlaceInfoPanel);
-        GameMgr.storyCtr.doNextStory();
+        GameMgr.storyCtr.doingNextOperate();
     }
 }

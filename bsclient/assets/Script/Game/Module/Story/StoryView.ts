@@ -51,7 +51,6 @@ export default class StoryView extends BaseView {
     @property(cc.Sprite)
     sprAsideTip: cc.Sprite = null;
 
-    _currChapterAB: string = "";
     _currScenePath: string = "";
 
     _talkContent = "";
@@ -60,21 +59,12 @@ export default class StoryView extends BaseView {
     onLoad() {
         GameMgr.storyCtr.view = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.doingNext.bind(this));
-
-        // 加载当前章节
-        this._currChapterAB = "chapter" + GameMgr.playerCtr.playerModel.currChapter;
-        this._resMgr.loadAssetBundle(this._currChapterAB);
-
-        // 女主
+        // 预加载女主
         this._resMgr.loadAssetBundle("malisu", (bundle: cc.AssetManager.Bundle) => {
             bundle.load("malisu", sp.SkeletonData, (err, asset: sp.SkeletonData) => {
                 this._resMgr.addSkeletonData("malisu", asset);
             });
         });
-        this._resMgr.loadAssetBundle("yangxiaozhan")
-        this._resMgr.loadAssetBundle("gutingwei")
-        this._resMgr.loadAssetBundle("chengyuchuan")
-        this._resMgr.loadAssetBundle("bowenlang")
     }
 
     start() {
@@ -97,7 +87,7 @@ export default class StoryView extends BaseView {
         this._talkContent = "";
         if (this._currRoleObj && this._currRoleObj.dir == "M") {
             this.sprCallRole.spriteFrame = null;
-            this._resMgr.removeAsset(this._currChapterAB, "textures/role/" + this._currRoleObj.sp, cc.SpriteFrame);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._currRoleObj.sp), cc.SpriteFrame);
         }
         this._currRoleObj = null;
 
@@ -117,7 +107,7 @@ export default class StoryView extends BaseView {
         this._talkContent = "";
         if (this._currRoleObj && this._currRoleObj.dir == "M") {
             this.sprCallRole.spriteFrame = null;
-            this._resMgr.removeAsset(this._currChapterAB, "textures/role/" + this._currRoleObj.sp, cc.SpriteFrame);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._currRoleObj.sp), cc.SpriteFrame);
         }
         this._currRoleObj = null;
     }
@@ -149,10 +139,10 @@ export default class StoryView extends BaseView {
             // 卸载上一个角色
             if (this._currRoleObj && this._currRoleObj.sp != "malisu" && this._currRoleObj.sp != nextRoleObj.sp) {
                 this.sprCallRole.spriteFrame = null;
-                this._resMgr.removeAsset(this._currChapterAB, "textures/role/" + this._currRoleObj.sp, cc.SpriteFrame);
+                this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._currRoleObj.sp), cc.SpriteFrame);
             }
             // 加载下一个角色
-            this._resMgr.loadAsset(this._currChapterAB, "textures/role/" + nextRoleObj.sp, cc.SpriteFrame, (spriteFrame) => {
+            this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(nextRoleObj.sp), cc.SpriteFrame, (spriteFrame) => {
                 this.sprCallRole.spriteFrame = spriteFrame;
             })
         }
@@ -239,7 +229,13 @@ export default class StoryView extends BaseView {
                         .start()
                     // 移动背景
                     this._moveScene(true);
-                });
+                }, true);
+
+                //         this._resMgr.loadAssetBundle("yangxiaozhan")
+                // this._resMgr.loadAssetBundle("gutingwei")
+                // this._resMgr.loadAssetBundle("chengyuchuan")
+                // this._resMgr.loadAssetBundle("bowenlang")
+
             } else {
                 if (nextRoleObj.skin != "" && this._currRoleObj.skin != nextRoleObj.skin) {
                     this.spRightRole.setSkin(nextRoleObj.skin);
@@ -290,7 +286,7 @@ export default class StoryView extends BaseView {
         // 判断是否结束
         if (GameMgr.storyCtr.checkEnd()) return;
 
-        GameMgr.storyCtr.doingOperate();
+        GameMgr.storyCtr.doingNextOperate();
     }
 
     /**
@@ -299,16 +295,15 @@ export default class StoryView extends BaseView {
      * @param callbackFun 
      */
     switchScene(sceneId, callbackFun) {
-        let abName = "chapter" + GameMgr.playerCtr.playerModel.currChapter;
         if (this._currScenePath != "") {
             this.sprBg.spriteFrame = null;
-            this._resMgr.removeAsset(abName, this._currScenePath, cc.SpriteFrame);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._currScenePath, cc.SpriteFrame);
         }
 
         this.scheduleOnce(() => {
             let sceneObj = CfgMgr.CfgScene.scenes[sceneId];
             let bgPath = "texture/bg/" + sceneObj.bg;
-            this._resMgr.loadAsset(abName, bgPath, cc.SpriteFrame, (spriteFrame) => {
+            this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, bgPath, cc.SpriteFrame, (spriteFrame) => {
                 this.sprBg.spriteFrame = spriteFrame;
                 // this.sprBg.node.x = sceneObj.initx;
                 this._currScenePath = bgPath;
@@ -328,14 +323,14 @@ export default class StoryView extends BaseView {
                 .to(currSceneObj.dt, { position: cc.v3(this.sprBg.node.x + currSceneObj.x, this.sprBg.node.y) }, { easing: 'sineOut' })
                 .delay(0.8)
                 .call(() => {
-                    GameMgr.storyCtr.doingOperate();
+                    GameMgr.storyCtr.doingNextOperate();
                 })
                 .start()
         } else {
             cc.tween(this.sprBg.node)
                 .delay(0.5)
                 .call(() => {
-                    GameMgr.storyCtr.doingOperate();
+                    GameMgr.storyCtr.doingNextOperate();
                 })
                 .start()
         }
@@ -367,7 +362,7 @@ export default class StoryView extends BaseView {
      * 场景
      * @param isLeft 是否向左移动
      */
-    _moveScene(isLeft: boolean) {
+    private _moveScene(isLeft: boolean) {
         if (isLeft) {
             cc.tween(this.sprBg.node)
                 .to(1, { position: cc.v3(this.sprBg.node.x - 40, this.sprBg.node.y) }, { easing: 'sineOut' })
@@ -377,6 +372,14 @@ export default class StoryView extends BaseView {
                 .to(1, { position: cc.v3(this.sprBg.node.x + 40, this.sprBg.node.y) }, { easing: 'sineOut' })
                 .start()
         }
+    }
+
+    /**
+     * 获取角色资源路径
+     * @param name 
+     */
+    private _getRolePath(name: string) {
+        return "textures/role/" + name;
     }
 
 }

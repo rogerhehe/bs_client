@@ -16,6 +16,7 @@ import RoleInfoCtr from "./Game/Module/RoleInfo/RoleInfoCtr";
 import SelectCtr from "./Game/Module/Select/SelectCtr";
 import SoliloquyCtr from "./Game/Module/Soliloquy/SoliloquyCtr";
 import AsideCtr from "./Game/Module/Aside/AsideCtr";
+import ChatuCtr from "./Game/Module/Chatu/ChatuCtr";
 
 /**
  * @name GameMgr.ts
@@ -57,6 +58,7 @@ export default class GameMgr {
     public static selectCtr: SelectCtr = SelectCtr.getInstance();
     public static soliloquyCtr: SoliloquyCtr = SoliloquyCtr.getInstance();
     public static asideCtr: AsideCtr = AsideCtr.getInstance();
+    public static chatuCtr: ChatuCtr = ChatuCtr.getInstance();
 
     public init() {
 

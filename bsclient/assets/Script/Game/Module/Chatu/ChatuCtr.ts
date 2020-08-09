@@ -1,4 +1,5 @@
 import BaseController from "../../../Core/BaseController";
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name ChatuCtr.ts
@@ -21,6 +22,19 @@ export default class ChatuCtr extends BaseController {
     }
 
     public init() {
-        
+
+    }
+
+    private _chatuId: number = 0;
+    /** 插图配置ID */
+    get chatuId() { return this._chatuId; }
+
+    /**
+     * 打开插图界面
+     * @param _chatuId
+     */
+    public openChatu(chatuId: number) {
+        this._chatuId = chatuId;
+        this._uiMgr.openUI(UIConfig.UIChatuPanel);
     }
 }

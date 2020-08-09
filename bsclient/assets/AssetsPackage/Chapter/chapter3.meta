@@ -1,9 +1,9 @@
 {
   "ver": "1.1.2",
   "uuid": "e1cbc151-5281-4bfb-a85b-39daae78e3fe",
-  "isBundle": false,
+  "isBundle": true,
   "bundleName": "",
-  "priority": 1,
+  "priority": "4",
   "compressionType": {},
   "optimizeHotUpdate": {},
   "inlineSpriteFrames": {},

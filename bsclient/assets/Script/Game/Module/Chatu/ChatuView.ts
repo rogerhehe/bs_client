@@ -1,5 +1,7 @@
+import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import CfgMgr from "../../Config/CfgMgr";
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name ChatuItem.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class ChatuItem extends cc.Component {
+export default class ChatuItem extends BaseView {
 
     /** 插图背景 */
     @property(cc.Sprite)
@@ -35,24 +37,18 @@ export default class ChatuItem extends cc.Component {
     start() {
         this.sprBg.node.active = false;
         this.sprChatu.node.active = false;
-
-        if (this.node["customParam"]) {
-            this._showChatu(<number>this.node["customParam"]);
-        } else {
-            GameMgr.storyCtr.doNextStory();
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChatuPanel);
-        }
+        this._showChatu(GameMgr.chatuCtr.chatuId);
     }
 
     onDestroy() {
         this.sprChatu.spriteFrame = null;
-        GameMgr.releaseImage(this._chatuUrl);
+        this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._chatuUrl, cc.SpriteFrame);
     }
 
     onClickNext(event: any) {
         event.stopPropagation();
         if (this._canNext) {
-            GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+            // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
             if (this.sprBg.node.active) {
                 cc.tween(this.sprBg.node)
                     .to(0.5, { opacity: 0 })
@@ -73,9 +69,9 @@ export default class ChatuItem extends cc.Component {
         this.sprChatu.node.x = chatuObj.x;
         this.sprChatu.node.y = chatuObj.y;
         this.sprChatu.node.scale = chatuObj.scale;
-        this._chatuUrl = "textures/chatu/" + chatuObj.name;
+        this._chatuUrl = "texture/chatu/" + chatuObj.name;
 
-        cc.loader.loadRes(this._chatuUrl, cc.SpriteFrame, (err, frame) => {
+        this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._chatuUrl, cc.SpriteFrame, (spriteFrame) => {
             if (chatuObj.act == "chatu_scale") {
                 this.sprBg.node.active = true;
                 this.sprBg.node.opacity = 0;
@@ -83,13 +79,13 @@ export default class ChatuItem extends cc.Component {
                     .to(0.5, { opacity: 130 })
                     .call(() => {
                         this.sprChatu.node.active = true;
-                        this.sprChatu.spriteFrame = frame;
+                        this.sprChatu.spriteFrame = spriteFrame;
                         this._animation.play(chatuObj.act);
                     })
                     .start();
             } else {
                 this.sprChatu.node.active = true;
-                this.sprChatu.spriteFrame = frame;
+                this.sprChatu.spriteFrame = spriteFrame;
                 this._animation.play(chatuObj.act);
             }
         });
@@ -114,7 +110,7 @@ export default class ChatuItem extends cc.Component {
 
     _showChatuEnd() {
         // 切换分支
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChatuPanel);
-        GameMgr.storyCtr.doNextStory();
+        this._uiMgr.closeUI(UIConfig.UIChatuPanel);
+        GameMgr.storyCtr.doingNextOperate();
     }
 }

@@ -161,18 +161,29 @@ export default class ResourceCache {
      * @param assetType 资源类型
      * @param callbackFun 加载完成后回调函数
      */
-    public loadAsset(bundleName: string, assetPath: string, assetType: typeof cc.Asset, callbackFun: any) {
+    public loadAsset(bundleName: string, assetPath: string, assetType: typeof cc.Asset, callbackFun: any, tryAB?: boolean) {
         let bundle = cc.assetManager.getBundle(bundleName);
         if (bundle) {
             bundle.load(assetPath, assetType, (err, asset: cc.Asset) => {
-                asset.addRef();
+                // asset.addRef();
                 if (callbackFun) {
                     callbackFun(asset);
                 }
                 console.log("from [" + bundleName + "AB] load asset [" + assetPath + "] succ");
             });
         } else {
-            console.warn("[" + bundleName + "AB] not exist, load asset [" + assetPath + "] fail");
+            if (tryAB) {
+                this.loadAssetBundle(bundleName, (bundle) => {
+                    bundle.load(assetPath, assetType, (err, asset: cc.Asset) => {
+                        if (callbackFun) {
+                            callbackFun(asset);
+                        }
+                        console.log("from [" + bundleName + "AB] load asset [" + assetPath + "] succ");
+                    });
+                })
+            } else {
+                console.warn("[" + bundleName + "AB] not exist, load asset [" + assetPath + "] fail");
+            }
         }
     }
 
@@ -188,8 +199,8 @@ export default class ResourceCache {
         if (bundle) {
             let asset = bundle.get(assetPath, assetType);
             if (asset) {
-                asset.decRef();
-                // cc.assetManager.releaseAsset(asset);
+                // asset.decRef();
+                cc.assetManager.releaseAsset(asset);
                 console.log("from [" + bundleName + "AB] remove asset [" + assetPath + "] succ");
             }
         }
