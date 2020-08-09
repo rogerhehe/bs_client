@@ -1,3 +1,6 @@
+import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
+import GameMgr from "../../../GameMgr";
 
 /**
  * @name MaskView.ts
@@ -8,7 +11,7 @@
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class MaskView extends cc.Component {
+export default class MaskView extends BaseView {
 
     /** 白色过渡 */
     @property(cc.Sprite)
@@ -20,14 +23,17 @@ export default class MaskView extends cc.Component {
 
     /** 动画组件 */
     @property(cc.Animation)
-    _animation: cc.Animation = null;
+    private _animation: cc.Animation = null;
 
     onLoad() {
-        this.node.on(cc.Node.EventType.TOUCH_END, this.onClickNext.bind(this))
+        this.node.on(cc.Node.EventType.TOUCH_END, (event) => {
+            event.stopPropagation();
+        })
         this._animation = this.getComponent(cc.Animation);
     }
 
     start() {
+        this._showMask(GameMgr.maskCtr.isWhite);
         this._animation.play();
     }
 
@@ -35,11 +41,7 @@ export default class MaskView extends cc.Component {
 
     }
 
-    onClickNext(event: any) {
-        event.stopPropagation();
-    }
-
-    showMask(isWhite: boolean) {
+    private _showMask(isWhite: boolean) {
         if (isWhite) {
             this.sprWhite.node.active = true;
             this.sprBlack.node.active = false;
@@ -50,6 +52,6 @@ export default class MaskView extends cc.Component {
     }
 
     _showMaskEnd() {
-        this.node.destroy();
+        this._uiMgr.closeUI(UIConfig.UIMaskPanel);
     }
 }

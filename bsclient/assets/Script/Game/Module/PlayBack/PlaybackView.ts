@@ -61,7 +61,7 @@ export default class PlaybackView extends cc.Component {
         GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
         // 恢复
         GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPlaybackPanel);
-        GameMgr.storyCtr.doStory({ "start": GameMgr.playerCtr.playerModel.currOperId });
+        GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
     }
 
     scrollCallback(scrollview, eventType, customEventData) {

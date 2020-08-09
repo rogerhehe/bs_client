@@ -305,7 +305,7 @@ export default class RoleBranchView extends cc.Component {
             if (GameMgr.roleBranchCtr.fromChapterView) {
                 // 重新开始故事
                 GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChapterPanel);
-                GameMgr.storyCtr.doStory({ "start": GameMgr.playerCtr.playerModel.currOperId });
+                GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
             } else {
                 // 切换分支
                 GameMgr.storyCtr.doStory({ "select": true, "branch": branchId });

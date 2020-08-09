@@ -83,29 +83,25 @@ export default class UIMgr {
             this.closeUI(uiCfg);
         }
 
-        // 加载Prefab
-        let loadPrefabCallback = (prefab: cc.Prefab) => {
-            let newNode = cc.instantiate(prefab);
-            if (uiCfg.zOrder) {
-                newNode.zIndex = uiCfg.zOrder;
-            }
-            newNode.setContentSize(this._rootHolder.getContentSize())
-            newNode.position = new cc.Vec3(0, 0, 0);
-            newNode.parent = this._rootHolder;
-            this._openUIObjMap[uiCfg.prefab] = newNode;
-            this._openUICfgMap[uiCfg.prefab] = uiCfg;
-            if (uiCfg.action != undefined && uiCfg.action) {
-                this.showTween(newNode);
-            }
-        }
-
-        // 加载AssetBundle
-        let loadBundleCallback = (bundle: cc.AssetManager.Bundle) => {
-            ResMgr.getInstance().getAsset(uiCfg.AB, uiCfg.prefab, cc.Prefab, loadPrefabCallback);
-        }
-
         if (uiCfg.AB) {
-            ResMgr.getInstance().getAssetBundle(uiCfg.AB, loadBundleCallback)
+            // 加载AssetBundle
+            ResMgr.getInstance().loadAssetBundle(uiCfg.AB, (bundle: cc.AssetManager.Bundle) => {
+                // 加载Prefab
+                ResMgr.getInstance().loadAsset(uiCfg.AB, uiCfg.prefab, cc.Prefab, (prefab: cc.Prefab) => {
+                    let newNode = cc.instantiate(prefab);
+                    if (uiCfg.zOrder) {
+                        newNode.zIndex = uiCfg.zOrder;
+                    }
+                    newNode.setContentSize(this._rootHolder.getContentSize())
+                    newNode.position = new cc.Vec3(0, 0, 0);
+                    newNode.parent = this._rootHolder;
+                    this._openUIObjMap[uiCfg.prefab] = newNode;
+                    this._openUICfgMap[uiCfg.prefab] = uiCfg;
+                    if (uiCfg.action != undefined && uiCfg.action) {
+                        this.showTween(newNode);
+                    }
+                });
+            });
             console.log("UiMgr openUI: ", uiCfg.prefab, " ok!");
         } else {
             console.warn("UiMgr openUI: ", uiCfg.prefab, " fail!");

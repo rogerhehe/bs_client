@@ -72,7 +72,7 @@ export default class RoleTalkView extends cc.Component {
             }
         } else {
             GameMgr.uiMgr.closeUI(GameMgr.cfg.uiRoleTalkPanel);
-            GameMgr.storyCtr.doStory({ "donext": true });
+            GameMgr.storyCtr.doNextStory();
         }
     }
 

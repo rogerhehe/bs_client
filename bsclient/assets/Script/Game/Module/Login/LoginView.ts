@@ -90,7 +90,7 @@ export default class LoginView extends BaseView {
             }
 
             // 开始旅行
-            GameMgr.storyCtr.doStory({ "start": GameMgr.playerCtr.playerModel.currOperId });
+            GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
         }
     }
 }

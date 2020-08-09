@@ -100,7 +100,7 @@ export default class ChapterItem extends cc.Component {
 
             // 开始故事
             GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChapterPanel);
-            GameMgr.storyCtr.doStory({ "start": GameMgr.playerCtr.playerModel.currOperId });
+            GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
         }
 
         cc.tween(this.node)
@@ -128,7 +128,7 @@ export default class ChapterItem extends cc.Component {
                 GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChapterPanel);
 
                 // 重新开始故事
-                GameMgr.storyCtr.doStory({ "start": GameMgr.playerCtr.playerModel.currOperId });
+                GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
             },
             callbackCancle: () => { // 取消重玩
 

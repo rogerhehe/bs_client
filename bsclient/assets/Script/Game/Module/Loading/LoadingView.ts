@@ -56,28 +56,17 @@ export default class LaunchView extends BaseView {
     ]
 
     onLoad() {
-        this.node.on(cc.Node.EventType.TOUCH_END, this.onClick.bind(this))
+        this.node.on(cc.Node.EventType.TOUCH_END, (event) => {
+            event.stopPropagation();
+        });
+        
         // 加载随机背景
         let bgID: number = Utils.random(1, 6);
         this._bgUrl = "texture/bg" + bgID.toString()
         if (bgID > 1) {
-            this._resMgr.getAsset(UIConfig.UILoadingPanel.AB, this._bgUrl, cc.SpriteFrame, (spriteFrame) => {
+            this._resMgr.loadAsset(UIConfig.UILoadingPanel.AB, this._bgUrl, cc.SpriteFrame, (spriteFrame) => {
                 this.sprBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
             })
-        }
-        // 加载通用AssetBundle
-        if (!GameMgr.GAME_INIT_FIN) {
-            let loadBundleCallback = (bundle: cc.AssetManager.Bundle) => {
-
-            }
-            this._resMgr.getAssetBundle(UIConfig.COMMON_ASSET, loadBundleCallback)
-        }
-        // 加载当前章节
-        if (!GameMgr.GAME_INIT_FIN) {
-            let loadBundleCallback = (bundle: cc.AssetManager.Bundle) => {
-
-            }
-            this._resMgr.getAssetBundle("chapter" + GameMgr.playerCtr.playerModel.currChapter, loadBundleCallback)
         }
     }
 
@@ -106,9 +95,5 @@ export default class LaunchView extends BaseView {
                 GameMgr.GAME_INIT_FIN = true;
             }
         }
-    }
-
-    onClick(event) {
-        event.stopPropagation();
     }
 }

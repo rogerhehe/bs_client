@@ -1,5 +1,7 @@
-import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import BaseView from "../../../Core/BaseView"
+import GameMgr from "../../../GameMgr"
+import CfgMgr from "../../Config/CfgMgr"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name PlaceInfoView.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class PlaceInfoView extends cc.Component {
+export default class PlaceInfoView extends BaseView {
 
     /** 时间信息 */
     @property(cc.Label)
@@ -27,12 +29,7 @@ export default class PlaceInfoView extends cc.Component {
     }
 
     start() {
-        if (this.node["customParam"]) {
-            this._showPlaceInfo(<number>this.node["customParam"]);
-        } else {
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPlaceInfoPanel);
-            GameMgr.storyCtr.doStory({ "donext": true });
-        }
+        this._showPlaceInfo(GameMgr.placeInfoCtr.placeId);
     }
 
     onDestroy() {
@@ -42,7 +39,7 @@ export default class PlaceInfoView extends cc.Component {
     onClickNext(event: any) {
         event.stopPropagation();
         if (this._canNext) {
-            GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+            this._audioMgr.playDefaultSound();
             this._switchBranch();
         }
     }
@@ -61,7 +58,7 @@ export default class PlaceInfoView extends cc.Component {
 
     _switchBranch() {
         // 切换分支
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPlaceInfoPanel);
-        GameMgr.storyCtr.doStory({ "donext": true });
+        this._uiMgr.closeUI(UIConfig.UIPlaceInfoPanel);
+        GameMgr.storyCtr.doNextStory();
     }
 }

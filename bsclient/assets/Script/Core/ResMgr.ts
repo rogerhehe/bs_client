@@ -127,13 +127,13 @@ export default class ResourceCache {
      * @param bundleName AssetBundle名称
      * @param callbackFun 加载完成后回调函数
      */
-    public getAssetBundle(bundleName: string, callbackFun?: any) {
+    public loadAssetBundle(bundleName: string, callbackFun?: any) {
         let bundle: cc.AssetManager.Bundle = cc.assetManager.getBundle(bundleName);
         if (bundle && callbackFun) {
             callbackFun(bundle);
         } else {
             cc.assetManager.loadBundle(bundleName, (err, bundle) => {
-                console.log("getAssetBundle => loadBundle =>" + bundleName)
+                console.log("loadAssetBundle => loadBundle =>" + bundleName)
                 if (callbackFun) {
                     callbackFun(bundle);
                 }
@@ -150,6 +150,7 @@ export default class ResourceCache {
         if (bundle) {
             bundle.releaseAll();
             cc.assetManager.removeBundle(bundle);
+            console.log("removeAssetBundle => removeBundle =>" + bundleName)
         }
     }
 
@@ -160,7 +161,7 @@ export default class ResourceCache {
      * @param assetType 资源类型
      * @param callbackFun 加载完成后回调函数
      */
-    public getAsset(bundleName: string, assetPath: string, assetType: typeof cc.Asset, callbackFun: any) {
+    public loadAsset(bundleName: string, assetPath: string, assetType: typeof cc.Asset, callbackFun: any) {
         let bundle = cc.assetManager.getBundle(bundleName);
         if (bundle) {
             bundle.load(assetPath, assetType, (err, asset: cc.Asset) => {
@@ -168,9 +169,10 @@ export default class ResourceCache {
                 if (callbackFun) {
                     callbackFun(asset);
                 }
+                console.log("from [" + bundleName + "AB] load asset [" + assetPath + "] succ");
             });
         } else {
-            console.warn("[" + bundleName + "]asset bundle not exist, get asset [" + assetPath + "] fail");
+            console.warn("[" + bundleName + "AB] not exist, load asset [" + assetPath + "] fail");
         }
     }
 
@@ -188,6 +190,7 @@ export default class ResourceCache {
             if (asset) {
                 asset.decRef();
                 // cc.assetManager.releaseAsset(asset);
+                console.log("from [" + bundleName + "AB] remove asset [" + assetPath + "] succ");
             }
         }
     }

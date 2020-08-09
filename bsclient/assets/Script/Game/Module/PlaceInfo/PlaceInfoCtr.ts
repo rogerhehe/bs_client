@@ -1,4 +1,5 @@
 import BaseController from "../../../Core/BaseController";
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name PlaceInfoCtr.ts
@@ -23,5 +24,14 @@ export default class PlaceInfoCtr extends BaseController {
 
     public init() {
         
+    }
+
+    private _placeId: number = 0;
+    /** 地点ID */
+    get placeId() { return this._placeId; }
+
+    public openPlaceInfo(placeId: number) {
+        this._placeId = placeId;
+        this._uiMgr.openUI(UIConfig.UIPlaceInfoPanel);
     }
 }

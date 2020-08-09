@@ -116,6 +116,6 @@ export default class EndView extends cc.Component {
 
         // 下一章
         GameMgr.uiMgr.closeUI(GameMgr.cfg.uiEndPanel);
-        GameMgr.storyCtr.doStory({ "start": GameMgr.playerCtr.playerModel.currOperId });
+        GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
     }
 }

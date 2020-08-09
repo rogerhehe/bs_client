@@ -46,7 +46,7 @@ export default class SelectView extends cc.Component {
             this._animation.play();
         } else {
             GameMgr.uiMgr.closeUI(GameMgr.cfg.uiSelectPanel);
-            GameMgr.storyCtr.doStory({ "donext": true });
+            GameMgr.storyCtr.doNextStory();
         }
     }
 

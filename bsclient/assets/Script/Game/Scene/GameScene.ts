@@ -16,22 +16,16 @@ const { ccclass, property } = cc._decorator;
 export default class GameScene extends cc.Component {
 
     onLoad() {
-        UIMgr.getInstance().openUI(UIConfig.UILoadingPanel);
-        if (this.checkSdkData()) {
-            UIMgr.getInstance().openUI(UIConfig.UILoginPanel);
-            UIMgr.getInstance().openUI(UIConfig.UIStoryPanel);
+        if (!GameMgr.GAME_INIT_FIN) {
+            // 加载通用AssetBundle
+            ResMgr.getInstance().loadAssetBundle(UIConfig.COMMON_ASSET, (bundle: cc.AssetManager.Bundle) => {
+                UIMgr.getInstance().openUI(UIConfig.UILoadingPanel);
+                if (this._checkSdkData()) {
+                    UIMgr.getInstance().openUI(UIConfig.UILoginPanel);
+                    UIMgr.getInstance().openUI(UIConfig.UIStoryPanel);
+                }
+            });
         }
-        // 女主
-        let loadBundleCallback = (bundle: cc.AssetManager.Bundle) => {
-            // this._resMgr.getAsset(UIConfig.UILoadingPanel.AB, this._bgUrl, cc.SpriteFrame, (spriteFrame) => {
-            //     this.sprBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
-            // })
-        }
-        ResMgr.getInstance().getAssetBundle("malisu", loadBundleCallback)
-        ResMgr.getInstance().getAssetBundle("yangxiaozhan")
-        ResMgr.getInstance().getAssetBundle("gutingwei")
-        ResMgr.getInstance().getAssetBundle("chengyuchuan")
-        ResMgr.getInstance().getAssetBundle("bowenlang")
 
         // cc.loader.loadRes("spines/role/malisu/malisu", sp.SkeletonData, (err, skeletonData) => {
         //     GameMgr.resCache.addSkeletonData("malisu", skeletonData);
@@ -49,14 +43,14 @@ export default class GameScene extends cc.Component {
     }
 
     start() {
-        
+
     }
 
     onDestroy() {
 
     }
 
-    checkSdkData() {
+    private _checkSdkData() {
         // SDK校验
         if (!Config.DEBUG && GameMgr.playerCtr.playerModel.code != 0) {
             GameMgr.popupCtr.openPopupMask("SDK校验失败, code=" + GameMgr.playerCtr.playerModel.code);

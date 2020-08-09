@@ -1,5 +1,5 @@
 import BaseController from "../../../Core/BaseController";
-import GameMgr from "../../../GameMgr";
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name MaskCtr.ts
@@ -23,6 +23,19 @@ export default class MaskCtr extends BaseController {
     }
 
     public init() {
-        
+        this._isWhite = false;
+    }
+
+    private _isWhite: boolean = false;
+    /** 独白起始ID */
+    get isWhite() { return this._isWhite; }
+
+    /**
+     * 打开过渡界面
+     * @param isWhite 是否为白色遮罩
+     */
+    public openMask(isWhite: boolean) {
+        this._isWhite = isWhite;
+        this._uiMgr.openUI(UIConfig.UIMaskPanel);
     }
 }

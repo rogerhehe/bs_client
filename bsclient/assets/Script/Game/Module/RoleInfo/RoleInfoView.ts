@@ -47,7 +47,7 @@ export default class RoleInfoView extends cc.Component {
             this._showRoleInfo(<number>this.node["customParam"]);
         } else {
             GameMgr.uiMgr.closeUI(GameMgr.cfg.uiRoleInfoPanel);
-            GameMgr.storyCtr.doStory({ "donext": true });
+            GameMgr.storyCtr.doNextStory();
         }
     }
 

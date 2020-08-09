@@ -1,6 +1,6 @@
 import BaseView from "../../../Core/BaseView"
-import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../Config/CfgMgr";
+import GameMgr from "../../../GameMgr"
+import CfgMgr from "../../Config/CfgMgr"
 import UIConfig from "../../../UIConfig"
 
 /**
@@ -51,7 +51,7 @@ export default class SoliloquyView extends BaseView {
                 this._audioMgr.stopSound();
                 // 切换分支
                 this._uiMgr.closeUI(UIConfig.UISoliloquyPanel);
-                GameMgr.storyCtr.doStory({ "donext": true });
+                GameMgr.storyCtr.doNextStory();
             } else {
                 this._showContent();
             }

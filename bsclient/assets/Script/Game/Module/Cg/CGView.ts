@@ -59,7 +59,7 @@ export default class CGView extends cc.Component {
         if (this.node["customParam"]) {
             this._showCG(<number>this.node["customParam"]);
         } else {
-            GameMgr.storyCtr.doStory({ "donext": true });
+            GameMgr.storyCtr.doNextStory();
             GameMgr.uiMgr.closeUI(GameMgr.cfg.uiCGPanel);
         }
     }
@@ -101,7 +101,7 @@ export default class CGView extends cc.Component {
         this.layoutAside.node.removeAllChildren();
 
         // 切换分支
-        GameMgr.storyCtr.doStory({ "donext": true });
+        GameMgr.storyCtr.doNextStory();
         GameMgr.uiMgr.closeUI(GameMgr.cfg.uiCGPanel);
     }
 

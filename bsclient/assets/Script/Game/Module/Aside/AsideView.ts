@@ -1,3 +1,4 @@
+import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr";
 
 /**
@@ -9,29 +10,23 @@ import GameMgr from "../../../GameMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class AsideView extends cc.Component {
+export default class AsideView extends BaseView {
 
     /** 旁白内容 */
     @property(cc.Label)
     txtContent: cc.Label = null;
 
     onLoad() {
-        GameMgr.asideCtr.viewComp = this;
+        GameMgr.asideCtr.view = this;
     }
 
     start() {
-        if (this.node["customParam"]) {
-            let data = this.node["customParam"];
-            this.showAside(data.txt, data.operId);
-        } else {
-            GameMgr.storyCtr.doStory({ "donext": true });
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiAsidePanel);
-        }
+        this.showAside(GameMgr.asideCtr.content, GameMgr.asideCtr.operId);
     }
 
     onDestroy() {
         this.unscheduleAllCallbacks();
-        GameMgr.asideCtr.viewComp = null;
+        GameMgr.asideCtr.view = null;
     }
 
     showAside(content: string, operId: number) {

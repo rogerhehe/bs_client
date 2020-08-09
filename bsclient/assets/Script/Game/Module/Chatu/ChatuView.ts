@@ -39,7 +39,7 @@ export default class ChatuItem extends cc.Component {
         if (this.node["customParam"]) {
             this._showChatu(<number>this.node["customParam"]);
         } else {
-            GameMgr.storyCtr.doStory({ "donext": true });
+            GameMgr.storyCtr.doNextStory();
             GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChatuPanel);
         }
     }
@@ -115,6 +115,6 @@ export default class ChatuItem extends cc.Component {
     _showChatuEnd() {
         // 切换分支
         GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChatuPanel);
-        GameMgr.storyCtr.doStory({ "donext": true });
+        GameMgr.storyCtr.doNextStory();
     }
 }
