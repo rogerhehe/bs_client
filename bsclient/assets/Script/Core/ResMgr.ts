@@ -10,7 +10,7 @@ export default class ResourceCache {
     private constructor() {
         // this._spriteFrameMap = {};
         // this._prefabMap = {};
-        // this._skeletonDataMap = {};
+        this._skeletonDataMap = {};
     }
 
     public static getInstance(): ResourceCache {
@@ -26,8 +26,8 @@ export default class ResourceCache {
     // /** 预制资源 */
     // private _prefabMap: { [key: string]: cc.Prefab; };
 
-    // /** spine数据资源 */
-    // private _skeletonDataMap: { [key: string]: sp.SkeletonData; };
+    /** spine数据资源 */
+    private _skeletonDataMap: { [key: string]: sp.SkeletonData; };
 
     // /**
     //  * 缓存资源
@@ -92,34 +92,34 @@ export default class ResourceCache {
     //     return null;
     // }
 
-    // /**
-    //  * 缓存spine资源
-    //  * @param key spine资源唯一标识
-    //  * @param skeletonData spine资源对象
-    //  */
-    // public addSkeletonData(key: string, skeletonData: sp.SkeletonData) {
-    //     this._skeletonDataMap[key] = skeletonData;
-    // }
+    /**
+     * 缓存spine资源
+     * @param key spine资源唯一标识
+     * @param skeletonData spine资源对象
+     */
+    public addSkeletonData(key: string, skeletonData: sp.SkeletonData) {
+        this._skeletonDataMap[key] = skeletonData;
+    }
 
-    // /**
-    //  * 移除缓存资源
-    //  * @param key spine资源唯一标识
-    //  */
-    // public removeSkeletonData(key: string) {
-    //     this._skeletonDataMap[key] = null;
-    // }
+    /**
+     * 移除缓存资源
+     * @param key spine资源唯一标识
+     */
+    public removeSkeletonData(key: string) {
+        this._skeletonDataMap[key] = null;
+    }
 
-    // /**
-    //  * 获取缓存的spine资源
-    //  * @param key spine资源唯一标识
-    //  */
-    // public getSkeletonData(key: string): sp.SkeletonData {
-    //     if (this._skeletonDataMap[key] != null) {
-    //         return this._skeletonDataMap[key];
-    //     }
+    /**
+     * 获取缓存的spine资源
+     * @param key spine资源唯一标识
+     */
+    public getSkeletonData(key: string): sp.SkeletonData {
+        if (this._skeletonDataMap[key] != null) {
+            return this._skeletonDataMap[key];
+        }
 
-    //     return null;
-    // }
+        return null;
+    }
 
 
     /**

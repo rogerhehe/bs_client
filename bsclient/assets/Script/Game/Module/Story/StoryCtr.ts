@@ -94,6 +94,27 @@ export default class StoryCtr extends BaseController {
         }
     }
 
+    public doStory(data: any) {
+        console.log("story event = ", data);
+        this.canClick = true;
+        // GameMgr.audioMgr.playMusic("audios/" + this._currBgm);
+        if (data.phone && data.branch) {
+            // 电话
+            GameMgr.maskCtr.openMask(true);
+            if (data.branch > 0) {
+                this.nextOperId = Number(data.branch);
+            }
+        } else if (data.select && data.branch && data.branch > 0) {
+            // 选择
+            // GameMgr.mainCtr.viewComp.node.active = true;
+            this.nextOperId = Number(data.branch);
+        } else {
+            GameMgr.popupCtr.openPopupMask("故事事件错误=" + data);
+            return;
+        }
+        this._view.doingNext(null);
+    }
+
     /**
      * 开始叙事
      * @param startOperId 叙事开始ID
@@ -102,6 +123,23 @@ export default class StoryCtr extends BaseController {
         this.canClick = true;
         if (this.currOperId != startOperId) {
             this.nextOperId = startOperId;
+        }
+        this.doingOperate();
+    }
+
+    /**
+     * 衣服选择结束
+     * @param branchId 
+     * @param skin 
+     */
+    public endClothStory(branchId: number, skin: string) {
+        this.canClick = true;
+        GameMgr.maskCtr.openMask(true);
+        // 存档
+        if (branchId > 0) {
+            this.nextOperId = branchId;
+            GameMgr.playerCtr.playerModel.currOperId = this.nextOperId;
+            GameMgr.playerCtr.saveChapterCurr();
         }
         this.doingOperate();
     }
@@ -184,7 +222,7 @@ export default class StoryCtr extends BaseController {
 
         // 执行操作
         this.doingHandler[currOperObj.doing](currOperObj);
-        
+
         if (Config.DEBUG) {
             let player = GameMgr.playerCtr.playerModel;
             console.log("doing=", currOperObj.doing, "item=", currOperObj.item, "chapter=", player.currChapter,
@@ -199,7 +237,6 @@ export default class StoryCtr extends BaseController {
      * @param currOperObj 
      */
     private _moveHandler(currOperObj) {
-        // 
         this._view.adjustScene(this.currSceneId)
     }
 
@@ -211,13 +248,12 @@ export default class StoryCtr extends BaseController {
         GameMgr.asideCtr.openAside(currOperObj.txt, this.currOperId);
     }
 
+    /**
+     * 2.对话
+     * @param currOperObj 
+     */
     _roleTalkHandler(currOperObj) {
-        // 2.对话
-        if (this._uiMgr.getOpenUI(UIConfig.UIRoleTalkPanel)) {
-            // (<RoleTalkView>GameMgr.roleTalkCtr.viewComp).showDialogue(currOperObj.item, currOperObj.txt);
-        } else {
-            this._uiMgr.openUI(UIConfig.UIRoleTalkPanel, { memory: false, roleId: currOperObj.item, txt: currOperObj.txt })
-        }
+        this._view.showDialogue(currOperObj.item, currOperObj.txt);
         GameMgr.playerCtr.playerModel.addTalkPlayerback(this.currOperId);
     }
 
@@ -226,8 +262,11 @@ export default class StoryCtr extends BaseController {
         this._uiMgr.openUI(UIConfig.UIRoleInfoPanel, currOperObj.item);
     }
 
+    /**
+     * 4.分支选择
+     * @param currOperObj 
+     */
     _selectHandler(currOperObj) {
-        // 4.分支选择
         // GameMgr.mainCtr.viewComp.node.active = false;
         if (this.currOperId == 300629) {
             // 第三章结束需要一个特殊的分支选择
@@ -259,8 +298,10 @@ export default class StoryCtr extends BaseController {
         // loveItem.showLove(currOperObj.item);
     }
 
+    /**
+     * 8.衣服选择
+     */
     _clothHandler() {
-        // 8.衣服选择
         GameMgr.maskCtr.openMask(true);
         this._uiMgr.openUI(UIConfig.UIClothPanel);
     }
@@ -314,35 +355,7 @@ export default class StoryCtr extends BaseController {
         GameMgr.soliloquyCtr.openSoliloquy(currOperObj.item);
     }
 
-    public doStory(data: any) {
-        console.log("story event = ", data);
-        this.canClick = true;
-        // GameMgr.audioMgr.playMusic("audios/" + this._currBgm);
-        if (data.cloth) {
-            // 换装
-            GameMgr.maskCtr.openMask(true);
-            // 存档
-            if (data.branch > 0) {
-                this.nextOperId = Number(data.branch);
-                GameMgr.playerCtr.playerModel.currOperId = this.nextOperId;
-                GameMgr.playerCtr.saveChapterCurr();
-            }
-        } else if (data.phone && data.branch) {
-            // 电话
-            GameMgr.maskCtr.openMask(true);
-            if (data.branch > 0) {
-                this.nextOperId = Number(data.branch);
-            }
-        } else if (data.select && data.branch && data.branch > 0) {
-            // 选择
-            // GameMgr.mainCtr.viewComp.node.active = true;
-            this.nextOperId = Number(data.branch);
-        } else {
-            GameMgr.popupCtr.openPopupMask("故事事件错误=" + data);
-            return;
-        }
-        this._view.doingNext(null);
-    }
+
 
     public doNext() {
         // 是否自动执行下一次操作
@@ -364,10 +377,6 @@ export default class StoryCtr extends BaseController {
                 .call(() => { this.canClick = true; })
                 .start()
         }
-    }
-
-    public doMove(isLeft: boolean) {
-        this._view.moveScene(isLeft)
     }
 
     checkEnd() {

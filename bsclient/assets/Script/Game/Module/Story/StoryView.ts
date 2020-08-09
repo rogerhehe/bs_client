@@ -2,7 +2,6 @@ import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr"
 import CfgMgr from "../../Config/CfgMgr"
 import UIConfig from "../../../UIConfig"
-import Config from "../../../Config"
 
 
 /**
@@ -20,41 +19,57 @@ export default class StoryView extends BaseView {
     @property(cc.Sprite)
     sprBg: cc.Sprite = null;
 
-    // currOperId: number = 0;
-    // nextOperId: number = 0;
-    // currBgm: string = "";
-    // canClick: boolean = false;
-    // isAuto: boolean = false;
-    // speed: number = 0.5;
+    /** 名字背景 */
+    @property(cc.Sprite)
+    sprNameBg: cc.Sprite = null;
 
-    // _currSceneId: number = 0;
+    /** 名字文本 */
+    @property(cc.Label)
+    txtName: cc.Label = null;
 
+    /** 对话背景 */
+    @property(cc.Sprite)
+    sprDialogueBg: cc.Sprite = null;
+
+    /** 对话文本 */
+    @property(cc.Label)
+    txtDialogue: cc.Label = null;
+
+    /** 左边角色 */
+    @property(sp.Skeleton)
+    spLeftRole: sp.Skeleton = null;
+
+    /** 右边角色 */
+    @property(sp.Skeleton)
+    spRightRole: sp.Skeleton = null;
+
+    /** 回忆角色 */
+    @property(cc.Sprite)
+    sprCallRole: cc.Sprite = null;
+
+    /** 点击提示 */
+    @property(cc.Sprite)
+    sprAsideTip: cc.Sprite = null;
+
+    _currChapterAB: string = "";
     _currScenePath: string = "";
+
+    _talkContent = "";
+    _currRoleObj = null;
 
     onLoad() {
         GameMgr.storyCtr.view = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.doingNext.bind(this));
 
         // 加载当前章节
-        let abName = "chapter" + GameMgr.playerCtr.playerModel.currChapter;
-        this._resMgr.loadAssetBundle(abName, () => {
-            // 初始场景
-            // let nextOperId = GameMgr.playerCtr.playerModel.currOperId;
-            // let nextOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[nextOperId];
-            // let nextSceneObj = CfgMgr.CfgScene.scenes[nextOperObj.scene];
-            // let bgPath = "texture/bg/" + nextSceneObj.bg;
-            // this._resMgr.loadAsset(abName, bgPath, cc.SpriteFrame, (spriteFrame) => {
-            //     this.sprBg.spriteFrame = spriteFrame;
-            //     // this.sprBg.node.x = nextSceneObj.initx;
-            //     this.currSceneId = nextOperObj.scene;
-            // })
-        });
+        this._currChapterAB = "chapter" + GameMgr.playerCtr.playerModel.currChapter;
+        this._resMgr.loadAssetBundle(this._currChapterAB);
 
         // 女主
         this._resMgr.loadAssetBundle("malisu", (bundle: cc.AssetManager.Bundle) => {
-            // this._resMgr.loadAsset(UIConfig.UILoadingPanel.AB, this._bgUrl, cc.SpriteFrame, (spriteFrame) => {
-            //     this.sprBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
-            // })
+            bundle.load("malisu", sp.SkeletonData, (err, asset: sp.SkeletonData) => {
+                this._resMgr.addSkeletonData("malisu", asset);
+            });
         });
         this._resMgr.loadAssetBundle("yangxiaozhan")
         this._resMgr.loadAssetBundle("gutingwei")
@@ -63,22 +78,184 @@ export default class StoryView extends BaseView {
     }
 
     start() {
-
         this._currScenePath = "";
 
-        // this._currSceneId = 0;
-
-        // this.currOperId = 0;
-        // this.nextOperId = 0;
-
-        // this.currBgm = "";
-        // this.canClick = false;
-        // this.isAuto = false;
-        // this.speed = 0.5;
+        this.sprAsideTip.node.active = false;
+        this.sprNameBg.node.active = false;
+        this.sprDialogueBg.node.active = false;
+        this.spLeftRole.node.active = false;
+        this.spRightRole.node.active = false;
+        this.sprCallRole.node.active = false;
+        this._talkContent = "";
+        this._currRoleObj = null;
+        this.spLeftRole.node.x = -1200;
+        this.spRightRole.node.x = 1200;
     }
 
     onDestroy() {
+        this.unscheduleAllCallbacks();
+        this._talkContent = "";
+        if (this._currRoleObj && this._currRoleObj.dir == "M") {
+            this.sprCallRole.spriteFrame = null;
+            this._resMgr.removeAsset(this._currChapterAB, "textures/role/" + this._currRoleObj.sp, cc.SpriteFrame);
+        }
+        this._currRoleObj = null;
+
         GameMgr.storyCtr.view = null;
+    }
+
+    showMemory(roleId: number, content: string) {
+        this.unscheduleAllCallbacks();
+        this.txtDialogue.string = "";
+        this.sprNameBg.node.active = true;
+        this.sprDialogueBg.node.active = true;
+        this.sprAsideTip.node.active = false;
+        // 隐藏正常角色
+        this.spLeftRole.node.active = false;
+        this.spRightRole.node.active = false;
+        // 激活回忆角色
+        this.sprCallRole.node.active = true;
+        // 对话
+        this._talkContent = content.split("]")[1];
+        // 角色名
+        let nextRoleObj = CfgMgr.CfgRole.roles[roleId];
+        this.txtName.string = nextRoleObj.name;
+        // 角色名背景
+        this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/" + nextRoleObj.nbg, cc.SpriteFrame, (spriteFrame) => {
+            this.sprNameBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
+        })
+        // 对话动画
+        this._tweenDialogue();
+        // 回忆角色动画
+        if (nextRoleObj.sp != "malisu" && (!this._currRoleObj || this._currRoleObj.sp != nextRoleObj.sp)) {
+            // 卸载上一个角色
+            if (this._currRoleObj && this._currRoleObj.sp != "malisu" && this._currRoleObj.sp != nextRoleObj.sp) {
+                this.sprCallRole.spriteFrame = null;
+                this._resMgr.removeAsset(this._currChapterAB, "textures/role/" + this._currRoleObj.sp, cc.SpriteFrame);
+            }
+            // 加载下一个角色
+            this._resMgr.loadAsset(this._currChapterAB, "textures/role/" + nextRoleObj.sp, cc.SpriteFrame, (spriteFrame) => {
+                this.sprCallRole.spriteFrame = spriteFrame;
+            })
+        }
+        this._currRoleObj = nextRoleObj;
+
+        this.scheduleOnce(() => {
+            GameMgr.storyCtr.doNext();
+            this.sprAsideTip.node.active = true;
+        }, 0.5);
+    }
+
+    showDialogue(roleId: number, content: string) {
+        this.unscheduleAllCallbacks();
+        this.txtDialogue.string = "";
+        let nextRoleObj = CfgMgr.CfgRole.roles[roleId];
+        this.sprNameBg.node.active = true;
+        this.sprDialogueBg.node.active = true;
+        this.sprAsideTip.node.active = false;
+        // 隐藏回忆角色
+        this.sprCallRole.node.active = false;
+        // 对话
+        this._talkContent = content.split("]")[1];
+        // 角色名
+        this.txtName.string = nextRoleObj.name;
+        // 角色名背景
+        this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/" + nextRoleObj.nbg, cc.SpriteFrame, (spriteFrame) => {
+            this.sprNameBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
+        })
+        // 对话动画
+        this._tweenDialogue();
+        // 正常角色动画
+        if (nextRoleObj.dir == "L") {
+            if (!this._currRoleObj || this._currRoleObj.sp != nextRoleObj.sp) {
+                // 右边消失
+                cc.tween(this.spRightRole.node)
+                    .to(0.2, { position: cc.v3(1200, this.spRightRole.node.y) })
+                    .start()
+                // 左边出现
+                this.spLeftRole.node.x = -1200;
+                this.spLeftRole.node.active = true;
+                this.spLeftRole.skeletonData = this._resMgr.getSkeletonData(nextRoleObj.sp);
+
+                if (nextRoleObj.skin == "") {
+                    this.spLeftRole.setSkin(GameMgr.playerCtr.playerModel.currSkin);
+                } else {
+                    this.spLeftRole.setSkin(nextRoleObj.skin);
+                }
+                this.spLeftRole.setAnimation(0, nextRoleObj.act[0], false);
+                this.spLeftRole.addAnimation(0, nextRoleObj.act[1], true);
+                cc.tween(this.spLeftRole.node)
+                    .to(0.2, { position: cc.v3(0, this.spLeftRole.node.y) })
+                    .start()
+                // 移动背景
+                this._moveScene(false);
+            } else {
+                if (nextRoleObj.skin != "" && this._currRoleObj.skin != nextRoleObj.skin) {
+                    this.spLeftRole.setSkin(nextRoleObj.skin);
+                }
+                if (nextRoleObj.act[0] != this._currRoleObj.act[0]) {
+                    this.spLeftRole.setAnimation(0, nextRoleObj.act[0], false);
+                    this.spLeftRole.addAnimation(0, nextRoleObj.act[1], true);
+                }
+            }
+        } else if (nextRoleObj.dir == "R") {
+            if ((!this._currRoleObj || this._currRoleObj.sp != nextRoleObj.sp)) {
+                // 卸载上一个角色
+                if (this._currRoleObj && this._currRoleObj.sp != "malisu" && this._currRoleObj.sp != nextRoleObj.sp && this.spRightRole.skeletonData) {
+                    this._resMgr.removeAsset(this._currRoleObj.sp, this._currRoleObj.sp, sp.SkeletonData);
+                }
+                // 左边消失
+                cc.tween(this.spLeftRole.node)
+                    .to(0.2, { position: cc.v3(-1200, this.spLeftRole.node.y) })
+                    .start()
+                // 右边出现
+                this.spRightRole.node.x = 1200;
+                this.spRightRole.node.active = true;
+                this._resMgr.loadAsset(nextRoleObj.sp, nextRoleObj.sp, sp.SkeletonData, (data) => {
+                    this.spRightRole.skeletonData = data;
+                    this.spRightRole.setSkin(nextRoleObj.skin);
+                    this.spRightRole.setAnimation(0, nextRoleObj.act[0], false);
+                    this.spRightRole.addAnimation(0, nextRoleObj.act[1], true);
+                    cc.tween(this.spRightRole.node)
+                        .to(0.2, { position: cc.v3(30, this.spRightRole.node.y) })
+                        .start()
+                    // 移动背景
+                    this._moveScene(true);
+                });
+            } else {
+                if (nextRoleObj.skin != "" && this._currRoleObj.skin != nextRoleObj.skin) {
+                    this.spRightRole.setSkin(nextRoleObj.skin);
+                }
+                if (nextRoleObj.act[0] != this._currRoleObj.act[0]) {
+                    this.spRightRole.setAnimation(0, nextRoleObj.act[0], false);
+                    this.spRightRole.addAnimation(0, nextRoleObj.act[1], true);
+                }
+            }
+        }
+        this._currRoleObj = nextRoleObj;
+
+        this.scheduleOnce(() => {
+            GameMgr.storyCtr.doNext();
+            this.sprAsideTip.node.active = true;
+        }, 0.5);
+    }
+
+    _tweenDialogue() {
+        this.sprDialogueBg.node.scaleY = 0.1
+        cc.tween(this.sprDialogueBg.node)
+            .to(0.1, { scaleY: 1 })
+            .call(() => {
+                this.txtDialogue.string = "";
+                let i = 0;
+                this.schedule(() => {
+                    this.txtDialogue.string += this._talkContent[i];
+                    i++;
+                    if (i >= this._talkContent.length) {
+                        // TODO
+                    }
+                }, 0.01, this._talkContent.length - 1);
+            })
+            .start()
     }
 
     doingNext(event) {
@@ -89,65 +266,19 @@ export default class StoryView extends BaseView {
         //     return;
         // }
 
-        // // 是否禁用操作
-        // if (!this.canClick) return;
+        // 是否禁用操作
+        if (!GameMgr.storyCtr.canClick) return;
 
-        // // 判断是否结束
-        // if (this.checkEnd()) return;
+        // 判断是否结束
+        if (GameMgr.storyCtr.checkEnd()) return;
 
-        // // 检查场景是否正常
-        // let nextOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.nextOperId];
-        // let currSceneObj = CfgMgr.CfgScene.scenes[this.currSceneId];
-        // let nextSceneObj = CfgMgr.CfgScene.scenes[nextOperObj.scene];
-
-        // // 场景无变化
-        // if (this.currSceneId == nextOperObj.scene) {
-        //     this.doingOperate(event);
-        //     return;
-        // }
-
-        // // 场景位移
-        // if (currSceneObj && currSceneObj.bg == nextSceneObj.bg) {
-        //     this.currSceneId = nextOperObj.scene;
-        //     this.doingOperate(event);
-        //     return;
-        // }
-
-        // // 关闭对话
-        // if (this._uiMgr.getOpenUI(UIConfig.UIRoleTalkPanel)) {
-        //     this._uiMgr.closeUI(UIConfig.UIRoleTalkPanel)
-        // }
-        // this.createNewMask(true);
-
-        // // 1.初始场景 2.场景切换
-        // let loadCallBack = () => {
-        //     // 加载下一场景图
-        //     // cc.loader.loadRes("textures/bg/" + nextSceneObj.bg, cc.SpriteFrame, (err, spriteFrame) => {
-        //     //     this.sprBg.spriteFrame = spriteFrame;
-        //     //     this.sprBg.node.x = nextSceneObj.initx;
-        //     //     this.currSceneId = nextOperObj.scene;
-        //     //     this.doingOperate(event);
-        //     //     // 存档
-        //     //     GameMgr.playerCtr.saveChapterCurr();
-        //     // });
-
-        //     // this._resMgr.loadAssetBundle("chapter" + GameMgr.playerCtr.playerModel.currChapter, loadBundleCallback)
-
-        //     this.doingOperate(event);
-        // }
-
-        // // 卸载当前场景图
-        // if (currSceneObj) {
-        //     this.sprBg.spriteFrame = null;
-        //     // GameMgr.releaseImage("textures/bg/" + currSceneObj.bg);
-        //     this.scheduleOnce(loadCallBack, 0.5);
-        // } else {
-        //     loadCallBack();
-        // }
+        GameMgr.storyCtr.doingOperate();
     }
 
     /**
      * 切换场景
+     * @param sceneId 
+     * @param callbackFun 
      */
     switchScene(sceneId, callbackFun) {
         let abName = "chapter" + GameMgr.playerCtr.playerModel.currChapter;
@@ -161,7 +292,7 @@ export default class StoryView extends BaseView {
             let bgPath = "texture/bg/" + sceneObj.bg;
             this._resMgr.loadAsset(abName, bgPath, cc.SpriteFrame, (spriteFrame) => {
                 this.sprBg.spriteFrame = spriteFrame;
-                this.sprBg.node.x = sceneObj.initx;
+                // this.sprBg.node.x = sceneObj.initx;
                 this._currScenePath = bgPath;
                 callbackFun();
             })
@@ -193,22 +324,6 @@ export default class StoryView extends BaseView {
     }
 
     /**
-     * 场景
-     * @param isLeft 是否向左移动
-     */
-    moveScene(isLeft: boolean) {
-        if (isLeft) {
-            cc.tween(this.sprBg.node)
-                .to(1, { position: cc.v3(this.sprBg.node.x - 40, this.sprBg.node.y) }, { easing: 'sineOut' })
-                .start()
-        } else {
-            cc.tween(this.sprBg.node)
-                .to(1, { position: cc.v3(this.sprBg.node.x + 40, this.sprBg.node.y) }, { easing: 'sineOut' })
-                .start()
-        }
-    }
-
-    /**
      * 震屏效果
      */
     shockScreen() {
@@ -229,4 +344,21 @@ export default class StoryView extends BaseView {
             .repeat(5)
             .start()
     }
+
+    /**
+     * 场景
+     * @param isLeft 是否向左移动
+     */
+    _moveScene(isLeft: boolean) {
+        if (isLeft) {
+            cc.tween(this.sprBg.node)
+                .to(1, { position: cc.v3(this.sprBg.node.x - 40, this.sprBg.node.y) }, { easing: 'sineOut' })
+                .start()
+        } else {
+            cc.tween(this.sprBg.node)
+                .to(1, { position: cc.v3(this.sprBg.node.x + 40, this.sprBg.node.y) }, { easing: 'sineOut' })
+                .start()
+        }
+    }
+
 }

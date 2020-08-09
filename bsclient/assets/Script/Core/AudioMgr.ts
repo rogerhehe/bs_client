@@ -106,16 +106,16 @@ export default class AudioMgr {
      * @param assetPath 音乐资源地址
      */
     public playDefaultSound(bundleName?: string, assetPath?: string) {
-        let tempBundleName: string = "Common";
-        let tempAssetPath: string = "audio/effClick";
-        if (bundleName) {
-            tempBundleName = bundleName;
-        }
-        if (assetPath) {
-            assetPath = "audio/" + assetPath;
-            tempAssetPath = assetPath;
-        }
-        this.playSound(tempBundleName, tempAssetPath);
+        // let tempBundleName: string = "Common";
+        // let tempAssetPath: string = "audio/effClick";
+        // if (bundleName) {
+        //     tempBundleName = bundleName;
+        // }
+        // if (assetPath) {
+        //     assetPath = "audio/" + assetPath;
+        //     tempAssetPath = assetPath;
+        // }
+        // this.playSound(tempBundleName, tempAssetPath);
     }
 
     /**

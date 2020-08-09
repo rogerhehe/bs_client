@@ -1,6 +1,9 @@
+import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import CfgMgr from "../../Config/CfgMgr";
 import ClothDescItem from "./ClothDescItem";
+import UIConfig from "../../../UIConfig"
+import Config from "../../../Config"
 
 /**
  * @name ReplacementView.ts
@@ -11,7 +14,7 @@ import ClothDescItem from "./ClothDescItem";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class ReplacementView extends cc.Component {
+export default class ReplacementView extends BaseView {
 
     /** 镜子背景 */
     @property(cc.Sprite)
@@ -62,27 +65,17 @@ export default class ReplacementView extends cc.Component {
 
     _modelCount = 5;
     _currModel = 0;
-    _jingziUrl = "textures/ui/jingzi";
-    _jingziSpUrl = "spines/ui/jingzi/jingzi";
 
     onLoad() {
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClickNext.bind(this))
         this._animation = this.getComponent(cc.Animation);
-
-        cc.loader.loadRes(this._jingziUrl, cc.SpriteFrame, (err, spriteFrame) => {
-            this.sprBg.spriteFrame = spriteFrame;
-        });
-
-        cc.loader.loadRes(this._jingziSpUrl, sp.SkeletonData, (err, data) => {
-            this.spMirror.skeletonData = data;
-            this.spMirror.setAnimation(0, 'idle_s', false);
-            this.spMirror.addAnimation(0, "idle_l", true);
-
-            this.spRole.skeletonData = GameMgr.resCache.getSkeletonData("malisu");
-            this._changeModel();
-        });
-
         this._clothDescItem = this.sprDescItem.getComponent("ClothDescItem");
+
+        this.spMirror.setAnimation(0, 'idle_s', false);
+        this.spMirror.addAnimation(0, "idle_l", true);
+
+        this.spRole.skeletonData = this._resMgr.getSkeletonData("malisu");
+        this._changeModel();
     }
 
     start() {
@@ -90,9 +83,7 @@ export default class ReplacementView extends cc.Component {
     }
 
     onDestroy() {
-        this.sprBg.spriteFrame = null;
-        GameMgr.releaseImage(this._jingziUrl);
-        GameMgr.releaseSpine(this._jingziSpUrl);
+
     }
 
     onClickNext(event: any) {
@@ -102,14 +93,14 @@ export default class ReplacementView extends cc.Component {
 
     onClickBuy(event: any) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.playDefaultSound();
 
         let clothId = this._currModel + 1;
         let clothObj = CfgMgr.CfgCloth.cloths[clothId]
 
         // 成功回调
         let buyCallBack = (isBuy) => {
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiReplacementPanel);
+            this._uiMgr.closeUI(UIConfig.UIClothPanel);
 
             // 是否购买回调
             if (isBuy) {
@@ -121,13 +112,13 @@ export default class ReplacementView extends cc.Component {
             GameMgr.playerCtr.saveClothCurr();
 
             // 换装完成
-            GameMgr.storyCtr.doStory({ "cloth": true, "branch": clothObj.nxId, "skin": clothObj.skin });
+            GameMgr.storyCtr.endClothStory(clothObj.nxId, clothObj.skin);
         }
 
         // 是否付费
         if (clothObj.price > 0 && GameMgr.playerCtr.playerModel.clothList.indexOf(clothId) < 0) {
             // 调用购买接口
-            if (GameMgr.cfg.DEBUG) {
+            if (Config.DEBUG) {
                 buyCallBack(true);
             } else {
                 GameMgr.playerCtr.purchaseGoods(clothObj.goodsId, buyCallBack);
@@ -139,13 +130,15 @@ export default class ReplacementView extends cc.Component {
 
     onClickDescTip(event: any) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.playDefaultSound();
+
         this._clothDescItem.showDesc(this._currModel + 1);
     }
 
     onClickLeft(event: any) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.playDefaultSound();
+
         this._clothDescItem.hideDesc();
         this._animation.playAdditive("mirror_role_left");
 
@@ -154,7 +147,8 @@ export default class ReplacementView extends cc.Component {
 
     onClickRight(event: any) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.playDefaultSound();
+
         this._clothDescItem.hideDesc();
         this._animation.playAdditive("mirror_role_right");
 
@@ -207,13 +201,16 @@ export default class ReplacementView extends cc.Component {
         this.spRole.setSkin(clothObj.skin);
         this.spRole.setAnimation(0, 'idle_l', true);
 
-        let atlasUrl = GameMgr.cfg.uiReplacementPanel.atlasUrl;
+        let atlasUrl = "atlas/hz_price_btn";
+        let txtPrice = "确 定";
         if (clothObj.price > 0 && GameMgr.playerCtr.playerModel.clothList.indexOf(clothId) < 0) {
-            this.sprPrice.spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "hz_price_btn_pay");
-            this.txtPrice.string = clothObj.price.toString();
-        } else {
-            this.sprPrice.spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "hz_price_btn");
-            this.txtPrice.string = "确 定";
+            atlasUrl = "atlas/hz_price_btn_pay";
+            txtPrice = clothObj.price.toString();
         }
+
+        this._resMgr.loadAsset(UIConfig.UIClothPanel.AB, atlasUrl, cc.SpriteFrame, (spriteFrame) => {
+            this.sprPrice.spriteFrame = <cc.SpriteFrame>spriteFrame;
+            this.txtPrice.string = txtPrice;
+        })
     }
 }
