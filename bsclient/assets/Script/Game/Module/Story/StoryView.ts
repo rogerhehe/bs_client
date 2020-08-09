@@ -104,6 +104,24 @@ export default class StoryView extends BaseView {
         GameMgr.storyCtr.view = null;
     }
 
+    reset() {
+        this.sprAsideTip.node.active = false;
+        this.sprNameBg.node.active = false;
+        this.sprDialogueBg.node.active = false;
+        this.spLeftRole.node.active = false;
+        this.spRightRole.node.active = false;
+        this.sprCallRole.node.active = false;
+        this.spLeftRole.node.x = -1200;
+        this.spRightRole.node.x = 1200;
+
+        this._talkContent = "";
+        if (this._currRoleObj && this._currRoleObj.dir == "M") {
+            this.sprCallRole.spriteFrame = null;
+            this._resMgr.removeAsset(this._currChapterAB, "textures/role/" + this._currRoleObj.sp, cc.SpriteFrame);
+        }
+        this._currRoleObj = null;
+    }
+
     showMemory(roleId: number, content: string) {
         this.unscheduleAllCallbacks();
         this.txtDialogue.string = "";

@@ -104,10 +104,6 @@ export default class StoryCtr extends BaseController {
             if (data.branch > 0) {
                 this.nextOperId = Number(data.branch);
             }
-        } else if (data.select && data.branch && data.branch > 0) {
-            // 选择
-            // GameMgr.mainCtr.viewComp.node.active = true;
-            this.nextOperId = Number(data.branch);
         } else {
             GameMgr.popupCtr.openPopupMask("故事事件错误=" + data);
             return;
@@ -140,6 +136,19 @@ export default class StoryCtr extends BaseController {
             this.nextOperId = branchId;
             GameMgr.playerCtr.playerModel.currOperId = this.nextOperId;
             GameMgr.playerCtr.saveChapterCurr();
+        }
+        this.doingOperate();
+    }
+
+    /**
+     * 选项选择结束
+     * @param branchId 
+     */
+    public endSelectStory(branchId: number) {
+        console.log("endSelectStory nextOperId = ", branchId);
+        if (branchId > 0) {
+            // GameMgr.mainCtr.viewComp.node.active = true;
+            this.nextOperId = branchId;
         }
         this.doingOperate();
     }
@@ -215,9 +224,7 @@ export default class StoryCtr extends BaseController {
         // 关闭对话
         if (currOperObj.doing <= 1 || currOperObj.doing == 5 || currOperObj.doing == 6
             || currOperObj.doing == 8 || currOperObj.doing == 9) {
-            if (this._uiMgr.getOpenUI(UIConfig.UIRoleTalkPanel)) {
-                this._uiMgr.closeUI(UIConfig.UIRoleTalkPanel)
-            }
+            this._view.reset();
         }
 
         // 执行操作
@@ -274,7 +281,7 @@ export default class StoryCtr extends BaseController {
             GameMgr.maskCtr.openMask(true);
             this._uiMgr.openUI(UIConfig.UIRoleBranchPanel);
         } else {
-            this._uiMgr.openUI(UIConfig.UISelectPanel, currOperObj.item);
+            GameMgr.selectCtr.openSelectPanel(currOperObj.item);
         }
     }
 
@@ -313,13 +320,12 @@ export default class StoryCtr extends BaseController {
         this._uiMgr.openUI(UIConfig.UICallPanel);
     }
 
+    /**
+     * 10.回忆
+     * @param currOperObj 
+     */
     _memoryHandler(currOperObj) {
-        // 10.回忆
-        if (this._uiMgr.getOpenUI(UIConfig.UIRoleTalkPanel)) {
-            // (<RoleTalkView>GameMgr.roleTalkCtr.viewComp).showMemory(currOperObj.item, currOperObj.txt);
-        } else {
-            this._uiMgr.openUI(UIConfig.UIRoleTalkPanel, { memory: true, roleId: currOperObj.item, txt: currOperObj.txt })
-        }
+        this._view.showMemory(currOperObj.item, currOperObj.txt);
         GameMgr.playerCtr.playerModel.addTalkPlayerback(this.currOperId);
     }
 

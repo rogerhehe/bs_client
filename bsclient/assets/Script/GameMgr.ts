@@ -13,7 +13,6 @@ import PlaybackCtr from "./Game/Module/PlayBack/PlaybackCtr";
 import ReplacementCtr from "./Game/Module/Cloth/ClothCtr";
 import RoleBranchCtr from "./Game/Module/RoleBranch/RoleBranchCtr";
 import RoleInfoCtr from "./Game/Module/RoleInfo/RoleInfoCtr";
-import RoleTalkCtr from "./Game/Module/RoleTalk/RoleTalkCtr";
 import SelectCtr from "./Game/Module/Select/SelectCtr";
 import SoliloquyCtr from "./Game/Module/Soliloquy/SoliloquyCtr";
 import AsideCtr from "./Game/Module/Aside/AsideCtr";
@@ -55,7 +54,6 @@ export default class GameMgr {
     public static replacementCtr: ReplacementCtr = ReplacementCtr.getInstance();
     public static roleBranchCtr: RoleBranchCtr = RoleBranchCtr.getInstance();
     public static roleInfoCtr: RoleInfoCtr = RoleInfoCtr.getInstance();
-    public static roleTalkCtr: RoleTalkCtr = RoleTalkCtr.getInstance();
     public static selectCtr: SelectCtr = SelectCtr.getInstance();
     public static soliloquyCtr: SoliloquyCtr = SoliloquyCtr.getInstance();
     public static asideCtr: AsideCtr = AsideCtr.getInstance();

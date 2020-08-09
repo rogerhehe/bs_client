@@ -56,8 +56,6 @@ export default class UIConfig {
 
 	/** 叙事界面 */
 	public static UIStoryPanel: IUICfg = { prefab: "prefab/StoryPanel", AB: "Story", delAB: true, zOrder: UIConfig.BASE_LAYER };
-	/** 人物对话 */
-	public static UIRoleTalkPanel: IUICfg = { prefab: "prefab/RoleTalkPanel", AB: "Story", zOrder: UIConfig.BOTTOM_LAYER };
 	/** 选择支线 */
 	public static UISelectPanel: IUICfg = { prefab: "prefab/SelectPanel", AB: "Story", zOrder: UIConfig.NORMAL_LAYER };
 	/** 插图 */

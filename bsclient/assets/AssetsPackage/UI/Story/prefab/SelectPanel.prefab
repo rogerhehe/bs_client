@@ -690,7 +690,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "8e2c1/J0QhH0ayv//JmgV58",
+    "_componentId": "ba252pK0ZVOT5L3i8ly+OGS",
     "handler": "onClickSelect",
     "customEventData": "0"
   },
@@ -1229,7 +1229,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "8e2c1/J0QhH0ayv//JmgV58",
+    "_componentId": "ba252pK0ZVOT5L3i8ly+OGS",
     "handler": "onClickSelect",
     "customEventData": "1"
   },
@@ -1768,7 +1768,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "8e2c1/J0QhH0ayv//JmgV58",
+    "_componentId": "ba252pK0ZVOT5L3i8ly+OGS",
     "handler": "onClickSelect",
     "customEventData": "2"
   },
@@ -2307,7 +2307,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "8e2c1/J0QhH0ayv//JmgV58",
+    "_componentId": "ba252pK0ZVOT5L3i8ly+OGS",
     "handler": "onClickSelect",
     "customEventData": "3"
   },
@@ -2393,7 +2393,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true,
+    "_enabled": false,
     "alignMode": 1,
     "_target": null,
     "_alignFlags": 0,

@@ -1,5 +1,8 @@
+import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import CfgMgr from "../../Config/CfgMgr";
+import UIConfig from "../../../UIConfig"
+import Config from "../../../Config"
 
 /**
  * @name SelectView.ts
@@ -10,7 +13,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class SelectView extends cc.Component {
+export default class SelectView extends BaseView {
 
     /** 分支选择按钮 */
     @property(cc.Button)
@@ -41,13 +44,8 @@ export default class SelectView extends cc.Component {
     }
 
     start() {
-        if (this.node["customParam"]) {
-            this._showSelect(<number>this.node["customParam"]);
-            this._animation.play();
-        } else {
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiSelectPanel);
-            GameMgr.storyCtr.doNextStory();
-        }
+        this._showSelect(GameMgr.selectCtr.selectId);
+        this._animation.play();
     }
 
     onDestroy() {
@@ -75,11 +73,11 @@ export default class SelectView extends cc.Component {
         }
 
         // 选择声音
-        GameMgr.audioMgr.playSound("audios/" + this._selectObj.sound[data]);
+        // GameMgr.audioMgr.playSound("audios/" + this._selectObj.sound[data]);
 
         // 分支选择
         let branch = this._selectObj.list[data];
-        let branchId = branch.split("#")[0];
+        let branchId = Number(branch.split("#")[0]);
 
         // 成功回调
         let buyCallBack = (isBuy) => {
@@ -99,7 +97,7 @@ export default class SelectView extends cc.Component {
 
             // 衣服特殊分支
             if (this._selectObj.cloth.length > 0 && this._selectObj.cloth.indexOf(GameMgr.playerCtr.playerModel.currClothId) >= 0) {
-                branchId = branch.split("#")[1];
+                branchId = Number(branch.split("#")[1]);
             }
 
             // 大结局分支选择, 1.是否正确选项  2.好感度是否达标
@@ -119,15 +117,15 @@ export default class SelectView extends cc.Component {
                 }
                 // 判断是否命中完美结局
                 if (loveVaule >= lovaeVauleMax) {
-                    branchId = branch.split("#")[0];
+                    branchId = Number(branch.split("#")[0]);
                 } else {
-                    branchId = branch.split("#")[1];
+                    branchId = Number(branch.split("#")[1]);
                 }
             }
 
             // 切换分支
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiSelectPanel);
-            GameMgr.storyCtr.doStory({ "select": true, "branch": branchId });
+            this._uiMgr.closeUI(UIConfig.UISelectPanel);
+            GameMgr.storyCtr.endSelectStory(branchId);
 
             // 上报
             GameMgr.playerCtr.reportSelectEvent(isBuy, this._selectId, branchId);
@@ -136,7 +134,7 @@ export default class SelectView extends cc.Component {
         // 是否付费
         if (this._selectObj.pay[data] > 0 && GameMgr.playerCtr.playerModel.selectList.indexOf(branchId) < 0) {
             // 调用购买接口
-            if (GameMgr.cfg.DEBUG) {
+            if (Config.DEBUG) {
                 buyCallBack(true);
             } else {
                 GameMgr.playerCtr.purchaseGoods(this._selectObj.goodsId[data], buyCallBack);
@@ -151,21 +149,25 @@ export default class SelectView extends cc.Component {
             element.node.active = false;
         });
 
-        let atlasUrl = GameMgr.cfg.resUiCommon;
         this._selectId = selectId;
         this._selectObj = CfgMgr.CfgSelect.selects[selectId];
 
         for (let index = 0; index < this._selectObj.count && this.btnSelect.length; index++) {
             this.txtSelect[index].string = this._selectObj.txt[index];
             // 是否付费
-            let branchId = this._selectObj.list[index].split("#")[0];
+            let branchId = Number(this._selectObj.list[index].split("#")[0]);
+            
+            let atlasUrl = "atlas/story_select_btn1";
+            let txtPay = ""
             if (this._selectObj.pay[index] > 0 && GameMgr.playerCtr.playerModel.selectList.indexOf(branchId) < 0) {
-                this.txtPay[index].string = this._selectObj.pay[index].toString();
-                this.sprSelect[index].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "ty_select_btn1_pay");
-            } else {
-                this.txtPay[index].string = "";
-                this.sprSelect[index].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "ty_select_btn1");
+                atlasUrl = "atlas/story_select_btn1_pay";
+                txtPay = this._selectObj.pay[index].toString();
             }
+            this.txtPay[index].string = txtPay;
+            this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, atlasUrl, cc.SpriteFrame, (spriteFrame) => {
+                this.sprSelect[index].spriteFrame = <cc.SpriteFrame>spriteFrame;
+            })
+            
             this.btnSelect[index].node.active = true;
         }
     }
