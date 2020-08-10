@@ -56,6 +56,8 @@ export default class StoryView extends BaseView {
     _talkContent = "";
     _currRoleObj = null;
 
+    _spriteFrameMap: { [key: string]: cc.SpriteFrame; };
+
     onLoad() {
         GameMgr.storyCtr.view = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.doingNext.bind(this));
@@ -64,6 +66,13 @@ export default class StoryView extends BaseView {
             bundle.load("malisu", sp.SkeletonData, (err, asset: sp.SkeletonData) => {
                 this._resMgr.addSkeletonData("malisu", asset);
             });
+        });
+        // 角色名背景
+        this._spriteFrameMap = {};
+        ["bo", "cheng", "gu", "nv", "nan"].forEach(element => {
+            this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/story_nbg_" + element, cc.SpriteFrame, (spriteFrame) => {
+                this._spriteFrameMap["story_nbg_" + element] = <cc.SpriteFrame>spriteFrame;
+            })
         });
     }
 
@@ -129,9 +138,7 @@ export default class StoryView extends BaseView {
         let nextRoleObj = CfgMgr.CfgRole.roles[roleId];
         this.txtName.string = nextRoleObj.name;
         // 角色名背景
-        this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/" + nextRoleObj.nbg, cc.SpriteFrame, (spriteFrame) => {
-            this.sprNameBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
-        })
+        this.sprNameBg.spriteFrame = this._spriteFrameMap[nextRoleObj.nbg];
         // 对话动画
         this._tweenDialogue();
         // 回忆角色动画
@@ -168,9 +175,7 @@ export default class StoryView extends BaseView {
         // 角色名
         this.txtName.string = nextRoleObj.name;
         // 角色名背景
-        this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/" + nextRoleObj.nbg, cc.SpriteFrame, (spriteFrame) => {
-            this.sprNameBg.spriteFrame = <cc.SpriteFrame>spriteFrame;
-        })
+        this.sprNameBg.spriteFrame = this._spriteFrameMap[nextRoleObj.nbg];
         // 对话动画
         this._tweenDialogue();
         // 正常角色动画
@@ -230,12 +235,6 @@ export default class StoryView extends BaseView {
                     // 移动背景
                     this._moveScene(true);
                 }, true);
-
-                //         this._resMgr.loadAssetBundle("yangxiaozhan")
-                // this._resMgr.loadAssetBundle("gutingwei")
-                // this._resMgr.loadAssetBundle("chengyuchuan")
-                // this._resMgr.loadAssetBundle("bowenlang")
-
             } else {
                 if (nextRoleObj.skin != "" && this._currRoleObj.skin != nextRoleObj.skin) {
                     this.spRightRole.setSkin(nextRoleObj.skin);
@@ -299,7 +298,6 @@ export default class StoryView extends BaseView {
             this.sprBg.spriteFrame = null;
             this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._currScenePath, cc.SpriteFrame);
         }
-
         this.scheduleOnce(() => {
             let sceneObj = CfgMgr.CfgScene.scenes[sceneId];
             let bgPath = "texture/bg/" + sceneObj.bg;
