@@ -1,5 +1,7 @@
+import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import CfgMgr from "../../Config/CfgMgr";
+import UIConfig from "../../../UIConfig";
 
 /**
  * @name RoleInfoView.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class RoleInfoView extends cc.Component {
+export default class RoleInfoView extends BaseView {
 
     /** 半身像 */
     @property(cc.Sprite)
@@ -42,26 +44,20 @@ export default class RoleInfoView extends cc.Component {
 
     start() {
         this._canNext = false;
-
-        if (this.node["customParam"]) {
-            this._showRoleInfo(<number>this.node["customParam"]);
-        } else {
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiRoleInfoPanel);
-            GameMgr.storyCtr.doingNextOperate();
-        }
+        this._showRoleInfo(GameMgr.roleInfoCtr.roleInfoId);
     }
 
     onDestroy() {
         this.sprPortrait.spriteFrame = null;
-        GameMgr.releaseImage(this._portraitUrl);
+        this._resMgr.removeAsset(UIConfig.UIRoleInfoPanel.AB, this._portraitUrl, cc.SpriteFrame);
     }
 
     onClickNext(event: any) {
         event.stopPropagation();
         if (this._canNext) {
-            GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+            // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
             GameMgr.storyCtr.doNext();
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiRoleInfoPanel);
+            this._uiMgr.closeUI(UIConfig.UIRoleInfoPanel);
         }
     }
 
@@ -72,8 +68,8 @@ export default class RoleInfoView extends cc.Component {
         this.txtAge.string = roleInfoObj.age;
         this.txtStarType.string = roleInfoObj.star;
 
-        this._portraitUrl = "textures/role/" + roleInfoObj.res;
-        cc.loader.loadRes(this._portraitUrl, cc.SpriteFrame, (err, spriteFrame) => {
+        this._portraitUrl = "texture/" + roleInfoObj.res;
+        this._resMgr.loadAsset(UIConfig.UIRoleInfoPanel.AB, this._portraitUrl, cc.SpriteFrame, (spriteFrame)=>{
             this.sprPortrait.spriteFrame = spriteFrame;
             this._animation.play();
         });

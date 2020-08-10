@@ -280,9 +280,12 @@ export default class StoryCtr extends BaseController {
         GameMgr.playerCtr.playerModel.addTalkPlayerback(this.currOperId);
     }
 
+    /**
+     * 3.人物介绍
+     * @param currOperObj 
+     */
     _roleInfoHandler(currOperObj) {
-        // 3.人物介绍
-        this._uiMgr.openUI(UIConfig.UIRoleInfoPanel, currOperObj.item);
+        GameMgr.roleInfoCtr.openRoleInfo(currOperObj.item);
     }
 
     /**

@@ -1,4 +1,5 @@
 import BaseController from "../../../Core/BaseController";
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name RoleInfoCtr.ts
@@ -23,5 +24,18 @@ export default class RoleInfoCtr extends BaseController {
     
     public init() {
         
+    }
+
+    private _roleInfoId: number = 0;
+    /** 插图配置ID */
+    get roleInfoId() { return this._roleInfoId; }
+
+    /**
+     * 打开人物介绍界面
+     * @param _roleInfoId
+     */
+    public openRoleInfo(roleInfoId: number) {
+        this._roleInfoId = roleInfoId;
+        this._uiMgr.openUI(UIConfig.UIRoleInfoPanel);
     }
 }
