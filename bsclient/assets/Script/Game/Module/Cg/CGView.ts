@@ -1,5 +1,7 @@
+import BaseView from "../../../Core/BaseView"
 import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import CfgMgr from "../../Config/CfgMgr";
+import UIConfig from "../../../UIConfig";
 
 /**
  * @name CGView.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class CGView extends cc.Component {
+export default class CGView extends BaseView {
 
     /** CG动画 */
     @property(sp.Skeleton)
@@ -55,23 +57,17 @@ export default class CGView extends cc.Component {
         });
         this._cgSpUrl = "";
         this._cgSprUrl = "";
-        
-        if (this.node["customParam"]) {
-            this._showCG(<number>this.node["customParam"]);
-        } else {
-            GameMgr.storyCtr.doingNextOperate();
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiCGPanel);
-        }
+        this._showCG(GameMgr.cgCtr.cgId);
     }
 
     onDestroy() {
         this.unscheduleAllCallbacks();
         if (this._cgSpUrl != "") {
-            GameMgr.releaseSpine(this._cgSpUrl);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._cgSpUrl, sp.SkeletonData);
         }
         if (this._cgSprUrl != "") {
             this.sprCG.spriteFrame = null;
-            GameMgr.releaseImage(this._cgSprUrl);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._cgSprUrl, cc.SpriteFrame);
         }
     }
 
@@ -91,7 +87,7 @@ export default class CGView extends cc.Component {
     }
 
     _endCG() {
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
         cc.tween(this.spCG.node).stop();
         cc.tween(this.sprCG.node).stop();
         cc.tween(this.txtTouch.node).stop();
@@ -101,8 +97,8 @@ export default class CGView extends cc.Component {
         this.layoutAside.node.removeAllChildren();
 
         // 切换分支
+        this._uiMgr.closeUI(UIConfig.UICGPanel)
         GameMgr.storyCtr.doingNextOperate();
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiCGPanel);
     }
 
     _showCG(cgId: number) {
@@ -139,25 +135,24 @@ export default class CGView extends cc.Component {
         this.spCG.node.x = cgObj.x
         this.spCG.node.y = cgObj.y
         this.spCG.node.scale = cgObj.scale;
-        this._cgSpUrl = "spines/cg/" + cgObj.name + "/" + cgObj.name;
-
-        cc.loader.loadRes(this._cgSpUrl, sp.SkeletonData, (err, data) => {
+        this._cgSpUrl = "effect/" + cgObj.name + "/" + cgObj.name;
+        this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._cgSpUrl, sp.SkeletonData, (data) => {
             this.spCG.node.active = true;
             this.spCG.skeletonData = data;
             this.spCG.setAnimation(0, cgObj.act[0], false);
             this.spCG.addAnimation(0, cgObj.act[1], true);
-        });
+        })
     }
 
     _cgSprite(cgObj) {
         this.sprCG.node.x = cgObj.x
         this.sprCG.node.y = cgObj.y
         this.sprCG.node.scale = cgObj.scale;
-        this._cgSprUrl = "spines/cg/" + cgObj.name;
+        this._cgSprUrl = "effect/" + cgObj.name;
 
-        cc.loader.loadRes(this._cgSprUrl, cc.SpriteFrame, (err, frame) => {
+        this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._cgSprUrl, cc.SpriteFrame, (spriteFrame) => {
             this.sprCG.node.active = true;
-            this.sprCG.spriteFrame = frame;
+            this.sprCG.spriteFrame = spriteFrame;
             this.scheduleOnce(() => {
                 this._tweenTxtTouch();
                 let tw = cc.tween;
@@ -169,7 +164,7 @@ export default class CGView extends cc.Component {
                     .repeatForever()
                     .start()
             }, 0.5);
-        });
+        })
     }
 
     _tweenTxtTouch() {

@@ -1,4 +1,5 @@
-import BaseController from "../../../Core/BaseController";
+import BaseController from "../../../Core/BaseController"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name CGCtr.ts
@@ -23,5 +24,19 @@ export default class CGCtr extends BaseController {
     
     public init() {
         
+    }
+
+
+    private _cgId: number = 0;
+    /** 插图配置ID */
+    get cgId() { return this._cgId; }
+
+    /**
+     * 打开CG界面
+     * @param _cgId
+     */
+    public openCG(cgId: number) {
+        this._cgId = cgId;
+        this._uiMgr.openUI(UIConfig.UICGPanel);
     }
 }

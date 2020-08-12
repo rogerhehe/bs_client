@@ -56,8 +56,6 @@ export default class StoryView extends BaseView {
     _talkContent = "";
     _currRoleObj = null;
 
-    _spriteFrameMap: { [key: string]: cc.SpriteFrame; };
-
     onLoad() {
         GameMgr.storyCtr.view = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.doingNext.bind(this));
@@ -67,11 +65,11 @@ export default class StoryView extends BaseView {
                 this._resMgr.addSkeletonData("malisu", asset);
             });
         });
-        // 角色名背景
-        this._spriteFrameMap = {};
+        // 角色名背景  story_atlas
+        let atlas: Array<cc.SpriteFrame> = []
         ["bo", "cheng", "gu", "nv", "nan"].forEach(element => {
             this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/story_nbg_" + element, cc.SpriteFrame, (spriteFrame) => {
-                this._spriteFrameMap["story_nbg_" + element] = <cc.SpriteFrame>spriteFrame;
+                atlas.push(<cc.SpriteFrame>spriteFrame);
             })
         });
     }
@@ -93,13 +91,13 @@ export default class StoryView extends BaseView {
 
     onDestroy() {
         this.unscheduleAllCallbacks();
+        this._resMgr.removeSkeletonData("malisu");
         this._talkContent = "";
         if (this._currRoleObj && this._currRoleObj.dir == "M") {
             this.sprCallRole.spriteFrame = null;
             this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._currRoleObj.sp), cc.SpriteFrame);
         }
         this._currRoleObj = null;
-
         GameMgr.storyCtr.view = null;
     }
 

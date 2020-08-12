@@ -294,8 +294,8 @@ export default class StoryCtr extends BaseController {
      */
     _selectHandler(currOperObj) {
         // GameMgr.mainCtr.viewComp.node.active = false;
+        // 第三章结束需要一个特殊的分支选择
         if (this.currOperId == 300629) {
-            // 第三章结束需要一个特殊的分支选择
             GameMgr.asideCtr.closeAside();
             GameMgr.maskCtr.openMask(true);
             this._uiMgr.openUI(UIConfig.UIRoleBranchPanel);
@@ -312,14 +312,20 @@ export default class StoryCtr extends BaseController {
         GameMgr.chatuCtr.openChatu(currOperObj.item)
     }
 
+    /**
+     * 6.CG动画
+     * @param currOperObj 
+     */
     _cgHandler(currOperObj) {
-        // 6.CG动画
         GameMgr.maskCtr.openMask(true);
-        this._uiMgr.openUI(UIConfig.UICGPanel, currOperObj.item);
+        GameMgr.cgCtr.openCG(currOperObj.item)
     }
 
+    /**
+     * 7.好感度
+     * @param currOperObj 
+     */
     _loveHandler(currOperObj) {
-        // 7.好感度
         // let item: cc.Node = cc.instantiate(GameMgr.resCache.getPrefab(GameMgr.cfg.uiLoveItem.prefabUrl));
         // item.parent = this.node;
         // item.zIndex = cc.macro.MAX_ZINDEX;

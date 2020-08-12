@@ -8,8 +8,8 @@ export default class ResourceCache {
     private static _instance: ResourceCache;
 
     private constructor() {
-        // this._spriteFrameMap = {};
-        // this._prefabMap = {};
+        this._spriteFrameMap = {};
+        this._prefabMap = {};
         this._skeletonDataMap = {};
     }
 
@@ -21,76 +21,74 @@ export default class ResourceCache {
     }
 
     // /** 位图资源容器 */
-    // private _spriteFrameMap: { [key: string]: Array<cc.SpriteFrame>; };
+    private _spriteFrameMap: { [key: string]: Array<cc.SpriteFrame>; };
 
-    // /** 预制资源 */
-    // private _prefabMap: { [key: string]: cc.Prefab; };
+    /** 预制资源 */
+    private _prefabMap: { [key: string]: cc.Prefab; };
 
     /** spine数据资源 */
     private _skeletonDataMap: { [key: string]: sp.SkeletonData; };
 
-    // /**
-    //  * 缓存资源
-    //  * @param key 资源名
-    //  * @param res 资源数组
-    //  */
-    // public addSpriteFrame(key: string, res: Array<cc.SpriteFrame>) {
-    //     this._spriteFrameMap[key] = res;
-    // }
+    /**
+     * 缓存资源
+     * @param key 资源名
+     * @param res 资源数组
+     */
+    public addSpriteFrame(key: string, res: Array<cc.SpriteFrame>) {
+        this._spriteFrameMap[key] = res;
+    }
 
-    // /**
-    //  * 移除缓存资源
-    //  * @param key 资源名
-    //  */
-    // public removeSpriteFrame(key: string) {
-    //     this._spriteFrameMap[key] = null;
-    // }
+    /**
+     * 移除缓存资源
+     * @param key 资源名
+     */
+    public removeSpriteFrame(key: string) {
+        this._spriteFrameMap[key] = null;
+    }
 
-    // /**
-    //  * 获取资源贴图
-    //  * @param key 资源名
-    //  * @param resName 贴图名
-    //  */
-    // public getSpriteFrame(key: string, resName: string): cc.SpriteFrame {
-    //     if (this._spriteFrameMap[key] != null) {
-    //         for (const iterator of this._spriteFrameMap[key]) {
-    //             if (iterator.name === resName) {
-    //                 return iterator;
-    //             }
-    //         }
-    //     }
+    /**
+     * 获取资源贴图
+     * @param key 资源名
+     * @param resName 贴图名
+     */
+    public getSpriteFrame(key: string, resName: string): cc.SpriteFrame {
+        if (this._spriteFrameMap[key] != null) {
+            for (const iterator of this._spriteFrameMap[key]) {
+                if (iterator.name === resName) {
+                    return iterator;
+                }
+            }
+        }
+        return null;
+    }
 
-    //     return null;
-    // }
+    /**
+     * 缓存预制资源
+     * @param key 预制资源唯一标识
+     * @param prefab 预制资源对象
+     */
+    public addPrefab(key: string, prefab: cc.Prefab) {
+        this._prefabMap[key] = prefab;
+    }
 
-    // /**
-    //  * 缓存预制资源
-    //  * @param key 预制资源唯一标识
-    //  * @param prefab 预制资源对象
-    //  */
-    // public addPrefab(key: string, prefab: cc.Prefab) {
-    //     this._prefabMap[key] = prefab;
-    // }
+    /**
+     * 移除缓存资源
+     * @param key 预制资源唯一标识
+     */
+    public removePrefab(key: string) {
+        this._prefabMap[key] = null;
+    }
 
-    // /**
-    //  * 移除缓存资源
-    //  * @param key 预制资源唯一标识
-    //  */
-    // public removePrefab(key: string) {
-    //     this._prefabMap[key] = null;
-    // }
-
-    // /**
-    //  * 获取缓存的预制资源
-    //  * @param key 预制资源唯一标识
-    //  */
-    // public getPrefab(key: string): cc.Prefab {
-    //     if (this._prefabMap[key] != null) {
-    //         return this._prefabMap[key];
-    //     }
-
-    //     return null;
-    // }
+    /**
+     * 获取缓存的预制资源
+     * @param key 预制资源唯一标识
+     */
+    public getPrefab(key: string): cc.Prefab {
+        if (this._prefabMap[key] != null) {
+            return this._prefabMap[key];
+        }
+        return null;
+    }
 
     /**
      * 缓存spine资源
@@ -117,10 +115,8 @@ export default class ResourceCache {
         if (this._skeletonDataMap[key] != null) {
             return this._skeletonDataMap[key];
         }
-
         return null;
     }
-
 
     /**
      * 获取AssetBundle资源

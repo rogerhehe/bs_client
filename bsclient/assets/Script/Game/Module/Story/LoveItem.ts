@@ -1,5 +1,5 @@
 import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import CfgMgr from "../../Config/CfgMgr";
 
 /**
  * @name LoveItem.ts
@@ -52,7 +52,7 @@ export default class LoveItem extends cc.Component {
         this.sprIcon.spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, loveObj.icon);
 
         cc.tween(this.node)
-            .to(2.5, { position: cc.v2(this.node.x, this.node.y + 700), opacity: 0 }, { easing: 'sineOut' })
+            .to(2.5, { position: cc.v3(this.node.x, this.node.y + 700), opacity: 0 }, { easing: 'sineOut' })
             .call(() => {
                 this.node.destroy();
             })
