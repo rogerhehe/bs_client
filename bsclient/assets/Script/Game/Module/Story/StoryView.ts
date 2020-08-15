@@ -51,14 +51,14 @@ export default class StoryView extends BaseView {
     @property(cc.Sprite)
     sprAsideTip: cc.Sprite = null;
 
-    _currScenePath: string = "";
-
-    _talkContent = "";
     _currRoleObj = null;
+    _prev2P = null;
+    _currScenePath: string = "";
+    _talkContent = "";
 
     _storyAtlas = ["nbg_bo", "nbg_cheng", "nbg_gu", "nbg_nv", "nbg_nan",
-            "feel_big_ico", "feel_mid_ico", "feel_small_ico", "feel_psmall_ico",
-            "select_btn1", "select_btn1_pay"]
+        "feel_big_ico", "feel_mid_ico", "feel_small_ico", "feel_psmall_ico",
+        "select_btn1", "select_btn1_pay"]
 
     onLoad() {
         GameMgr.storyCtr.view = this;
@@ -81,18 +81,19 @@ export default class StoryView extends BaseView {
     }
 
     start() {
-        this._currScenePath = "";
-
         this.sprAsideTip.node.active = false;
         this.sprNameBg.node.active = false;
         this.sprDialogueBg.node.active = false;
         this.spLeftRole.node.active = false;
         this.spRightRole.node.active = false;
         this.sprCallRole.node.active = false;
-        this._talkContent = "";
-        this._currRoleObj = null;
         this.spLeftRole.node.x = -1200;
         this.spRightRole.node.x = 1200;
+
+        this._currRoleObj = null;
+        this._prev2P = null;
+        this._currScenePath = "";
+        this._talkContent = "";
     }
 
     onDestroy() {
@@ -102,13 +103,11 @@ export default class StoryView extends BaseView {
         this._storyAtlas.forEach(element => {
             this._resMgr.removeAsset(UIConfig.UIStoryPanel.AB, "atlas/story_" + element, cc.SpriteFrame);
         });
-
-        this._talkContent = "";
-        if (this._currRoleObj && this._currRoleObj.dir == "M") {
+        if (this._prev2P) {
             this.sprCallRole.spriteFrame = null;
-            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._currRoleObj.sp), cc.SpriteFrame);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._prev2P.sp), cc.SpriteFrame);
         }
-        this._currRoleObj = null;
+        this._prev2P = null;
         GameMgr.storyCtr.view = null;
     }
 
@@ -122,12 +121,13 @@ export default class StoryView extends BaseView {
         this.spLeftRole.node.x = -1200;
         this.spRightRole.node.x = 1200;
 
-        this._talkContent = "";
-        if (this._currRoleObj && this._currRoleObj.dir == "M") {
+        if (this._prev2P) {
             this.sprCallRole.spriteFrame = null;
-            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._currRoleObj.sp), cc.SpriteFrame);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._prev2P.sp), cc.SpriteFrame);
         }
         this._currRoleObj = null;
+        this._prev2P = null;
+        this._talkContent = "";
     }
 
     showMemory(roleId: number, content: string) {
@@ -150,23 +150,29 @@ export default class StoryView extends BaseView {
         this.sprNameBg.spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIStoryPanel.AB, nextRoleObj.nbg);
         // 对话动画
         this._tweenDialogue();
-        // 回忆角色动画
-        if (nextRoleObj.sp != "malisu" && (!this._currRoleObj || this._currRoleObj.sp != nextRoleObj.sp)) {
-            // 卸载上一个角色
-            if (this._currRoleObj && this._currRoleObj.sp != "malisu" && this._currRoleObj.sp != nextRoleObj.sp) {
-                this.sprCallRole.spriteFrame = null;
-                this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._currRoleObj.sp), cc.SpriteFrame);
+        // 角色是否为2P
+        if (nextRoleObj.sp != "malisu") {
+            if (this._prev2P == null) {
+                this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(nextRoleObj.sp), cc.SpriteFrame, (spriteFrame) => {
+                    this.sprCallRole.spriteFrame = spriteFrame;
+                })
+            } else {
+                if (this._prev2P.sp != nextRoleObj.sp) {
+                    // 卸载上一个角色
+                    this.sprCallRole.spriteFrame = null;
+                    this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._prev2P.sp), cc.SpriteFrame);
+                    // 加载下一个角色
+                    this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(nextRoleObj.sp), cc.SpriteFrame, (spriteFrame) => {
+                        this.sprCallRole.spriteFrame = spriteFrame;
+                    })
+                }
             }
-            // 加载下一个角色
-            this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(nextRoleObj.sp), cc.SpriteFrame, (spriteFrame) => {
-                this.sprCallRole.spriteFrame = spriteFrame;
-            })
+            this._prev2P = nextRoleObj;
         }
-        this._currRoleObj = nextRoleObj;
-
+        // 延时下一步
         this.scheduleOnce(() => {
-            GameMgr.storyCtr.doNext();
             this.sprAsideTip.node.active = true;
+            GameMgr.storyCtr.doNext();
         }, 0.5);
     }
 
@@ -256,9 +262,10 @@ export default class StoryView extends BaseView {
         }
         this._currRoleObj = nextRoleObj;
 
+        // 延时下一步
         this.scheduleOnce(() => {
-            GameMgr.storyCtr.doNext();
             this.sprAsideTip.node.active = true;
+            GameMgr.storyCtr.doNext();
         }, 0.5);
     }
 
@@ -386,7 +393,7 @@ export default class StoryView extends BaseView {
      * @param name 
      */
     private _getRolePath(name: string) {
-        return "textures/role/" + name;
+        return "texture/role/" + name;
     }
 
 }

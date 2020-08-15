@@ -26,9 +26,9 @@ export default class CallCtr extends BaseController {
         
     }
 
-     /** 是否电话切入分支 */
-     public switchBranch: boolean = false;
-     
+    /** 是否电话切入分支 */
+    public switchBranch: boolean = false;
+
     private _startId: number = 0;
     /** 进入对话开始对话的起始ID */
     get startId() { return this._startId; }

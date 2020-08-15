@@ -193,7 +193,7 @@ export default class CallView extends BaseView {
         this.txtOther.string = "";
         this.txtSelf.string = "";
         this.btnHangup.interactable = true;
-        this._resMgr.loadAsset(UIConfig.UICallPanel.AB, "th_hang_up_ico1", cc.SpriteFrame, (spriteFrame) => {
+        this._resMgr.loadAsset(UIConfig.UICallPanel.AB, "atlas/th_hang_up_ico1", cc.SpriteFrame, (spriteFrame) => {
             this.sprHangup.spriteFrame = spriteFrame;
         })
     }

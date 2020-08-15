@@ -377,8 +377,11 @@ export default class StoryCtr extends BaseController {
         GameMgr.playerCtr.playerModel.addTalkPlayerback(this.currOperId);
     }
 
+    /**
+     * 11.彩蛋，好像没派上用场
+     * @param currOperObj 
+     */
     _eggHandler(currOperObj) {
-        // 11.彩蛋，好像没派上用场
         let eggObj = CfgMgr.CfgEgg.eggs[currOperObj.item];
         if (eggObj && GameMgr.playerCtr.playerModel.egg.indexOf(eggObj.egg) >= 0 && eggObj.branch > 0) {
             this.currOperId = eggObj.branch;
