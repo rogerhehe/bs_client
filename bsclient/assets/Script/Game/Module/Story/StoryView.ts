@@ -58,11 +58,11 @@ export default class StoryView extends BaseView {
 
     _storyAtlas = ["nbg_bo", "nbg_cheng", "nbg_gu", "nbg_nv", "nbg_nan",
         "feel_big_ico", "feel_mid_ico", "feel_small_ico", "feel_psmall_ico",
-        "select_btn1", "select_btn1_pay"]
+        "select_btn1", "select_btn1_pay"];
 
     onLoad() {
         GameMgr.storyCtr.view = this;
-        this.node.on(cc.Node.EventType.TOUCH_END, this.doingNext.bind(this));
+        this.node.on(cc.Node.EventType.TOUCH_END, this._doingNext.bind(this));
         // 预加载女主
         this._resMgr.loadAssetBundle("malisu", (bundle: cc.AssetManager.Bundle) => {
             bundle.load("malisu", sp.SkeletonData, (err, asset: sp.SkeletonData) => {
@@ -98,8 +98,8 @@ export default class StoryView extends BaseView {
 
     onDestroy() {
         this.unscheduleAllCallbacks();
-        this._resMgr.removeSpriteFrame(UIConfig.UIStoryPanel.AB);
         this._resMgr.removeSkeletonData("malisu");
+        this._resMgr.removeSpriteFrame(UIConfig.UIStoryPanel.AB);
         this._storyAtlas.forEach(element => {
             this._resMgr.removeAsset(UIConfig.UIStoryPanel.AB, "atlas/story_" + element, cc.SpriteFrame);
         });
@@ -287,7 +287,7 @@ export default class StoryView extends BaseView {
             .start()
     }
 
-    doingNext(event) {
+    _doingNext(event) {
         // // 打断自动操作
         // if (this.isAuto && event) {
         //     this.isAuto = false;
@@ -306,10 +306,7 @@ export default class StoryView extends BaseView {
      * @param callbackFun 
      */
     switchScene(sceneId, callbackFun) {
-        if (this._currScenePath != "") {
-            this.sprBg.spriteFrame = null;
-            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._currScenePath, cc.SpriteFrame);
-        }
+        this.clearScene();
         this.scheduleOnce(() => {
             let sceneObj = CfgMgr.CfgScene.scenes[sceneId];
             let bgPath = "texture/bg/" + sceneObj.bg;
@@ -343,6 +340,17 @@ export default class StoryView extends BaseView {
                     GameMgr.storyCtr.doingNextOperate();
                 })
                 .start()
+        }
+    }
+
+    /**
+     * 清理当前场景
+     */
+    clearScene() {
+        if (this._currScenePath != "") {
+            this.sprBg.spriteFrame = null;
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._currScenePath, cc.SpriteFrame);
+            this._currScenePath = "";
         }
     }
 

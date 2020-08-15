@@ -56,7 +56,7 @@ export default class LoveItem extends BaseView {
             .to(2.5, { position: cc.v3(this.node.x, this.node.y + 700), opacity: 0 }, { easing: 'sineOut' })
             .call(() => {
                 this.node.destroy();
-                this._resMgr.removeAsset(UIConfig.UIStoryPanel.AB, "prefab/LoveItem", cc.Prefab);
+                this._resMgr.removeAsset(UIConfig.UIStoryPanel.AB, UIConfig.UILoveItem.prefab, cc.Prefab);
             })
             .start()
 

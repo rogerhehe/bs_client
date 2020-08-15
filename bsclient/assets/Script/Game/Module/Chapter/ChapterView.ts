@@ -1,5 +1,7 @@
-import GameMgr from "../../../GameMgr";
-import ChapterItem from "./ChapterItem";
+import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
+import GameMgr from "../../../GameMgr"
+import ChapterItem from "./ChapterItem"
 
 /**
  * @name ChapterView.ts
@@ -10,17 +12,26 @@ import ChapterItem from "./ChapterItem";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class ChapterView extends cc.Component {
+export default class ChapterView extends BaseView {
 
     @property(cc.ScrollView)
     scrollViewStage: cc.ScrollView = null;
 
     _chapterItems: ChapterItem[] = [];
     _loadedNum: number = 0;
+    _chapterAtlas = ["cheng_lock", "cheng_ing", "cheng_fin", "gu_lock", "gu_ing", "gu_fin", "bo_lock", "bo_ing", "bo_fin"];
 
     onLoad() {
-        GameMgr.chapterCtr.viewComp = this;
-        this.node.on(cc.Node.EventType.TOUCH_END, this.onClick.bind(this))
+        this.node.on(cc.Node.EventType.TOUCH_END, this.onClick.bind(this));
+        // 预加载贴图
+        let atlas: Array<cc.SpriteFrame> = []
+        this._chapterAtlas.forEach(element => {
+            this._resMgr.loadAsset(UIConfig.UIChapterPanel.AB, "atlas/zj_" + element, cc.SpriteFrame, (spriteFrame) => {
+                // spriteFrame.addRef();
+                atlas.push(<cc.SpriteFrame>spriteFrame);
+            })
+        });
+        this._resMgr.addSpriteFrame(UIConfig.UIChapterPanel.AB, atlas);
     }
 
     start() {
@@ -34,7 +45,8 @@ export default class ChapterView extends cc.Component {
         } else {
             openChapterCount = 6;
         }
-        cc.loader.loadRes(GameMgr.cfg.uiChapterItem.prefabUrl, (err, prefab) => {
+        // 初始化列表
+        this._resMgr.loadAsset(UIConfig.UIChapterPanel.AB, UIConfig.UIChapterItem.prefab, cc.Prefab, (prefab) => {
             for (let index = 0, chapterId = 1; index < openChapterCount; index++, chapterId++) {
                 let item: cc.Node = cc.instantiate(prefab);
                 this.scrollViewStage.content.addChild(item);
@@ -51,6 +63,14 @@ export default class ChapterView extends cc.Component {
                 }
             }
         })
+    }
+
+    onDestroy() {
+        this._resMgr.removeSpriteFrame(UIConfig.UIChapterPanel.AB);
+        this._chapterAtlas.forEach(element => {
+            this._resMgr.removeAsset(UIConfig.UIStoryPanel.AB, "atlas/zj_" + element, cc.SpriteFrame);
+        });
+        this._resMgr.removeAsset(UIConfig.UIChapterPanel.AB, UIConfig.UIChapterItem.prefab, cc.Prefab);
     }
 
     onClick(event: any) {
@@ -80,7 +100,7 @@ export default class ChapterView extends cc.Component {
     _selectBranch() {
         // 1-程 2-顾 3-博，正在进行的 --> 已完成的 --> 未解锁的，都没有选程
         let itemId: number = 1;
-        let chapterObj = GameMgr.playerCtr.playerModel.chapterList[4]; 
+        let chapterObj = GameMgr.playerCtr.playerModel.chapterList[4];
         if (chapterObj.stage[1].operateId > 0) {
             itemId = 1;
         } else if (chapterObj.stage[2].operateId > 0) {

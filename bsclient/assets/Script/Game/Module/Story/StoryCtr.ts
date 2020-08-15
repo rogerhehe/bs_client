@@ -344,7 +344,7 @@ export default class StoryCtr extends BaseController {
      * @param currOperObj 
      */
     _loveHandler(currOperObj) {
-        this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "prefab/LoveItem", cc.Prefab, (prefab) => {
+        this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, UIConfig.UILoveItem.prefab, cc.Prefab, (prefab) => {
             let item: cc.Node = cc.instantiate(prefab);
             item.parent = this._view.node;
             item.zIndex = cc.macro.MAX_ZINDEX;
@@ -424,13 +424,15 @@ export default class StoryCtr extends BaseController {
             GameMgr.playerCtr.playerModel.endChapter(currOperObj.item);
             GameMgr.maskCtr.openMask(true);
             // 关闭所有
-            this._uiMgr.closeAllUI(UIConfig.UIMainPanel.prefab);
+            this._uiMgr.closeAllUI(UIConfig.UIStoryPanel.prefab);
             // 打开结束
             if (GameMgr.playerCtr.playerModel.currChapter <= 0) {
                 this._uiMgr.openUI(UIConfig.UIChapterPanel);
             } else {
                 this._uiMgr.openUI(UIConfig.UIEndPanel);
             }
+            // 移除场景
+            this._view.clearScene();
             return true;
         }
         return false;

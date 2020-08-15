@@ -1,5 +1,7 @@
-import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import BaseView from "../../../Core/BaseView"
+import GameMgr from "../../../GameMgr"
+import CfgMgr from "../../Config/CfgMgr"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name ChapterItem.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class ChapterItem extends cc.Component {
+export default class ChapterItem extends BaseView {
 
     /** 角色进度图标容器 */
     @property(cc.Layout)
@@ -64,7 +66,7 @@ export default class ChapterItem extends cc.Component {
     onDestroy() {
         this.unscheduleAllCallbacks();
         this.sprChatu.spriteFrame = null;
-        GameMgr.releaseImage(this._currChatuUrl);
+        this._resMgr.removeAsset(UIConfig.UIChapterPanel.AB, this._currChatuUrl, cc.SpriteFrame);
     }
 
     onClickPlay(event) {
@@ -72,7 +74,7 @@ export default class ChapterItem extends cc.Component {
         this._chapterView.syncDisableClick();
 
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
 
         let callback = () => {
             // 平台控制
@@ -99,7 +101,7 @@ export default class ChapterItem extends cc.Component {
             GameMgr.playerCtr.playerModel.currOperId = stageObj.operateId;
 
             // 开始故事
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChapterPanel);
+            this._uiMgr.closeUI(UIConfig.UIChapterPanel);
             GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
         }
 
@@ -116,7 +118,7 @@ export default class ChapterItem extends cc.Component {
             this._chapterView.syncDisableClick();
 
             event.stopPropagation();
-            GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+            // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
         }
 
         let popupParam: IPopupParam = {
@@ -125,7 +127,7 @@ export default class ChapterItem extends cc.Component {
             txtCancel: "不要",
             callbackSure: () => { // 确定重玩
                 GameMgr.playerCtr.playerModel.replayChapter(this._chapterId, this._currStageId);
-                GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChapterPanel);
+                this._uiMgr.closeUI(UIConfig.UIChapterPanel);
 
                 // 重新开始故事
                 GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
@@ -142,15 +144,15 @@ export default class ChapterItem extends cc.Component {
         this._chapterView.syncDisableClick();
 
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
 
         GameMgr.roleBranchCtr.fromChapterView = true;
-        GameMgr.uiMgr.openUI(GameMgr.cfg.uiRoleBranchPanel);
+        this._uiMgr.openUI(UIConfig.UIRoleBranchPanel);
     }
 
     onClickChangeRole(event, data) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
 
         if (this._currStageId == data || this._chapterId < 4 || data > 3 || data < 1) {
             return
@@ -173,7 +175,7 @@ export default class ChapterItem extends cc.Component {
 
         let chapterObj = GameMgr.playerCtr.playerModel.chapterList[chapterId];
         let stagObj = chapterObj.stage[this._currStageId];
-        let chatuUrl = "textures/chapter/chapter" + chapterId.toString();
+        let chatuUrl = "texture/chapter" + chapterId.toString();
 
         // 是否解锁
         if (stagObj.operateId <= 0 && stagObj.unlock <= 0) {
@@ -195,9 +197,9 @@ export default class ChapterItem extends cc.Component {
         } else {
             // 加载插图
             this._currChatuUrl = chatuUrl;
-            cc.loader.loadRes(chatuUrl, cc.SpriteFrame, (err, frame) => {
-                this.sprChatu.spriteFrame = frame;
-            });
+            this._resMgr.loadAsset(UIConfig.UIChapterPanel.AB, this._currChatuUrl, cc.SpriteFrame, (spriteFrame) => {
+                this.sprChatu.spriteFrame = spriteFrame;
+            })
         }
 
         // 第四章特殊逻辑
@@ -216,35 +218,34 @@ export default class ChapterItem extends cc.Component {
 
     _roleBranchInfo(chapterObj: any) {
         // 1-程 2-顾 3-博
-        let atlasUrl = GameMgr.cfg.uiChapterPanel.atlasUrl;
         // 程
         let chengObj = chapterObj.stage[1];
         if (chengObj.unlock <= 0) {
-            this.sprRoleStatus[0].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_cheng_lock");
+            this.sprRoleStatus[0].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_cheng_lock");
         } else if (chengObj.operateId > 0 && chengObj.unlock > 0) {
-            this.sprRoleStatus[0].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_cheng_ing");
+            this.sprRoleStatus[0].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_cheng_ing");
         } else if (chengObj.operateId <= 0 && chengObj.unlock > 0 && chengObj.playCount > 0) {
-            this.sprRoleStatus[0].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_cheng_fin");
+            this.sprRoleStatus[0].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_cheng_fin");
         }
 
         // 顾
         let guObj = chapterObj.stage[2];
         if (guObj.unlock <= 0) {
-            this.sprRoleStatus[1].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_gu_lock");
+            this.sprRoleStatus[1].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_gu_lock");
         } else if (guObj.operateId > 0 && guObj.unlock > 0) {
-            this.sprRoleStatus[1].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_gu_ing");
+            this.sprRoleStatus[1].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_gu_ing");
         } else if (guObj.operateId <= 0 && guObj.unlock > 0 && guObj.playCount > 0) {
-            this.sprRoleStatus[1].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_gu_fin");
+            this.sprRoleStatus[1].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_gu_fin");
         }
 
         // 博
         let boObj = chapterObj.stage[3];
         if (boObj.unlock <= 0) {
-            this.sprRoleStatus[2].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_bo_lock");
+            this.sprRoleStatus[2].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_bo_lock");
         } else if (boObj.operateId > 0 && boObj.unlock > 0) {
-            this.sprRoleStatus[2].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_bo_ing");
+            this.sprRoleStatus[2].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_bo_ing");
         } else if (boObj.operateId <= 0 && boObj.unlock > 0 && boObj.playCount > 0) {
-            this.sprRoleStatus[2].spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "zj_bo_fin");
+            this.sprRoleStatus[2].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIChapterPanel.AB, "zj_bo_fin");
         }
     }
 
@@ -270,7 +271,7 @@ export default class ChapterItem extends cc.Component {
         // 插图
         let chapterObj = GameMgr.playerCtr.playerModel.chapterList[this._chapterId];
         let stagObj = chapterObj.stage[itemId];
-        let chatuUrl = "textures/chapter/chapter" + this._chapterId.toString();
+        let chatuUrl = "texture/chapter" + this._chapterId.toString();
 
         // 是否解锁
         if (stagObj.unlock <= 0) {
@@ -298,9 +299,9 @@ export default class ChapterItem extends cc.Component {
 
         // 加载插图
         this._currChatuUrl = chatuUrl;
-        cc.loader.loadRes(chatuUrl, cc.SpriteFrame, (err, frame) => {
-            this.sprChatu.spriteFrame = frame;
-        });
+        this._resMgr.loadAsset(UIConfig.UIChapterPanel.AB, this._currChatuUrl, cc.SpriteFrame, (spriteFrame) => {
+            this.sprChatu.spriteFrame = spriteFrame;
+        })
     }
 
     disableClick() {
