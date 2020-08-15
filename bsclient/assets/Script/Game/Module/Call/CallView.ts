@@ -1,5 +1,7 @@
-import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import BaseView from "../../../Core/BaseView"
+import GameMgr from "../../../GameMgr"
+import CfgMgr from "../../Config/CfgMgr"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name CallView.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class CallView extends cc.Component {
+export default class CallView extends BaseView {
 
     /** 分支容器 */
     @property(cc.Layout)
@@ -60,6 +62,7 @@ export default class CallView extends cc.Component {
     _canClick = false;
     _lastTxt = "";
     _selectObj = null;
+    _currHeadUrl = "";
 
     onLoad() {
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClick.bind(this))
@@ -77,18 +80,23 @@ export default class CallView extends cc.Component {
         if (GameMgr.callCtr.switchBranch) {
             this.autoAnswer();
         }
-        this.checkHead();
+        this._checkHead();
     }
 
     onDestroy() {
-
+        this.sprHeadIcon.spriteFrame = null;
+        this.sprHangup.spriteFrame = null;
+        this._resMgr.removeAsset(UIConfig.UICallPanel.AB, this._currHeadUrl, cc.SpriteFrame);
+        this._resMgr.removeAsset(UIConfig.UICallPanel.AB, "th_hang_up_ico1", cc.SpriteFrame);
     }
 
-    checkHead() {
+    _checkHead() {
         let msgObj = CfgMgr.CfgMessage.msgs[this._currId];
         this.txtName.string = msgObj.name;
-        let atlasUrl = GameMgr.cfg.uiCallPanel.atlasUrl;
-        this.sprHeadIcon.spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, msgObj.head);
+        this._currHeadUrl = "atlas/" + msgObj.head;
+        this._resMgr.loadAsset(UIConfig.UICallPanel.AB, this._currHeadUrl, cc.SpriteFrame, (spriteFrame) => {
+            this.sprHeadIcon.spriteFrame = spriteFrame;
+        })
     }
 
     onClick(event: any) {
@@ -96,7 +104,7 @@ export default class CallView extends cc.Component {
             event.stopPropagation();
         }
         if (!this._canClick) return;
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
 
         // 判断是否结束
         if (this._currId <= 0) {
@@ -142,7 +150,7 @@ export default class CallView extends cc.Component {
 
     onClickSelect(event, data) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
 
         // 关闭选择
         this.btnSelect.forEach(element => {
@@ -152,7 +160,7 @@ export default class CallView extends cc.Component {
         // 跳转回忆分支
         let branchId = 0;
         if (this._selectObj && data < this._selectObj.list.length) {
-            GameMgr.audioMgr.playSound("audios/" + this._selectObj.sound[data]);
+            // GameMgr.audioMgr.playSound("audios/" + this._selectObj.sound[data]);
 
             branchId = this._selectObj.list[data];
             if (branchId > 0) {
@@ -168,14 +176,14 @@ export default class CallView extends cc.Component {
 
     onClickAnswer(event) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        GameMgr.audioMgr.stopSound();
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.stopSound();
         this.autoAnswer();
     }
 
     onClickHangup(event) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
         GameMgr.callCtr.switchBranch = false;
         this.switchBranch(-1);
     }
@@ -185,8 +193,9 @@ export default class CallView extends cc.Component {
         this.txtOther.string = "";
         this.txtSelf.string = "";
         this.btnHangup.interactable = true;
-        let atlasUrl = GameMgr.cfg.uiCallPanel.atlasUrl;
-        this.sprHangup.spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, "th_hang_up_ico1");
+        this._resMgr.loadAsset(UIConfig.UICallPanel.AB, "th_hang_up_ico1", cc.SpriteFrame, (spriteFrame) => {
+            this.sprHangup.spriteFrame = spriteFrame;
+        })
     }
 
     autoAnswer() {
@@ -203,7 +212,7 @@ export default class CallView extends cc.Component {
     }
 
     switchBranch(branchId: number) {
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiCallPanel);
-        GameMgr.storyCtr.doStory({ "phone": true, "branch": branchId });
+        this._uiMgr.closeUI(UIConfig.UICallPanel);
+        GameMgr.storyCtr.doCallStory(branchId);
     }
 }

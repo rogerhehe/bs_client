@@ -1,4 +1,4 @@
-import BaseController from "../../../Core/BaseController";
+import BaseController from "../../../Core/BaseController"
 import UIConfig from "../../../UIConfig"
 
 /**

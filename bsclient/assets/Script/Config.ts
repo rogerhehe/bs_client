@@ -25,6 +25,7 @@ export default class Config {
 	public static CURR_STAGE: number = 1;
 	/** 当前操作ID */
 	public static CURR_OPER_ID: number = 100079;
+	// 100186
 
 	//==================音效資源路径配置====================//
 	/** 音乐大小本地存储key */

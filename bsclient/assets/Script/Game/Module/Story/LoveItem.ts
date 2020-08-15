@@ -1,5 +1,7 @@
-import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../Config/CfgMgr";
+import BaseView from "../../../Core/BaseView"
+import GameMgr from "../../../GameMgr"
+import CfgMgr from "../../Config/CfgMgr"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name LoveItem.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../Config/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class LoveItem extends cc.Component {
+export default class LoveItem extends BaseView {
 
     /** 提示图标 */
     @property(cc.Sprite)
@@ -34,7 +36,6 @@ export default class LoveItem extends cc.Component {
 
     showLove(loveId: number) {
         let loveObj = CfgMgr.CfgLove.loves[loveId];
-        let atlasUrl = GameMgr.cfg.resUiCommon;
 
         // 加好感度
         if (loveObj.role == "gu") {
@@ -49,12 +50,13 @@ export default class LoveItem extends cc.Component {
 
         // 显示桃心
         this.txtContent.string = loveObj.txt;
-        this.sprIcon.spriteFrame = GameMgr.resCache.getSpriteFrame(atlasUrl, loveObj.icon);
+        this.sprIcon.spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIStoryPanel.AB, loveObj.icon);
 
         cc.tween(this.node)
             .to(2.5, { position: cc.v3(this.node.x, this.node.y + 700), opacity: 0 }, { easing: 'sineOut' })
             .call(() => {
                 this.node.destroy();
+                this._resMgr.removeAsset(UIConfig.UIStoryPanel.AB, "prefab/LoveItem", cc.Prefab);
             })
             .start()
 

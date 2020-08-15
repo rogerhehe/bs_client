@@ -1,4 +1,5 @@
-import BaseController from "../../../Core/BaseController";
+import BaseController from "../../../Core/BaseController"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name CallCtr.ts
@@ -21,15 +22,24 @@ export default class CallCtr extends BaseController {
         return CallCtr._instance;
     }
 
-    /** 进入对话开始对话的起始ID */
-    public startId: number = 0;
-
-    /** 是否电话切入分支 */
-    public switchBranch: boolean = false;
-
     public init() {
-        this.startId = 0;
-        this.switchBranch = false;
+        
+    }
+
+     /** 是否电话切入分支 */
+     public switchBranch: boolean = false;
+     
+    private _startId: number = 0;
+    /** 进入对话开始对话的起始ID */
+    get startId() { return this._startId; }
+
+    /**
+     * 打开人物介绍界面
+     * @param _startId
+     */
+    public openCall(startId: number) {
+        this._startId = startId;
+        this._uiMgr.openUI(UIConfig.UICallPanel);
     }
 
     

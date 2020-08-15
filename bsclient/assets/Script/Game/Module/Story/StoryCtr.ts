@@ -1,9 +1,11 @@
 import BaseController from "../../../Core/BaseController";
 import GameMgr from "../../../GameMgr"
-import StoryView from "./StoryView"
 import UIConfig from "../../../UIConfig"
 import Config from "../../../Config"
 import CfgMgr from "../../Config/CfgMgr"
+import StoryView from "./StoryView"
+import LoveItem from "./LoveItem"
+
 
 /**
  * @name StoryCtr.ts
@@ -98,21 +100,26 @@ export default class StoryCtr extends BaseController {
         }
     }
 
-    public doStory(data: any) {
-        console.log("story event = ", data);
-        this.canClick = true;
-        // GameMgr.audioMgr.playMusic("audios/" + this._currBgm);
-        if (data.phone && data.branch) {
-            // 电话
-            GameMgr.maskCtr.openMask(true);
-            if (data.branch > 0) {
-                this.nextOperId = Number(data.branch);
-            }
+    public doNext() {
+        // 是否自动执行下一次操作
+        if (this.isAuto) {
+            this.canClick = true;
+            cc.tween(this._view.node)
+                .delay(this.speed)
+                .call(() => {
+                    if (this.checkEnd()) return;
+                    let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.currOperId];
+                    if (currOperObj && currOperObj.doing != 4) {
+                        this.doNext();
+                    }
+                })
+                .start()
         } else {
-            GameMgr.popupCtr.openPopupMask("故事事件错误=" + data);
-            return;
+            cc.tween(this._view.node)
+                .delay(0.5)
+                .call(() => { this.canClick = true; })
+                .start()
         }
-        this._view.doingNext(null);
     }
 
     /**
@@ -120,11 +127,10 @@ export default class StoryCtr extends BaseController {
      * @param startOperId 叙事开始ID
      */
     public doStartStory(startOperId: number) {
-        this.canClick = true;
+        // GameMgr.audioMgr.playMusic("audios/" + this._currBgm);
         if (this.currOperId != startOperId) {
             this.nextOperId = startOperId;
         }
-
         let tempChapterAB = GameMgr.playerCtr.playerModel.getCurrChapterAB();
         // 开始章节
         if (this.currChapterAB == "") {
@@ -152,11 +158,10 @@ export default class StoryCtr extends BaseController {
      * @param skin 
      */
     public endClothStory(branchId: number, skin: string) {
-        this.canClick = true;
-        // 存档
         if (branchId > 0) {
             this.nextOperId = branchId;
             GameMgr.playerCtr.playerModel.currOperId = this.nextOperId;
+            // 存档
             GameMgr.playerCtr.saveChapterCurr();
         }
         GameMgr.maskCtr.openMask(true);
@@ -168,9 +173,20 @@ export default class StoryCtr extends BaseController {
      * @param branchId 
      */
     public endSelectStory(branchId: number) {
-        console.log("endSelectStory nextOperId = ", branchId);
         if (branchId > 0) {
             // GameMgr.mainCtr.viewComp.node.active = true;
+            this.nextOperId = branchId;
+        }
+        this.doingNextOperate();
+    }
+
+    /**
+     * 电话分支
+     * @param branchId 
+     */
+    public doCallStory(branchId: number) {
+        if (branchId > 0) {
+            GameMgr.maskCtr.openMask(true);
             this.nextOperId = branchId;
         }
         this.doingNextOperate();
@@ -194,7 +210,7 @@ export default class StoryCtr extends BaseController {
         }
     }
 
-    _doingHandler() {
+    private _doingHandler() {
         // 校对章节操作
         let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.nextOperId];
         if (currOperObj.doing < -1 || currOperObj.doing > 13) {
@@ -211,7 +227,7 @@ export default class StoryCtr extends BaseController {
         }
 
         // 校对音乐音效
-        this.checkAudio(currOperObj, event)
+        this._checkAudio(currOperObj, event)
 
         // 同步当前操作
         if (this.currOperId != -1) {
@@ -326,11 +342,13 @@ export default class StoryCtr extends BaseController {
      * @param currOperObj 
      */
     _loveHandler(currOperObj) {
-        // let item: cc.Node = cc.instantiate(GameMgr.resCache.getPrefab(GameMgr.cfg.uiLoveItem.prefabUrl));
-        // item.parent = this.node;
-        // item.zIndex = cc.macro.MAX_ZINDEX;
-        // let loveItem: LoveItem = item.getComponent("LoveItem");
-        // loveItem.showLove(currOperObj.item);
+        this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "prefab/LoveItem", cc.Prefab, (prefab) => {
+            let item: cc.Node = cc.instantiate(prefab);
+            item.parent = this._view.node;
+            item.zIndex = cc.macro.MAX_ZINDEX;
+            let loveItem: LoveItem = item.getComponent("LoveItem");
+            loveItem.showLove(currOperObj.item);
+        })
     }
 
     /**
@@ -341,11 +359,13 @@ export default class StoryCtr extends BaseController {
         this._uiMgr.openUI(UIConfig.UIClothPanel);
     }
 
+    /**
+     * 9.电话微信
+     * @param currOperObj 
+     */
     _callHandler(currOperObj) {
-        // 9.电话微信
         GameMgr.maskCtr.openMask(false);
-        GameMgr.callCtr.startId = currOperObj.item;
-        this._uiMgr.openUI(UIConfig.UICallPanel);
+        GameMgr.callCtr.openCall(currOperObj.item);
     }
 
     /**
@@ -389,30 +409,6 @@ export default class StoryCtr extends BaseController {
         GameMgr.soliloquyCtr.openSoliloquy(currOperObj.item);
     }
 
-
-
-    public doNext() {
-        // 是否自动执行下一次操作
-        if (this.isAuto) {
-            this.canClick = true;
-            cc.tween(this._view.node)
-                .delay(this.speed)
-                .call(() => {
-                    if (this.checkEnd()) return;
-                    let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.currOperId];
-                    if (currOperObj && currOperObj.doing != 4) {
-                        this.doNext();
-                    }
-                })
-                .start()
-        } else {
-            cc.tween(this._view.node)
-                .delay(0.5)
-                .call(() => { this.canClick = true; })
-                .start()
-        }
-    }
-
     checkEnd() {
         if (this.nextOperId < 0) {
             // 判断是否为-1结束，设置下一章节数据，第三章结束需要特殊处理，进行男主分支固定选择
@@ -432,7 +428,12 @@ export default class StoryCtr extends BaseController {
         return false;
     }
 
-    checkAudio(operObj, event) {
+    /**
+     * 检查音乐音效
+     * @param operObj 
+     * @param event 
+     */
+    private _checkAudio(operObj, event) {
         // 背景音乐
         // if (operObj.music != "" && operObj.music != this._currBgm) {
         //     this._currBgm = operObj.music;
@@ -456,23 +457,20 @@ export default class StoryCtr extends BaseController {
         let nextOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.nextOperId];
         let currSceneObj = CfgMgr.CfgScene.scenes[this.currSceneId];
         let nextSceneObj = CfgMgr.CfgScene.scenes[nextOperObj.scene];
-
         // 场景无变化
         if (this.currSceneId == nextOperObj.scene) {
             return false;
         }
-
         // 场景位移
         if (currSceneObj && currSceneObj.bg == nextSceneObj.bg) {
             return false;
         }
-
         return true;
     }
 
     /**
      * 执行特殊效果
-     * @param effect 效果配置
+     * @param effectObj 效果配置
      */
     private _doCheckEffect(effectObj) {
         effectObj.forEach(element => {

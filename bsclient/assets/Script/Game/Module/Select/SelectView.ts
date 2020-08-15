@@ -157,17 +157,14 @@ export default class SelectView extends BaseView {
             // 是否付费
             let branchId = Number(this._selectObj.list[index].split("#")[0]);
             
-            let atlasUrl = "atlas/story_select_btn1";
+            let bgName = "story_select_btn1";
             let txtPay = ""
             if (this._selectObj.pay[index] > 0 && GameMgr.playerCtr.playerModel.selectList.indexOf(branchId) < 0) {
-                atlasUrl = "atlas/story_select_btn1_pay";
+                bgName = "story_select_btn1_pay";
                 txtPay = this._selectObj.pay[index].toString();
             }
             this.txtPay[index].string = txtPay;
-            this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, atlasUrl, cc.SpriteFrame, (spriteFrame) => {
-                this.sprSelect[index].spriteFrame = <cc.SpriteFrame>spriteFrame;
-            })
-            
+            this.sprSelect[index].spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIStoryPanel.AB, bgName);
             this.btnSelect[index].node.active = true;
         }
     }

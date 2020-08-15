@@ -20,7 +20,7 @@ export default class ResourceCache {
         return ResourceCache._instance;
     }
 
-    // /** 位图资源容器 */
+    /** 位图资源容器 */
     private _spriteFrameMap: { [key: string]: Array<cc.SpriteFrame>; };
 
     /** 预制资源 */
@@ -35,6 +35,9 @@ export default class ResourceCache {
      * @param res 资源数组
      */
     public addSpriteFrame(key: string, res: Array<cc.SpriteFrame>) {
+        // res.forEach(element => {
+        //     element.addRef();
+        // });
         this._spriteFrameMap[key] = res;
     }
 
@@ -43,6 +46,9 @@ export default class ResourceCache {
      * @param key 资源名
      */
     public removeSpriteFrame(key: string) {
+        // this._spriteFrameMap[key].forEach(element => {
+        //     element.decRef();
+        // });
         this._spriteFrameMap[key] = null;
     }
 
@@ -161,7 +167,6 @@ export default class ResourceCache {
         let bundle = cc.assetManager.getBundle(bundleName);
         if (bundle) {
             bundle.load(assetPath, assetType, (err, asset: cc.Asset) => {
-                // asset.addRef();
                 if (callbackFun) {
                     callbackFun(asset);
                 }
@@ -195,7 +200,7 @@ export default class ResourceCache {
         if (bundle) {
             let asset = bundle.get(assetPath, assetType);
             if (asset) {
-                // asset.decRef();
+                asset.decRef();
                 cc.assetManager.releaseAsset(asset);
                 console.log("from [" + bundleName + "AB] remove asset [" + assetPath + "] succ");
             }

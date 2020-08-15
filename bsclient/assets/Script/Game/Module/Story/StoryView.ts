@@ -56,6 +56,10 @@ export default class StoryView extends BaseView {
     _talkContent = "";
     _currRoleObj = null;
 
+    _storyAtlas = ["nbg_bo", "nbg_cheng", "nbg_gu", "nbg_nv", "nbg_nan",
+            "feel_big_ico", "feel_mid_ico", "feel_small_ico", "feel_psmall_ico",
+            "select_btn1", "select_btn1_pay"]
+
     onLoad() {
         GameMgr.storyCtr.view = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.doingNext.bind(this));
@@ -65,13 +69,15 @@ export default class StoryView extends BaseView {
                 this._resMgr.addSkeletonData("malisu", asset);
             });
         });
-        // 角色名背景  story_atlas
+        // 预加载贴图
         let atlas: Array<cc.SpriteFrame> = []
-        ["bo", "cheng", "gu", "nv", "nan"].forEach(element => {
-            this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/story_nbg_" + element, cc.SpriteFrame, (spriteFrame) => {
+        this._storyAtlas.forEach(element => {
+            this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, "atlas/story_" + element, cc.SpriteFrame, (spriteFrame) => {
+                spriteFrame.addRef();
                 atlas.push(<cc.SpriteFrame>spriteFrame);
             })
         });
+        this._resMgr.addSpriteFrame(UIConfig.UIStoryPanel.AB, atlas);
     }
 
     start() {
@@ -91,7 +97,12 @@ export default class StoryView extends BaseView {
 
     onDestroy() {
         this.unscheduleAllCallbacks();
+        this._resMgr.removeSpriteFrame(UIConfig.UIStoryPanel.AB);
         this._resMgr.removeSkeletonData("malisu");
+        this._storyAtlas.forEach(element => {
+            this._resMgr.removeAsset(UIConfig.UIStoryPanel.AB, "atlas/story_" + element, cc.SpriteFrame);
+        });
+
         this._talkContent = "";
         if (this._currRoleObj && this._currRoleObj.dir == "M") {
             this.sprCallRole.spriteFrame = null;
@@ -136,7 +147,7 @@ export default class StoryView extends BaseView {
         let nextRoleObj = CfgMgr.CfgRole.roles[roleId];
         this.txtName.string = nextRoleObj.name;
         // 角色名背景
-        this.sprNameBg.spriteFrame = this._spriteFrameMap[nextRoleObj.nbg];
+        this.sprNameBg.spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIStoryPanel.AB, nextRoleObj.nbg);
         // 对话动画
         this._tweenDialogue();
         // 回忆角色动画
@@ -173,7 +184,7 @@ export default class StoryView extends BaseView {
         // 角色名
         this.txtName.string = nextRoleObj.name;
         // 角色名背景
-        this.sprNameBg.spriteFrame = this._spriteFrameMap[nextRoleObj.nbg];
+        this.sprNameBg.spriteFrame = this._resMgr.getSpriteFrame(UIConfig.UIStoryPanel.AB, nextRoleObj.nbg);
         // 对话动画
         this._tweenDialogue();
         // 正常角色动画

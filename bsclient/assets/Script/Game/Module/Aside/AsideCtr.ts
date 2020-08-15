@@ -60,7 +60,7 @@ export default class AsideCtr extends BaseController {
      * 关闭旁白界面
      */
     public closeAside() {
-        if (this._view) {
+        if (this._view != null) {
             this._uiMgr.closeUI(UIConfig.UIAsidePanel);
         }
     }

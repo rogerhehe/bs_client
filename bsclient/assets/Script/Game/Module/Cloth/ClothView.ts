@@ -83,7 +83,9 @@ export default class ReplacementView extends BaseView {
     }
 
     onDestroy() {
-
+        this.sprPrice.spriteFrame = null;
+        this._resMgr.removeAsset(UIConfig.UIClothPanel.AB, "atlas/hz_price_btn", cc.SpriteFrame);
+        this._resMgr.removeAsset(UIConfig.UIClothPanel.AB, "atlas/hz_price_btn_pay", cc.SpriteFrame);
     }
 
     onClickNext(event: any) {
