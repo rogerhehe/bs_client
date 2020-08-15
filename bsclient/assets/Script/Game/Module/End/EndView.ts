@@ -1,4 +1,6 @@
-import GameMgr from "../../../GameMgr";
+import BaseView from "../../../Core/BaseView"
+import GameMgr from "../../../GameMgr"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name EndView.ts
@@ -9,7 +11,7 @@ import GameMgr from "../../../GameMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class EndView extends cc.Component {
+export default class EndView extends BaseView {
 
     /** 背景 */
     @property(cc.Sprite)
@@ -36,23 +38,18 @@ export default class EndView extends cc.Component {
     _animation: cc.Animation = null;
 
     _chatuUrlList: string[] = [];
-    _bgUrl: string = "textures/ui/js_bg";
 
     onLoad() {
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClick.bind(this))
         this._animation = this.getComponent(cc.Animation);
 
-        cc.loader.loadRes(this._bgUrl, cc.SpriteFrame, (err, spriteFrame) => {
-            this.sprBg.spriteFrame = spriteFrame;
-        });
-
         let chatuList = GameMgr.playerCtr.playerModel.endChatuList
         for (let index = 0; index < 3; ++index) {
             let chatu = chatuList[index].split("#")
             this.txtName[index].string = chatu[1];
-            let urlPath: string = "textures/bgsmall/" + chatu[0];
-            this._chatuUrlList[index] = urlPath;
-            cc.loader.loadRes(urlPath, cc.SpriteFrame, (err, spriteFrame) => {
+            let chatuUrl: string = "texture/bgsmall/" + chatu[0];
+            this._chatuUrlList[index] = chatuUrl;
+            this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, chatuUrl, cc.SpriteFrame, (spriteFrame) => {
                 this.sprChatu[index].spriteFrame = spriteFrame;
             });
         }
@@ -77,11 +74,9 @@ export default class EndView extends cc.Component {
 
     onDestroy() {
         this.unscheduleAllCallbacks();
-        this.sprBg.spriteFrame = null;
-        GameMgr.releaseImage(this._bgUrl);
         for (let index = 0; index < 3; ++index) {
             this.sprChatu[index].spriteFrame = null;
-            GameMgr.releaseImage(this._chatuUrlList[index]);
+            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._chatuUrlList[index], cc.SpriteFrame);
         }
     }
 
@@ -91,8 +86,8 @@ export default class EndView extends cc.Component {
 
     onClickReturn(event) {
         event.stopPropagation();
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiEndPanel);
-        GameMgr.uiMgr.openUI(GameMgr.cfg.uiChapterPanel);
+        this._uiMgr.closeUI(UIConfig.UIEndPanel);
+        this._uiMgr.openUI(UIConfig.UIChapterPanel);
     }
 
     onClickNext(event) {
@@ -102,20 +97,20 @@ export default class EndView extends cc.Component {
         let cfg = GameMgr.playerCtr.readConfigInfo;
         if (cfg.isLimitByUpdate > 0 && cfg.lastUpdateChapterId < GameMgr.playerCtr.playerModel.currChapterID) {
             GameMgr.popupCtr.openPopupTipLock("章节尚未开启");
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiEndPanel);
-            GameMgr.uiMgr.openUI(GameMgr.cfg.uiChapterPanel);
+            this._uiMgr.closeUI(UIConfig.UIEndPanel);
+            this._uiMgr.openUI(UIConfig.UIChapterPanel);
             return;
         }
 
         // 完结
         if (GameMgr.playerCtr.playerModel.currChapter < 0) {
-            GameMgr.uiMgr.openUI(GameMgr.cfg.uiChapterPanel);
+            this._uiMgr.openUI(UIConfig.UIChapterPanel);
             GameMgr.popupCtr.openPopupMask("本季已完结，敬请期待下一季！");
             return;
         }
 
         // 下一章
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiEndPanel);
+        this._uiMgr.closeUI(UIConfig.UIEndPanel);
         GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
     }
 }

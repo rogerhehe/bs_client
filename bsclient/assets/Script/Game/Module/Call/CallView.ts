@@ -87,7 +87,7 @@ export default class CallView extends BaseView {
         this.sprHeadIcon.spriteFrame = null;
         this.sprHangup.spriteFrame = null;
         this._resMgr.removeAsset(UIConfig.UICallPanel.AB, this._currHeadUrl, cc.SpriteFrame);
-        this._resMgr.removeAsset(UIConfig.UICallPanel.AB, "th_hang_up_ico1", cc.SpriteFrame);
+        this._resMgr.removeAsset(UIConfig.UICallPanel.AB, "atlas/th_hang_up_ico1", cc.SpriteFrame);
     }
 
     _checkHead() {

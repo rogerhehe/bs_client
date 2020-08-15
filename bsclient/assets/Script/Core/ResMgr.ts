@@ -135,7 +135,7 @@ export default class ResourceCache {
             callbackFun(bundle);
         } else {
             cc.assetManager.loadBundle(bundleName, (err, bundle) => {
-                console.log("loadAssetBundle => loadBundle =>" + bundleName)
+                console.log("loadAssetBundle => loadBundle => " + bundleName)
                 if (callbackFun) {
                     callbackFun(bundle);
                 }
@@ -152,7 +152,7 @@ export default class ResourceCache {
         if (bundle) {
             bundle.releaseAll();
             cc.assetManager.removeBundle(bundle);
-            console.log("removeAssetBundle => removeBundle =>" + bundleName)
+            console.log("removeAssetBundle => removeBundle => " + bundleName)
         }
     }
 
@@ -194,7 +194,7 @@ export default class ResourceCache {
      * @param assetPath 资源路径
      * @param assetType 资源类型
      */
-    public removeAsset(bundleName: string, assetPath: string, assetType: typeof cc.Asset) {
+    public removeAsset(bundleName: string, assetPath: string, assetType: typeof cc.Asset, tryAB?: boolean) {
         let bundle = cc.assetManager.getBundle(bundleName);
         // 释放AssetBundle内指定路径的资源
         if (bundle) {
@@ -203,6 +203,9 @@ export default class ResourceCache {
                 asset.decRef();
                 cc.assetManager.releaseAsset(asset);
                 console.log("from [" + bundleName + "AB] remove asset [" + assetPath + "] succ");
+            }
+            if (tryAB) {
+                this.removeAssetBundle(bundleName);
             }
         }
     }

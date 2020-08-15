@@ -107,7 +107,7 @@ export default class StoryCtr extends BaseController {
             cc.tween(this._view.node)
                 .delay(this.speed)
                 .call(() => {
-                    if (this.checkEnd()) return;
+                    if (this._checkEnd()) return;
                     let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.currOperId];
                     if (currOperObj && currOperObj.doing != 4) {
                         this.doNext();
@@ -197,6 +197,8 @@ export default class StoryCtr extends BaseController {
      */
     public doingNextOperate() {
         console.log("doingNextOperate nextOperId = ", this.nextOperId);
+        // 判断是否结束
+        if (this._checkEnd()) return;
         // 锁定操作
         this.canClick = false;
         // 是否切换场景
@@ -412,7 +414,10 @@ export default class StoryCtr extends BaseController {
         GameMgr.soliloquyCtr.openSoliloquy(currOperObj.item);
     }
 
-    checkEnd() {
+    /**
+     * 检查是否结束
+     */
+    private _checkEnd() {
         if (this.nextOperId < 0) {
             // 判断是否为-1结束，设置下一章节数据，第三章结束需要特殊处理，进行男主分支固定选择
             let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.currOperId];

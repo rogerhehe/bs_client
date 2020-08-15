@@ -105,7 +105,7 @@ export default class StoryView extends BaseView {
         });
         if (this._prev2P) {
             this.sprCallRole.spriteFrame = null;
-            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._prev2P.sp), cc.SpriteFrame);
+            this._resMgr.removeAsset(this._prev2P.sp, this._prev2P.sp, cc.SpriteFrame, true);
         }
         this._prev2P = null;
         GameMgr.storyCtr.view = null;
@@ -123,7 +123,7 @@ export default class StoryView extends BaseView {
 
         if (this._prev2P) {
             this.sprCallRole.spriteFrame = null;
-            this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._prev2P.sp), cc.SpriteFrame);
+            this._resMgr.removeAsset(this._prev2P.sp, this._prev2P.sp, cc.SpriteFrame, true);
         }
         this._currRoleObj = null;
         this._prev2P = null;
@@ -153,18 +153,18 @@ export default class StoryView extends BaseView {
         // 角色是否为2P
         if (nextRoleObj.sp != "malisu") {
             if (this._prev2P == null) {
-                this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(nextRoleObj.sp), cc.SpriteFrame, (spriteFrame) => {
+                this._resMgr.loadAsset(nextRoleObj.sp, nextRoleObj.sp, cc.SpriteFrame, (spriteFrame) => {
                     this.sprCallRole.spriteFrame = spriteFrame;
-                })
+                }, true)
             } else {
                 if (this._prev2P.sp != nextRoleObj.sp) {
                     // 卸载上一个角色
                     this.sprCallRole.spriteFrame = null;
-                    this._resMgr.removeAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(this._prev2P.sp), cc.SpriteFrame);
+                    this._resMgr.removeAsset(this._prev2P.sp, this._prev2P.sp, cc.SpriteFrame, true);
                     // 加载下一个角色
-                    this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._getRolePath(nextRoleObj.sp), cc.SpriteFrame, (spriteFrame) => {
+                    this._resMgr.loadAsset(nextRoleObj.sp, nextRoleObj.sp, cc.SpriteFrame, (spriteFrame) => {
                         this.sprCallRole.spriteFrame = spriteFrame;
-                    })
+                    }, true)
                 }
             }
             this._prev2P = nextRoleObj;
@@ -297,10 +297,6 @@ export default class StoryView extends BaseView {
 
         // 是否禁用操作
         if (!GameMgr.storyCtr.canClick) return;
-
-        // 判断是否结束
-        if (GameMgr.storyCtr.checkEnd()) return;
-
         GameMgr.storyCtr.doingNextOperate();
     }
 
@@ -387,13 +383,4 @@ export default class StoryView extends BaseView {
                 .start()
         }
     }
-
-    /**
-     * 获取角色资源路径
-     * @param name 
-     */
-    private _getRolePath(name: string) {
-        return "texture/role/" + name;
-    }
-
 }
