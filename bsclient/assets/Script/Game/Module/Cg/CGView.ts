@@ -87,7 +87,8 @@ export default class CGView extends BaseView {
     }
 
     _endCG() {
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+        
         cc.tween(this.spCG.node).stop();
         cc.tween(this.sprCG.node).stop();
         cc.tween(this.txtTouch.node).stop();

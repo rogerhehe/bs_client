@@ -95,7 +95,7 @@ export default class ReplacementView extends BaseView {
 
     onClickBuy(event: any) {
         event.stopPropagation();
-        this._audioMgr.playDefaultSound();
+        this._audioMgr.defaultSound();
 
         let clothId = this._currModel + 1;
         let clothObj = CfgMgr.CfgCloth.cloths[clothId]
@@ -132,14 +132,14 @@ export default class ReplacementView extends BaseView {
 
     onClickDescTip(event: any) {
         event.stopPropagation();
-        this._audioMgr.playDefaultSound();
+        this._audioMgr.defaultSound();
 
         this._clothDescItem.showDesc(this._currModel + 1);
     }
 
     onClickLeft(event: any) {
         event.stopPropagation();
-        this._audioMgr.playDefaultSound();
+        this._audioMgr.defaultSound();
 
         this._clothDescItem.hideDesc();
         this._animation.playAdditive("mirror_role_left");
@@ -149,7 +149,7 @@ export default class ReplacementView extends BaseView {
 
     onClickRight(event: any) {
         event.stopPropagation();
-        this._audioMgr.playDefaultSound();
+        this._audioMgr.defaultSound();
 
         this._clothDescItem.hideDesc();
         this._animation.playAdditive("mirror_role_right");

@@ -20,11 +20,11 @@ export default class Config {
 	public static PORT: string = "9001";
 
 	/** 当前章节 */
-	public static CURR_CHAPTER: number = 3;
+	public static CURR_CHAPTER: number = 1;
 	/** 当前章节阶段 */
 	public static CURR_STAGE: number = 1;
 	/** 当前操作ID */
-	public static CURR_OPER_ID: number = 300622; // 300622; //100519; // 100186
+	public static CURR_OPER_ID: number = 0; // 300622; //100519; // 100186
 
 	//==================音效資源路径配置====================//
 	/** 音乐大小本地存储key */

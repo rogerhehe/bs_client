@@ -39,7 +39,7 @@ export default class PlaceInfoView extends BaseView {
     onClickNext(event: any) {
         event.stopPropagation();
         if (this._canNext) {
-            this._audioMgr.playDefaultSound();
+            this._audioMgr.defaultSound();
             this._switchBranch();
         }
     }

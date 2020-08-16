@@ -1,7 +1,7 @@
 import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
 import GameMgr from "../../../GameMgr"
 import CfgMgr from "../../Config/CfgMgr"
-import UIConfig from "../../../UIConfig"
 
 /**
  * @name ChapterItem.ts
@@ -74,7 +74,7 @@ export default class ChapterItem extends BaseView {
         this._chapterView.syncDisableClick();
 
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
 
         let callback = () => {
             // 平台控制
@@ -118,7 +118,7 @@ export default class ChapterItem extends BaseView {
             this._chapterView.syncDisableClick();
 
             event.stopPropagation();
-            // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+            this._audioMgr.defaultSound();
         }
 
         let popupParam: IPopupParam = {
@@ -144,7 +144,7 @@ export default class ChapterItem extends BaseView {
         this._chapterView.syncDisableClick();
 
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
 
         GameMgr.roleBranchCtr.fromChapterView = true;
         this._uiMgr.openUI(UIConfig.UIRoleBranchPanel);
@@ -152,7 +152,7 @@ export default class ChapterItem extends BaseView {
 
     onClickChangeRole(event, data) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
 
         if (this._currStageId == data || this._chapterId < 4 || data > 3 || data < 1) {
             return

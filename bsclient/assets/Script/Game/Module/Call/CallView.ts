@@ -104,7 +104,7 @@ export default class CallView extends BaseView {
             event.stopPropagation();
         }
         if (!this._canClick) return;
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
 
         // 判断是否结束
         if (this._currId <= 0) {
@@ -150,7 +150,7 @@ export default class CallView extends BaseView {
 
     onClickSelect(event, data) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
 
         // 关闭选择
         this.btnSelect.forEach(element => {
@@ -160,8 +160,6 @@ export default class CallView extends BaseView {
         // 跳转回忆分支
         let branchId = 0;
         if (this._selectObj && data < this._selectObj.list.length) {
-            // GameMgr.audioMgr.playSound("audios/" + this._selectObj.sound[data]);
-
             branchId = this._selectObj.list[data];
             if (branchId > 0) {
                 GameMgr.callCtr.switchBranch = true;
@@ -176,14 +174,16 @@ export default class CallView extends BaseView {
 
     onClickAnswer(event) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        // GameMgr.audioMgr.stopSound();
+        this._audioMgr.defaultSound();
+        this._audioMgr.stopSound();
+        
         this.autoAnswer();
     }
 
     onClickHangup(event) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         GameMgr.callCtr.switchBranch = false;
         this.switchBranch(-1);
     }

@@ -132,7 +132,8 @@ export default class RoleBranchView extends BaseView {
 
     onClickReturn(event) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         this._uiMgr.closeUI(UIConfig.UIRoleBranchPanel);
     }
 
@@ -193,7 +194,8 @@ export default class RoleBranchView extends BaseView {
     onClickCheng(event, data) {
         this._interactableAll();
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         if (this._end) { return; }
 
         let callSelectRole = () => {
@@ -224,7 +226,8 @@ export default class RoleBranchView extends BaseView {
     onClickGu(event, data) {
         this._interactableAll();
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         if (this._end) { return; }
 
         let callSelectRole = () => {
@@ -255,7 +258,8 @@ export default class RoleBranchView extends BaseView {
     onClickBo(event, data) {
         this._interactableAll();
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+        
         if (this._end) { return; }
 
         let callSelectRole = () => {

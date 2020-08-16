@@ -1,5 +1,7 @@
-import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
+import CfgMgr from "../../Config/CfgMgr"
+import GameMgr from "../../../GameMgr"
 
 /**
  * @name PlaybackView.ts
@@ -10,7 +12,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class PlaybackView extends cc.Component {
+export default class PlaybackView extends BaseView {
 
     /** 背景 */
     @property(cc.Sprite)
@@ -28,8 +30,6 @@ export default class PlaybackView extends cc.Component {
     @property(cc.Button)
     btnReturn: cc.Button = null;
 
-    _bgUrl: string = "textures/ui/hf_bg";
-
     onLoad() {
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClickNext.bind(this))
     }
@@ -37,19 +37,15 @@ export default class PlaybackView extends cc.Component {
     start() {
         this.txtTalk.string = "";
         this.btnReturn.node.active = false;
-        cc.loader.loadRes(this._bgUrl, cc.SpriteFrame, (err, spriteFrame) => {
-            this.sprBg.spriteFrame = spriteFrame;
-            this.scheduleOnce(() => {
-                this.showContent();
-                this.btnReturn.node.active = true;
-            }, 0.5)
-        });
+        this.scheduleOnce(() => {
+            this.showContent();
+            this.btnReturn.node.active = true;
+        }, 0.5)
     }
 
     onDestroy() {
         this.unscheduleAllCallbacks();
         this.sprBg.spriteFrame = null;
-        GameMgr.releaseImage(this._bgUrl);
     }
 
     onClickNext(event: any) {
@@ -58,9 +54,10 @@ export default class PlaybackView extends cc.Component {
 
     onClickReturn(event, data) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+        
         // 恢复
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPlaybackPanel);
+        this._uiMgr.closeUI(UIConfig.UIPlaybackPanel);
         GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
     }
 

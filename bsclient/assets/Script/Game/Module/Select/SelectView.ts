@@ -58,6 +58,7 @@ export default class SelectView extends BaseView {
 
     onClickSelect(event, custom_data) {
         event.stopPropagation();
+        this._audioMgr.defaultSound();
 
         let data = Number(custom_data)
         if (data > this._selectObj.count) {
@@ -71,9 +72,6 @@ export default class SelectView extends BaseView {
             GameMgr.popupCtr.openPopupMask("配置错误, count=" + this._selectObj.count + "len=" + this._selectObj.list.length);
             return;
         }
-
-        // 选择声音
-        // GameMgr.audioMgr.playSound("audios/" + this._selectObj.sound[data]);
 
         // 分支选择
         let branch = this._selectObj.list[data];

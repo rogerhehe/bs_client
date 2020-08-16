@@ -52,23 +52,24 @@ export default class PopupView1 extends BaseView {
     }
 
     onClickBtnClose() {
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
     }
 
     onClickBtnSure() {
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
+        this._audioMgr.defaultSound();
 
+        this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
         if (this._popupParam) {
             this._popupParam.callbackSure();
         }
     }
 
     onClickBtnCancle() {
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
+        this._audioMgr.defaultSound();
 
+        this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
         if (this._popupParam) {
             this._popupParam.callbackCancle();
         }

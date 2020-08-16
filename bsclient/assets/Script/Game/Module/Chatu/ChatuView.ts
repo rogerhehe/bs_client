@@ -48,7 +48,8 @@ export default class ChatuItem extends BaseView {
     onClickNext(event: any) {
         event.stopPropagation();
         if (this._canNext) {
-            // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+            this._audioMgr.defaultSound();
+            
             if (this.sprBg.node.active) {
                 cc.tween(this.sprBg.node)
                     .to(0.5, { opacity: 0 })

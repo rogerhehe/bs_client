@@ -52,7 +52,8 @@ export default class MainView extends cc.Component {
 
     onClickAuto(event, data) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         if (!this._canClick) { return; }
         this._disableClick();
 
@@ -73,7 +74,8 @@ export default class MainView extends cc.Component {
 
     onClickPlayback(event, data) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         if (!this._canClick) { return; }
         this._disableClick();
 
@@ -85,7 +87,8 @@ export default class MainView extends cc.Component {
 
     onClickChapter(event, data) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+
         if (!this._canClick) { return; }
         this._disableClick();
 
@@ -98,7 +101,8 @@ export default class MainView extends cc.Component {
 
     onClickCloth(event, data) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+        
         if (!this._canClick) { return; }
         this._disableClick();
 

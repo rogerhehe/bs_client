@@ -459,7 +459,7 @@ export default class StoryCtr extends BaseController {
         // if (operObj.sound != "") {
         //     GameMgr.audioMgr.playSound("audios/" + operObj.sound)
         // } else if (event) {
-        //     GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        //     this._audioMgr.defaultSound();
         // }
     }
 

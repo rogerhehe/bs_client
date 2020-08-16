@@ -55,7 +55,8 @@ export default class RoleInfoView extends BaseView {
     onClickNext(event: any) {
         event.stopPropagation();
         if (this._canNext) {
-            // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+            this._audioMgr.defaultSound();
+            
             GameMgr.storyCtr.doNext();
             this._uiMgr.closeUI(UIConfig.UIRoleInfoPanel);
         }

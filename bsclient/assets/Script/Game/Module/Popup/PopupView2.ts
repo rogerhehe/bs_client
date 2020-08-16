@@ -33,7 +33,8 @@ export default class PopupView2 extends BaseView {
 
     onClickBtnClose(event) {
         event.stopPropagation();
-        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._audioMgr.defaultSound();
+        
         this._uiMgr.closeUI(UIConfig.UIPopupPanel2);
     }
 }

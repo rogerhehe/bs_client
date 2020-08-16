@@ -82,7 +82,7 @@ export default class AudioMgr {
     public playSound(bundleName: string, assetPath: string) {
         assetPath = "audio/" + assetPath;
         
-        if (cc.audioEngine.getState(this._currSoundID) > 0) {
+        if (this._currSoundID >= 0 && cc.audioEngine.getState(this._currSoundID) > 0) {
             return
         }
 
@@ -105,17 +105,16 @@ export default class AudioMgr {
      * @param bundleName AssetBundle名称
      * @param assetPath 音乐资源地址
      */
-    public playDefaultSound(bundleName?: string, assetPath?: string) {
-        // let tempBundleName: string = "Common";
-        // let tempAssetPath: string = "audio/effClick";
-        // if (bundleName) {
-        //     tempBundleName = bundleName;
-        // }
-        // if (assetPath) {
-        //     assetPath = "audio/" + assetPath;
-        //     tempAssetPath = assetPath;
-        // }
-        // this.playSound(tempBundleName, tempAssetPath);
+    public defaultSound(bundleName?: string, assetPath?: string) {
+        let tempBundleName: string = "Common";
+        let tempAssetPath: string = "effClick";
+        if (bundleName) {
+            tempBundleName = bundleName;
+        }
+        if (assetPath) {
+            tempAssetPath = assetPath;
+        }
+        this.playSound(tempBundleName, tempAssetPath);
     }
 
     /**

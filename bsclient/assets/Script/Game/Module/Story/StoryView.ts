@@ -288,6 +288,8 @@ export default class StoryView extends BaseView {
     }
 
     _doingNext(event) {
+        this._audioMgr.defaultSound();
+
         // // 打断自动操作
         // if (this.isAuto && event) {
         //     this.isAuto = false;
@@ -297,6 +299,7 @@ export default class StoryView extends BaseView {
 
         // 是否禁用操作
         if (!GameMgr.storyCtr.canClick) return;
+        // 下一步
         GameMgr.storyCtr.doingNextOperate();
     }
 

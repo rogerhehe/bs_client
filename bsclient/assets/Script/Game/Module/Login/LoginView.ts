@@ -79,16 +79,17 @@ export default class LoginView extends BaseView {
         event.stopPropagation();
 
         if (this._canNext) {
-            this._audioMgr.playDefaultSound();
+            this._audioMgr.defaultSound();
             this._audioMgr.stopMusic();
+
             this._uiMgr.closeUI(UIConfig.UILoginPanel);
 
             // 通关过第一章打开章节选择界面
             if (GameMgr.playerCtr.playerModel.chapterList[1].stage[1].playCount > 0) {
-                // this._uiMgr.openUI(GameMgr.cfg.uiChapterPanel);
+                this._uiMgr.openUI(UIConfig.UIChapterPanel);
                 return;
             }
-
+            
             // 开始旅行
             GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
         }
