@@ -288,7 +288,7 @@ export default class StoryCtr extends BaseController {
      * 2.对话
      * @param currOperObj 
      */
-    _roleTalkHandler(currOperObj) {
+    private _roleTalkHandler(currOperObj) {
         this._view.showDialogue(currOperObj.item, currOperObj.txt);
         GameMgr.playerCtr.playerModel.addTalkPlayerback(this.currOperId);
     }
@@ -297,7 +297,7 @@ export default class StoryCtr extends BaseController {
      * 3.人物介绍
      * @param currOperObj 
      */
-    _roleInfoHandler(currOperObj) {
+    private _roleInfoHandler(currOperObj) {
         GameMgr.roleInfoCtr.openRoleInfo(currOperObj.item);
     }
 
@@ -305,7 +305,7 @@ export default class StoryCtr extends BaseController {
      * 4.分支选择
      * @param currOperObj 
      */
-    _selectHandler(currOperObj) {
+    private _selectHandler(currOperObj) {
         GameMgr.mainCtr.hideMain();
         // 第三章结束需要一个特殊的分支选择
         if (this.currOperId == 300629) {
@@ -321,7 +321,7 @@ export default class StoryCtr extends BaseController {
      * 5.插图
      * @param currOperObj 
      */
-    _chatuHandler(currOperObj) {
+    private _chatuHandler(currOperObj) {
         GameMgr.chatuCtr.openChatu(currOperObj.item)
     }
 
@@ -329,7 +329,7 @@ export default class StoryCtr extends BaseController {
      * 6.CG动画
      * @param currOperObj 
      */
-    _cgHandler(currOperObj) {
+    private _cgHandler(currOperObj) {
         GameMgr.maskCtr.openMask(true);
         GameMgr.cgCtr.openCG(currOperObj.item)
     }
@@ -338,7 +338,7 @@ export default class StoryCtr extends BaseController {
      * 7.好感度
      * @param currOperObj 
      */
-    _loveHandler(currOperObj) {
+    private _loveHandler(currOperObj) {
         this._resMgr.loadAsset(UIConfig.UIStoryPanel.AB, UIConfig.UILoveItem.prefab, cc.Prefab, (prefab) => {
             let item: cc.Node = cc.instantiate(prefab);
             item.parent = this._view.node;
@@ -351,7 +351,7 @@ export default class StoryCtr extends BaseController {
     /**
      * 8.衣服选择
      */
-    _clothHandler() {
+    private _clothHandler() {
         GameMgr.maskCtr.openMask(true);
         this._uiMgr.openUI(UIConfig.UIClothPanel);
     }
@@ -360,7 +360,7 @@ export default class StoryCtr extends BaseController {
      * 9.电话微信
      * @param currOperObj 
      */
-    _callHandler(currOperObj) {
+    private _callHandler(currOperObj) {
         GameMgr.maskCtr.openMask(false);
         GameMgr.callCtr.openCall(currOperObj.item);
     }
@@ -369,7 +369,7 @@ export default class StoryCtr extends BaseController {
      * 10.回忆
      * @param currOperObj 
      */
-    _memoryHandler(currOperObj) {
+    private _memoryHandler(currOperObj) {
         this._view.showMemory(currOperObj.item, currOperObj.txt);
         GameMgr.playerCtr.playerModel.addTalkPlayerback(this.currOperId);
     }
@@ -378,7 +378,7 @@ export default class StoryCtr extends BaseController {
      * 11.彩蛋，好像没派上用场
      * @param currOperObj 
      */
-    _eggHandler(currOperObj) {
+    private _eggHandler(currOperObj) {
         let eggObj = CfgMgr.CfgEgg.eggs[currOperObj.item];
         if (eggObj && GameMgr.playerCtr.playerModel.egg.indexOf(eggObj.egg) >= 0 && eggObj.branch > 0) {
             this.currOperId = eggObj.branch;
@@ -450,7 +450,7 @@ export default class StoryCtr extends BaseController {
             this._currBgm = GameMgr.playerCtr.playerModel.currBgm
             this._audioMgr.playMusic(tempChapterAB, this._currBgm)
 
-        } else if (operObj.sound != "") {
+        } else if (operObj.sound != "" && operObj.sound != "effClick") {
             this._audioMgr.playSound(tempChapterAB, operObj.sound);
         }
     }

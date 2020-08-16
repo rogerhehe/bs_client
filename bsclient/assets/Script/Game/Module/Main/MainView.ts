@@ -29,7 +29,6 @@ export default class MainView extends BaseView {
 
     onLoad() {
         GameMgr.mainCtr.view = this;
-        this.node.on(cc.Node.EventType.TOUCH_END, this.onClickNext.bind(this))
     }
 
     start() {
@@ -41,15 +40,6 @@ export default class MainView extends BaseView {
     onDestroy() {
         this.unscheduleAllCallbacks();
         GameMgr.mainCtr.view = null;
-    }
-
-    onClickNext(event: any) {
-
-    }
-
-    onClickSpeed(event, data) {
-        event.stopPropagation();
-
     }
 
     onClickAuto(event, data) {

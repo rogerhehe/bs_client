@@ -62,7 +62,7 @@ export default class StoryView extends BaseView {
 
     onLoad() {
         GameMgr.storyCtr.view = this;
-        this.node.on(cc.Node.EventType.TOUCH_END, this._doingNext.bind(this));
+        this.node.on(cc.Node.EventType.TOUCH_END, this.onClick.bind(this));
         // 预加载女主
         this._resMgr.loadAssetBundle("malisu", (bundle: cc.AssetManager.Bundle) => {
             bundle.load("malisu", sp.SkeletonData, (err, asset: sp.SkeletonData) => {
@@ -111,6 +111,23 @@ export default class StoryView extends BaseView {
         GameMgr.storyCtr.view = null;
     }
 
+    onClick(event) {
+        // 打断自动操作
+        if (GameMgr.storyCtr.isAuto) {
+            GameMgr.storyCtr.isAuto = false;
+            GameMgr.mainCtr.setAuto(false);
+            return;
+        }
+        // 是否禁用操作
+        if (!GameMgr.storyCtr.canClick) return;
+        this._audioMgr.defaultSound();
+        // 下一步
+        GameMgr.storyCtr.doingNextOperate();
+    }
+
+    /**
+     * 界面重置
+     */
     reset() {
         this.sprAsideTip.node.active = false;
         this.sprNameBg.node.active = false;
@@ -130,6 +147,11 @@ export default class StoryView extends BaseView {
         this._talkContent = "";
     }
 
+    /**
+     * 人物静态对话
+     * @param roleId 
+     * @param content 
+     */
     showMemory(roleId: number, content: string) {
         this.unscheduleAllCallbacks();
         this.txtDialogue.string = "";
@@ -176,6 +198,11 @@ export default class StoryView extends BaseView {
         }, 0.5);
     }
 
+    /**
+     * 人物动画对话
+     * @param roleId 
+     * @param content 
+     */
     showDialogue(roleId: number, content: string) {
         this.unscheduleAllCallbacks();
         this.txtDialogue.string = "";
@@ -269,38 +296,6 @@ export default class StoryView extends BaseView {
         }, 0.5);
     }
 
-    _tweenDialogue() {
-        this.sprDialogueBg.node.scaleY = 0.1
-        cc.tween(this.sprDialogueBg.node)
-            .to(0.1, { scaleY: 1 })
-            .call(() => {
-                this.txtDialogue.string = "";
-                let i = 0;
-                this.schedule(() => {
-                    this.txtDialogue.string += this._talkContent[i];
-                    i++;
-                    if (i >= this._talkContent.length) {
-                        // TODO
-                    }
-                }, 0.01, this._talkContent.length - 1);
-            })
-            .start()
-    }
-
-    _doingNext(event) {
-        // 打断自动操作
-        if (GameMgr.storyCtr.isAuto) {
-            GameMgr.storyCtr.isAuto = false;
-            GameMgr.mainCtr.setAuto(false);
-            return;
-        }
-        // 是否禁用操作
-        if (!GameMgr.storyCtr.canClick) return;
-        this._audioMgr.defaultSound();
-        // 下一步
-        GameMgr.storyCtr.doingNextOperate();
-    }
-
     /**
      * 切换场景
      * @param sceneId 
@@ -373,6 +368,27 @@ export default class StoryView extends BaseView {
                 tw().to(0.02, { position: cc.v2(0, 0) })
             )
             .repeat(5)
+            .start()
+    }
+
+    /**
+     * 文字展示
+     */
+    private _tweenDialogue() {
+        this.sprDialogueBg.node.scaleY = 0.1
+        cc.tween(this.sprDialogueBg.node)
+            .to(0.1, { scaleY: 1 })
+            .call(() => {
+                this.txtDialogue.string = "";
+                let i = 0;
+                this.schedule(() => {
+                    this.txtDialogue.string += this._talkContent[i];
+                    i++;
+                    if (i >= this._talkContent.length) {
+                        // TODO
+                    }
+                }, 0.01, this._talkContent.length - 1);
+            })
             .start()
     }
 

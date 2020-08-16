@@ -443,9 +443,7 @@
     "_fillStart": 0,
     "_fillRange": 0,
     "_isTrimmedMode": true,
-    "_atlas": {
-      "__uuid__": "8af649ae-928f-4256-812b-16daa05aa00b"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {
@@ -870,9 +868,7 @@
     "_fillStart": 0,
     "_fillRange": 0,
     "_isTrimmedMode": true,
-    "_atlas": {
-      "__uuid__": "8af649ae-928f-4256-812b-16daa05aa00b"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {
@@ -1297,9 +1293,7 @@
     "_fillStart": 0,
     "_fillRange": 0,
     "_isTrimmedMode": true,
-    "_atlas": {
-      "__uuid__": "8af649ae-928f-4256-812b-16daa05aa00b"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {
@@ -1724,9 +1718,7 @@
     "_fillStart": 0,
     "_fillRange": 0,
     "_isTrimmedMode": true,
-    "_atlas": {
-      "__uuid__": "8af649ae-928f-4256-812b-16daa05aa00b"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {
@@ -2137,9 +2129,7 @@
     "_fillStart": 0,
     "_fillRange": 0,
     "_isTrimmedMode": true,
-    "_atlas": {
-      "__uuid__": "8af649ae-928f-4256-812b-16daa05aa00b"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {
@@ -2182,9 +2172,7 @@
     "_fillStart": 0,
     "_fillRange": 0,
     "_isTrimmedMode": true,
-    "_atlas": {
-      "__uuid__": "8af649ae-928f-4256-812b-16daa05aa00b"
-    },
+    "_atlas": null,
     "_id": ""
   },
   {

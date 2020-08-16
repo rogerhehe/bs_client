@@ -44,6 +44,7 @@ export default class AudioMgr {
      * @param assetPath 音乐资源地址
      */
     public playMusic(bundleName: string, assetPath: string) {
+        console.log("from [" + bundleName + "AB] load music [" + assetPath + "] succ");
         assetPath = "audio/" + assetPath;
 
         if (this._currMusicPath == assetPath && cc.audioEngine.getState(this._currMusicID) > 0) {
@@ -80,6 +81,9 @@ export default class AudioMgr {
      * @param assetPath 音乐资源地址
      */
     public playSound(bundleName: string, assetPath: string) {
+        if (assetPath != "effClick") {
+            console.log("from [" + bundleName + "AB] load sound [" + assetPath + "] succ");
+        }
         assetPath = "audio/" + assetPath;
         
         if (this._currSoundID >= 0 && cc.audioEngine.getState(this._currSoundID) > 0) {
