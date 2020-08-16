@@ -24,7 +24,7 @@ export default class Config {
 	/** 当前章节阶段 */
 	public static CURR_STAGE: number = 1;
 	/** 当前操作ID */
-	public static CURR_OPER_ID: number = 300622; //100519; // 100186
+	public static CURR_OPER_ID: number = 300622; // 300622; //100519; // 100186
 
 	//==================音效資源路径配置====================//
 	/** 音乐大小本地存储key */

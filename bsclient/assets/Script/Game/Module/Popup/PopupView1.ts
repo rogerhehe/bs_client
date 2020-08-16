@@ -1,4 +1,6 @@
-import GameMgr from "../../../GameMgr";
+import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
+import GameMgr from "../../../GameMgr"
 
 /**
  * @name PopupView1.ts
@@ -9,7 +11,7 @@ import GameMgr from "../../../GameMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class PopupView1 extends cc.Component {
+export default class PopupView1 extends BaseView {
 
     /** 文本内容 */
     @property(cc.Label)
@@ -27,14 +29,13 @@ export default class PopupView1 extends cc.Component {
     private _popupParam: IPopupParam = null;
 
     onLoad() {
-        GameMgr.popupCtr.viewComp = this;
         this.node.on(cc.Node.EventType.TOUCH_START, (event: any) => {
             event.stopPropagation();
         });
     }
 
     start() {
-        this._popupParam = <IPopupParam>this.node["customParam"];
+        this._popupParam = GameMgr.popupCtr.popup1Param;
         if (this._popupParam) {
             this.txtContent.string = this._popupParam.txtContent;
             if (this._popupParam.txtSure) {
@@ -47,17 +48,17 @@ export default class PopupView1 extends cc.Component {
     }
 
     onDestroy() {
-        GameMgr.popupCtr.viewComp = null;
+
     }
 
     onClickBtnClose() {
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPopupPanel1);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
     }
 
     onClickBtnSure() {
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPopupPanel1);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
 
         if (this._popupParam) {
             this._popupParam.callbackSure();
@@ -65,8 +66,8 @@ export default class PopupView1 extends cc.Component {
     }
 
     onClickBtnCancle() {
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPopupPanel1);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._uiMgr.closeUI(UIConfig.UIPopupPanel1);
 
         if (this._popupParam) {
             this._popupParam.callbackCancle();

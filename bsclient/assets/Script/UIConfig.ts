@@ -6,7 +6,7 @@
 
 export default class UIConfig {
 	/** 通用资源 */
-	public static COMMON_ASSET: string = "Common";
+	public static COMMON_AB: string = "Common";
 
 	/** UI层级 */
 	public static BASE_LAYER: number = 5;
@@ -18,15 +18,15 @@ export default class UIConfig {
 
 	//====================CommonAB配置======================//
 	/** 弹窗界面1(确定取消) */
-	public static UIPopupPanel1: IUICfg = { prefab: "prefab/PopupPanel1", AB: "Common", action: true };
+	public static UIPopupPanel1: IUICfg = { prefab: "prefab/PopupPanel1", AB: UIConfig.COMMON_AB, zOrder: cc.macro.MAX_ZINDEX, action: true };
 	/** 弹窗界面2(tips固定) */
-	public static UIPopupPanel2: IUICfg = { prefab: "prefab/PopupPanel2", AB: "Common" };
+	public static UIPopupPanel2: IUICfg = { prefab: "prefab/PopupPanel2", AB: UIConfig.COMMON_AB, zOrder: cc.macro.MAX_ZINDEX };
 	/** 弹窗界面3(tips漂移) */
-	public static UIPopupPanel3: IUICfg = { prefab: "prefab/PopupPanel3", AB: "Common" };
+	public static UIPopupPanel3: IUICfg = { prefab: "prefab/PopupPanel3", AB: UIConfig.COMMON_AB, zOrder: cc.macro.MAX_ZINDEX };
 	/** 弹窗界面4(倒计时) */
-	public static UIPopupPanel4: IUICfg = { prefab: "prefab/PopupPanel4", AB: "Common" };
+	public static UIPopupPanel4: IUICfg = { prefab: "prefab/PopupPanel4", AB: UIConfig.COMMON_AB, zOrder: cc.macro.MAX_ZINDEX };
 	/** 过渡遮罩 */
-	public static UIMaskPanel: IUICfg = { prefab: "prefab/MaskPanel", AB: "Common", zOrder: UIConfig.TOP_LAYER };
+	public static UIMaskPanel: IUICfg = { prefab: "prefab/MaskPanel", AB: UIConfig.COMMON_AB, zOrder: UIConfig.TOP_LAYER };
 
 	//====================其他AB配置======================//
 	/** 加载界面 */

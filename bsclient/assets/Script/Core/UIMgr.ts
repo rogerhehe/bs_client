@@ -35,7 +35,7 @@ export default class UIMgr {
      * @param rootNode UI根节点
      */
     public initRootHolder(rootNode: cc.Node) {
-        // this._rootHolder = cc.find("UIRoot");
+        // this._rootHolder = cc.find("Canvas");
         this._rootHolder = rootNode;
     }
 

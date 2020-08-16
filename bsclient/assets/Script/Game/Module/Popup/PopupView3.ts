@@ -1,4 +1,4 @@
-import GameMgr from "../../../GameMgr";
+import BaseView from "../../../Core/BaseView"
 
 /**
  * @name PopupView3.ts
@@ -9,19 +9,18 @@ import GameMgr from "../../../GameMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class PopupView3 extends cc.Component {
+export default class PopupView3 extends BaseView {
 
     /** 文本内容 */
     @property(cc.Label)
     txtContent: cc.Label = null;
 
     onLoad() {
-        GameMgr.popupCtr.viewComp = this;
         this.node.on(cc.Node.EventType.TOUCH_START, this.onClickBtnClose.bind(this));
     }
 
     start() {
-
+        
     }
 
     onClickBtnClose(event) {

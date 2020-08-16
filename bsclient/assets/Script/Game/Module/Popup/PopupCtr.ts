@@ -1,6 +1,6 @@
-import BaseController from "../../../Core/BaseController";
-import GameMgr from "../../../GameMgr";
-import PopupView3 from "./PopupView3";
+import BaseController from "../../../Core/BaseController"
+import PopupView3 from "./PopupView3"
+import UIConfig from "../../../UIConfig"
 
 /**
  * @name PopupCtr.ts
@@ -27,19 +27,22 @@ export default class PopupCtr extends BaseController {
 
     }
 
+    /** 弹窗1参数 */
+    public popup1Param: IPopupParam = null;
+
+    /** 弹窗2参数 */
+    public popup2Param: string = "";
+
+    /** 弹窗2参数 */
+    public popup4Param: number = 0;
+
     /**
      * 按钮弹窗
      * @param popupParam 内容参数
      */
     public openPopupBtn(popupParam: IPopupParam) {
-        let uiCfg: IUICfg = {
-            prefabUrl: GameMgr.cfg.uiPopupPanel1.prefabUrl,
-            customParam: popupParam,
-            action: true,
-            zOrder: cc.macro.MAX_ZINDEX
-        };
-
-        GameMgr.uiMgr.openUI(uiCfg);
+        this.popup1Param = popupParam;
+        this._uiMgr.openUI(UIConfig.UIPopupPanel1);
     }
 
     /**
@@ -47,14 +50,8 @@ export default class PopupCtr extends BaseController {
      * @param strParam 提示内容
      */
     public openPopupMask(strParam: string) {
-        let uiCfg: IUICfg = {
-            prefabUrl: GameMgr.cfg.uiPopupPanel2.prefabUrl,
-            customParam: { txtContent: strParam },
-            action: true,
-            zOrder: cc.macro.MAX_ZINDEX
-        };
-
-        GameMgr.uiMgr.openUI(uiCfg);
+        this.popup2Param = strParam;
+        this._uiMgr.openUI(UIConfig.UIPopupPanel2);
     }
 
     /**
@@ -64,24 +61,25 @@ export default class PopupCtr extends BaseController {
     public openPopupTip(strTips: string) {
         var currCanvas = cc.find("Canvas");
         if (currCanvas) {
-            let popupTips: cc.Node = cc.instantiate(GameMgr.resCache.getPrefab(GameMgr.cfg.uiPopupPanel3.prefabUrl));
-            let popupView: PopupView3 = popupTips.getComponent("PopupView3");
-            popupView.node.zIndex = cc.macro.MAX_ZINDEX;
-            popupView.txtContent.string = strTips;
-            currCanvas.addChild(popupTips);
-
-            // 动画
-            let tw = cc.tween;
-            tw(popupTips)
-                .parallel(
-                    tw().to(3, { position: cc.v2(0, 380) }, { easing: 'sineOut' }),
-                    tw().to(3, { opacity: 0 }, { easing: 'fade' })
-                )
-                .call(() => {
-                    popupTips.destroy();
-                    console.log("openPopupTip: destroy popup tip!");
-                })
-                .start()
+            this._resMgr.loadAsset(UIConfig.COMMON_AB, UIConfig.UIPopupPanel3.prefab, cc.Prefab, (prefab) => {
+                let popupTips: cc.Node = cc.instantiate(prefab);
+                let popupView: PopupView3 = popupTips.getComponent("PopupView3");
+                popupView.node.zIndex = UIConfig.UIPopupPanel3.zOrder;
+                popupView.txtContent.string = strTips;
+                currCanvas.addChild(popupTips);
+                // 动画
+                let tw = cc.tween;
+                tw(popupTips)
+                    .parallel(
+                        tw().to(3, { position: cc.v2(0, 380) }, { easing: 'sineOut' }),
+                        tw().to(3, { opacity: 0 }, { easing: 'fade' })
+                    )
+                    .call(() => {
+                        popupTips.destroy();
+                        this._resMgr.removeAsset(UIConfig.COMMON_AB, UIConfig.UIPopupPanel3.prefab, cc.Prefab);
+                    })
+                    .start()
+            });
         }
     }
 
@@ -92,17 +90,22 @@ export default class PopupCtr extends BaseController {
     public openPopupTipLock(strTips: string) {
         var currCanvas = cc.find("Canvas");
         if (currCanvas) {
-            let popupTips: cc.Node = cc.instantiate(GameMgr.resCache.getPrefab(GameMgr.cfg.uiPopupPanel3.prefabUrl));
-            let popupView: PopupView3 = popupTips.getComponent("PopupView3");
-            popupView.node.zIndex = cc.macro.MAX_ZINDEX;
-            popupView.txtContent.string = strTips;
-            currCanvas.addChild(popupTips);
-
-            // 动画
-            cc.tween(popupTips)
-                .delay(4)
-                .to(2, { opacity: 0 }, { easing: 'fade' })
-                .start()
+            this._resMgr.loadAsset(UIConfig.COMMON_AB, UIConfig.UIPopupPanel3.prefab, cc.Prefab, (prefab) => {
+                let popupTips: cc.Node = cc.instantiate(prefab);
+                let popupView: PopupView3 = popupTips.getComponent("PopupView3");
+                popupView.node.zIndex = UIConfig.UIPopupPanel3.zOrder;
+                popupView.txtContent.string = strTips;
+                currCanvas.addChild(popupTips);
+                // 动画
+                cc.tween(popupTips)
+                    .delay(4)
+                    .to(2, { opacity: 0 }, { easing: 'fade' })
+                    .call(() => {
+                        popupTips.destroy();
+                        this._resMgr.removeAsset(UIConfig.COMMON_AB, UIConfig.UIPopupPanel3.prefab, cc.Prefab);
+                    })
+                    .start()
+            });
         }
     }
 
@@ -111,19 +114,10 @@ export default class PopupCtr extends BaseController {
      * @param timeCnt 倒计时时间，单位(s)
      */
     public openPopupTime(timeCnt: number) {
-        console.log("openPopupTime timeCnt: ", timeCnt);
-
         if (timeCnt <= 0) {
             return;
         }
-
-        let uiCfg: IUICfg = {
-            prefabUrl: GameMgr.cfg.uiPopupPanel4.prefabUrl,
-            customParam: { txtContent: timeCnt },
-            action: true,
-            zOrder: cc.macro.MAX_ZINDEX
-        };
-
-        GameMgr.uiMgr.openUI(uiCfg);
+        this.popup4Param = timeCnt;
+        this._uiMgr.openUI(UIConfig.UIPopupPanel4);
     }
 }

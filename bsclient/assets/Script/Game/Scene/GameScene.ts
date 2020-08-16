@@ -18,7 +18,7 @@ export default class GameScene extends cc.Component {
     onLoad() {
         if (!GameMgr.GAME_INIT_FIN) {
             // 加载通用AssetBundle
-            ResMgr.getInstance().loadAssetBundle(UIConfig.COMMON_ASSET, (bundle: cc.AssetManager.Bundle) => {
+            ResMgr.getInstance().loadAssetBundle(UIConfig.COMMON_AB, (bundle: cc.AssetManager.Bundle) => {
                 UIMgr.getInstance().openUI(UIConfig.UILoadingPanel);
                 if (this._checkSdkData()) {
                     UIMgr.getInstance().openUI(UIConfig.UILoginPanel);
@@ -26,20 +26,6 @@ export default class GameScene extends cc.Component {
                 }
             });
         }
-
-        // cc.loader.loadRes("spines/role/malisu/malisu", sp.SkeletonData, (err, skeletonData) => {
-        //     GameMgr.resCache.addSkeletonData("malisu", skeletonData);
-        // });
-
-        // // 好感度
-        // cc.loader.loadRes(GameMgr.cfg.uiLoveItem.prefabUrl, (err, prefab) => {
-        //     GameMgr.resCache.addPrefab(GameMgr.cfg.uiLoveItem.prefabUrl, prefab)
-        // });
-
-        // // 遮罩
-        // cc.loader.loadRes(GameMgr.cfg.uiMaskPanel.prefabUrl, (err, prefab) => {
-        //     GameMgr.resCache.addPrefab(GameMgr.cfg.uiMaskPanel.prefabUrl, prefab)
-        // });
     }
 
     start() {

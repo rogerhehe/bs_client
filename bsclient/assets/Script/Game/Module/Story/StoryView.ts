@@ -309,11 +309,10 @@ export default class StoryView extends BaseView {
         this.clearScene();
         this.scheduleOnce(() => {
             let sceneObj = CfgMgr.CfgScene.scenes[sceneId];
-            let bgPath = "texture/bg/" + sceneObj.bg;
-            this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, bgPath, cc.SpriteFrame, (spriteFrame) => {
+            this._currScenePath = "texture/bg/" + sceneObj.bg;
+            this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._currScenePath, cc.SpriteFrame, (spriteFrame) => {
                 this.sprBg.spriteFrame = spriteFrame;
                 // this.sprBg.node.x = sceneObj.initx;
-                this._currScenePath = bgPath;
                 callbackFun();
             })
         }, 0.5);

@@ -350,7 +350,7 @@ export default class StoryCtr extends BaseController {
             item.zIndex = cc.macro.MAX_ZINDEX;
             let loveItem: LoveItem = item.getComponent("LoveItem");
             loveItem.showLove(currOperObj.item);
-        })
+        });
     }
 
     /**
@@ -434,6 +434,8 @@ export default class StoryCtr extends BaseController {
             // 移除场景
             this._view.clearScene();
             this.currSceneId = 0;
+            this.currOperId = 0;
+            this.nextOperId = 0;
             return true;
         }
         return false;

@@ -1,5 +1,5 @@
-import GameMgr from "../../../GameMgr";
-import CfgMgr from "../../cfg/CfgMgr";
+import BaseView from "../../../Core/BaseView"
+import CfgMgr from "../../Config/CfgMgr"
 
 /**
  * @name ClothDescItem.ts
@@ -10,7 +10,7 @@ import CfgMgr from "../../cfg/CfgMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class ClothDescItem extends cc.Component {
+export default class ClothDescItem extends BaseView {
 
     @property(cc.Label)
     txtPrice: cc.Label = null

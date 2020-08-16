@@ -1174,7 +1174,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "dab51z3I3RILrl0Y5Q2bMP7",
+    "_componentId": "fddb8XP92lAFLk6WP5Bres0",
     "handler": "onClickBtnCancle",
     "customEventData": ""
   },
@@ -1601,7 +1601,7 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "dab51z3I3RILrl0Y5Q2bMP7",
+    "_componentId": "fddb8XP92lAFLk6WP5Bres0",
     "handler": "onClickBtnSure",
     "customEventData": ""
   },

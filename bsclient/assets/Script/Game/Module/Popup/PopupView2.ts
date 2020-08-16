@@ -1,4 +1,6 @@
-import GameMgr from "../../../GameMgr";
+import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
+import GameMgr from "../../../GameMgr"
 
 /**
  * @name PopupView2.ts
@@ -9,30 +11,29 @@ import GameMgr from "../../../GameMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class PopupView2 extends cc.Component {
+export default class PopupView2 extends BaseView {
 
     /** 文本内容 */
     @property(cc.Label)
     txtContent: cc.Label = null;
 
     /** 弹窗参数 */
-    private _popupParam: IPopupParam = null;
+    private _popupParam: string = null;
 
     onLoad() {
-        GameMgr.popupCtr.viewComp = this;
         this.node.on(cc.Node.EventType.TOUCH_START, this.onClickBtnClose.bind(this));
     }
 
     start() {
-        this._popupParam = <IPopupParam>this.node["customParam"];
+        this._popupParam = GameMgr.popupCtr.popup2Param;
         if (this._popupParam) {
-            this.txtContent.string = this._popupParam.txtContent;
+            this.txtContent.string = this._popupParam;
         }
     }
 
     onClickBtnClose(event) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiPopupPanel2);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._uiMgr.closeUI(UIConfig.UIPopupPanel2);
     }
 }
