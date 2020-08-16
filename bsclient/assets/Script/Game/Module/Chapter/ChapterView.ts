@@ -27,7 +27,6 @@ export default class ChapterView extends BaseView {
         let atlas: Array<cc.SpriteFrame> = []
         this._chapterAtlas.forEach(element => {
             this._resMgr.loadAsset(UIConfig.UIChapterPanel.AB, "atlas/zj_" + element, cc.SpriteFrame, (spriteFrame) => {
-                // spriteFrame.addRef();
                 atlas.push(<cc.SpriteFrame>spriteFrame);
             })
         });

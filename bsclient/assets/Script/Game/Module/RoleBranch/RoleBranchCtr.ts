@@ -21,9 +21,10 @@ export default class RoleBranchCtr extends BaseController {
         return RoleBranchCtr._instance;
     }
 
-    public fromChapterView: boolean = false;
-
     public init() {
         this.fromChapterView = false;
     }
+
+    /** 是否来自章节列表 */
+    public fromChapterView: boolean = false;
 }

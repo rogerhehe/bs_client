@@ -433,6 +433,7 @@ export default class StoryCtr extends BaseController {
             }
             // 移除场景
             this._view.clearScene();
+            this.currSceneId = 0;
             return true;
         }
         return false;

@@ -1,4 +1,6 @@
-import GameMgr from "../../../GameMgr";
+import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
+import GameMgr from "../../../GameMgr"
 
 /**
  * @name RoleBranchView.ts
@@ -9,7 +11,7 @@ import GameMgr from "../../../GameMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class RoleBranchView extends cc.Component {
+export default class RoleBranchView extends BaseView {
 
     /** 独白背景 */
     @property(cc.Sprite)
@@ -130,8 +132,8 @@ export default class RoleBranchView extends cc.Component {
 
     onClickReturn(event) {
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
-        GameMgr.uiMgr.closeUI(GameMgr.cfg.uiRoleBranchPanel);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        this._uiMgr.closeUI(UIConfig.UIRoleBranchPanel);
     }
 
     _showSelect() {
@@ -150,37 +152,37 @@ export default class RoleBranchView extends cc.Component {
         this.sprNameGu.node.active = true;
 
         cc.tween(this.sprAsideBg.node)
-            .to(0.2, { position: cc.v2(this.sprAsideBg.node.x - this._dist, this.sprAsideBg.node.y) }, { easing: 'sineIn' })
+            .to(0.2, { position: cc.v3(this.sprAsideBg.node.x - this._dist, this.sprAsideBg.node.y) }, { easing: 'sineIn' })
             .start()
 
         cc.tween(this.btnCheng.node)
-            .to(0.3, { position: cc.v2(this.btnCheng.node.x + this._dist, this.btnCheng.node.y) }, { easing: 'sineIn' })
+            .to(0.3, { position: cc.v3(this.btnCheng.node.x + this._dist, this.btnCheng.node.y) }, { easing: 'sineIn' })
             .start()
         cc.tween(this.sprHeadCheng.node)
-            .to(0.3, { position: cc.v2(this.sprHeadCheng.node.x + this._dist, this.sprHeadCheng.node.y) }, { easing: 'sineIn' })
+            .to(0.3, { position: cc.v3(this.sprHeadCheng.node.x + this._dist, this.sprHeadCheng.node.y) }, { easing: 'sineIn' })
             .start()
         cc.tween(this.sprNameCheng.node)
-            .to(0.3, { position: cc.v2(this.sprNameCheng.node.x + this._dist, this.sprNameCheng.node.y) }, { easing: 'sineIn' })
+            .to(0.3, { position: cc.v3(this.sprNameCheng.node.x + this._dist, this.sprNameCheng.node.y) }, { easing: 'sineIn' })
             .start()
 
         cc.tween(this.btnBo.node)
-            .to(0.2, { position: cc.v2(this.btnBo.node.x - this._dist, this.btnBo.node.y) }, { easing: 'sineIn' })
+            .to(0.2, { position: cc.v3(this.btnBo.node.x - this._dist, this.btnBo.node.y) }, { easing: 'sineIn' })
             .start()
         cc.tween(this.sprHeadBo.node)
-            .to(0.2, { position: cc.v2(this.sprHeadBo.node.x - this._dist, this.sprHeadBo.node.y) }, { easing: 'sineIn' })
+            .to(0.2, { position: cc.v3(this.sprHeadBo.node.x - this._dist, this.sprHeadBo.node.y) }, { easing: 'sineIn' })
             .start()
         cc.tween(this.sprNameBo.node)
-            .to(0.2, { position: cc.v2(this.sprNameBo.node.x - this._dist, this.sprNameBo.node.y) }, { easing: 'sineIn' })
+            .to(0.2, { position: cc.v3(this.sprNameBo.node.x - this._dist, this.sprNameBo.node.y) }, { easing: 'sineIn' })
             .start()
 
         cc.tween(this.btnGu.node)
-            .to(0.3, { position: cc.v2(this.btnGu.node.x + this._dist, this.btnGu.node.y) }, { easing: 'sineIn' })
+            .to(0.3, { position: cc.v3(this.btnGu.node.x + this._dist, this.btnGu.node.y) }, { easing: 'sineIn' })
             .start()
         cc.tween(this.sprHeadGu.node)
-            .to(0.3, { position: cc.v2(this.sprHeadGu.node.x + this._dist, this.sprHeadGu.node.y) }, { easing: 'sineIn' })
+            .to(0.3, { position: cc.v3(this.sprHeadGu.node.x + this._dist, this.sprHeadGu.node.y) }, { easing: 'sineIn' })
             .start()
         cc.tween(this.sprNameGu.node)
-            .to(0.3, { position: cc.v2(this.sprNameGu.node.x + this._dist, this.sprNameGu.node.y) }, { easing: 'sineIn' })
+            .to(0.3, { position: cc.v3(this.sprNameGu.node.x + this._dist, this.sprNameGu.node.y) }, { easing: 'sineIn' })
             .start()
     }
 
@@ -191,7 +193,7 @@ export default class RoleBranchView extends cc.Component {
     onClickCheng(event, data) {
         this._interactableAll();
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
         if (this._end) { return; }
 
         let callSelectRole = () => {
@@ -222,7 +224,7 @@ export default class RoleBranchView extends cc.Component {
     onClickGu(event, data) {
         this._interactableAll();
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
         if (this._end) { return; }
 
         let callSelectRole = () => {
@@ -253,7 +255,7 @@ export default class RoleBranchView extends cc.Component {
     onClickBo(event, data) {
         this._interactableAll();
         event.stopPropagation();
-        GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
+        // GameMgr.audioMgr.playSound(GameMgr.cfg.btnAudioUrl);
         if (this._end) { return; }
 
         let callSelectRole = () => {
@@ -286,31 +288,31 @@ export default class RoleBranchView extends cc.Component {
         this.btnReturn.node.active = false;
 
         cc.tween(bg)
-            .to(1, { position: cc.v2(this.ndBgHolder.x, this.ndBgHolder.y) }, { easing: 'sineIn' })
+            .to(1, { position: cc.v3(this.ndBgHolder.x, this.ndBgHolder.y) }, { easing: 'sineIn' })
             .start()
 
         cc.tween(head)
-            .to(1, { position: cc.v2(this.ndHeadHolder.x, this.ndHeadHolder.y) }, { easing: 'sineIn' })
+            .to(1, { position: cc.v3(this.ndHeadHolder.x, this.ndHeadHolder.y) }, { easing: 'sineIn' })
             .start()
 
         cc.tween(nameBg)
-            .to(1, { position: cc.v2(this.ndNameBgHolder.x, this.ndNameBgHolder.y) }, { easing: 'sineIn' })
+            .to(1, { position: cc.v3(this.ndNameBgHolder.x, this.ndNameBgHolder.y) }, { easing: 'sineIn' })
             .start()
 
         cc.tween(name)
-            .to(1, { position: cc.v2(this.ndNameHolder.x, this.ndNameHolder.y), scale: this.ndNameHolder.scale }, { easing: 'sineIn' })
+            .to(1, { position: cc.v3(this.ndNameHolder.x, this.ndNameHolder.y), scale: this.ndNameHolder.scale }, { easing: 'sineIn' })
             .start()
 
         this.scheduleOnce(() => {
             if (GameMgr.roleBranchCtr.fromChapterView) {
                 // 重新开始故事
-                GameMgr.uiMgr.closeUI(GameMgr.cfg.uiChapterPanel);
+                this._uiMgr.closeUI(UIConfig.UIChapterPanel);
                 GameMgr.storyCtr.doStartStory(GameMgr.playerCtr.playerModel.currOperId);
             } else {
                 // 切换分支
-                GameMgr.storyCtr.doStory({ "select": true, "branch": branchId });
+                GameMgr.storyCtr.endSelectStory(branchId);
             }
-            GameMgr.uiMgr.closeUI(GameMgr.cfg.uiRoleBranchPanel);
+            this._uiMgr.closeUI(UIConfig.UIRoleBranchPanel);
         }, 2.2)
     }
 
@@ -324,7 +326,7 @@ export default class RoleBranchView extends cc.Component {
                 callSelectRole();
             },
             callbackCancle: () => { // 取消切换
-                GameMgr.uiMgr.closeUI(GameMgr.cfg.uiRoleBranchPanel);
+                this._uiMgr.closeUI(UIConfig.UIRoleBranchPanel);
             }
         }
         GameMgr.popupCtr.openPopupBtn(popupParam);

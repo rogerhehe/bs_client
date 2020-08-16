@@ -1,7 +1,7 @@
 import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
 import GameMgr from "../../../GameMgr"
 import CfgMgr from "../../Config/CfgMgr"
-import UIConfig from "../../../UIConfig"
 
 
 /**
