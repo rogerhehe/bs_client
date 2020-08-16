@@ -53,8 +53,8 @@ export default class StoryView extends BaseView {
 
     _currRoleObj = null;
     _prev2P = null;
-    _currScenePath: string = "";
     _talkContent = "";
+    _currScenePath: string = "";
 
     _storyAtlas = ["nbg_bo", "nbg_cheng", "nbg_gu", "nbg_nv", "nbg_nan",
         "feel_big_ico", "feel_mid_ico", "feel_small_ico", "feel_psmall_ico",
@@ -288,17 +288,15 @@ export default class StoryView extends BaseView {
     }
 
     _doingNext(event) {
-        this._audioMgr.defaultSound();
-
-        // // 打断自动操作
-        // if (this.isAuto && event) {
-        //     this.isAuto = false;
-        //     GameMgr.mainCtr.setAuto(false);
-        //     return;
-        // }
-
+        // 打断自动操作
+        if (GameMgr.storyCtr.isAuto) {
+            GameMgr.storyCtr.isAuto = false;
+            GameMgr.mainCtr.setAuto(false);
+            return;
+        }
         // 是否禁用操作
         if (!GameMgr.storyCtr.canClick) return;
+        this._audioMgr.defaultSound();
         // 下一步
         GameMgr.storyCtr.doingNextOperate();
     }

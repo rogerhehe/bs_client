@@ -1,4 +1,6 @@
-import GameMgr from "../../../GameMgr";
+import BaseView from "../../../Core/BaseView"
+import UIConfig from "../../../UIConfig"
+import GameMgr from "../../../GameMgr"
 
 /**
  * @name MainView.ts
@@ -9,7 +11,7 @@ import GameMgr from "../../../GameMgr";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class MainView extends cc.Component {
+export default class MainView extends BaseView {
 
     /** 自动提示 */
     @property(cc.Sprite)
@@ -26,7 +28,7 @@ export default class MainView extends cc.Component {
     _canClick: boolean = false;
 
     onLoad() {
-        GameMgr.mainCtr.setView(this);
+        GameMgr.mainCtr.view = this;
         this.node.on(cc.Node.EventType.TOUCH_END, this.onClickNext.bind(this))
     }
 
@@ -38,7 +40,7 @@ export default class MainView extends cc.Component {
 
     onDestroy() {
         this.unscheduleAllCallbacks();
-        GameMgr.mainCtr.setView(null);
+        GameMgr.mainCtr.view = null;
     }
 
     onClickNext(event: any) {
@@ -82,7 +84,7 @@ export default class MainView extends cc.Component {
         // 暂停
         this._pauseAuto();
         // 打开回放
-        // GameMgr.uiMgr.openUI(GameMgr.cfg.uiPlaybackPanel);
+        this._uiMgr.openUI(UIConfig.UIPlaybackPanel);
     }
 
     onClickChapter(event, data) {
@@ -95,22 +97,22 @@ export default class MainView extends cc.Component {
         // 暂停
         this._pauseAuto();
         // 打开章节选择
-        // GameMgr.audioMgr.stopMusic();
-        // GameMgr.uiMgr.openUI(GameMgr.cfg.uiChapterPanel);
+        this._audioMgr.stopMusic();
+        this._uiMgr.openUI(UIConfig.UIChapterPanel);
     }
 
     onClickCloth(event, data) {
         event.stopPropagation();
         this._audioMgr.defaultSound();
-        
+
         if (!this._canClick) { return; }
         this._disableClick();
 
         // 暂停
         this._pauseAuto();
         // 打开衣服选择
-        // GameMgr.audioMgr.stopMusic();
-        // GameMgr.uiMgr.openUI(GameMgr.cfg.uiReplacementPanel);
+        this._audioMgr.stopMusic();
+        this._uiMgr.openUI(UIConfig.UIClothPanel);
     }
 
     setAuto(isAuto: boolean) {

@@ -30,28 +30,25 @@ export default class StoryCtr extends BaseController {
 
     public init() {
         this.currChapterAB = "";
-
         this.currSceneId = 0;
-
         this.currOperId = 0;
         this.nextOperId = 0;
 
-        this.currBgm = "";
+        this._currBgm = "";
         this.canClick = false;
         this.isAuto = false;
         this.speed = 0.5;
     }
 
     currChapterAB: string = "";
-
+    currSceneId: number = 0;
     currOperId: number = 0;
     nextOperId: number = 0;
-    currBgm: string = "";
+
+    _currBgm: string = "";
     canClick: boolean = false;
     isAuto: boolean = false;
     speed: number = 0.5;
-
-    currSceneId: number = 0;
 
     /** 操作类型: -1.无 0.背景移动 1.旁白 2.对话 3.人物介绍 4.分支选择 5.插图 6.CG动画 
         7.好感度 8.衣服选择 9.电话微信 10.回忆 11.彩蛋 12.地点信息 13.独白 */
@@ -127,11 +124,15 @@ export default class StoryCtr extends BaseController {
      * @param startOperId 叙事开始ID
      */
     public doStartStory(startOperId: number) {
-        // GameMgr.audioMgr.playMusic("audios/" + this._currBgm);
+        let tempChapterAB = GameMgr.playerCtr.playerModel.getCurrChapterAB();
+        // 背景音乐
+        if (this._currBgm != "") {
+            this._audioMgr.playMusic(tempChapterAB, this._currBgm);
+        }
+        // 操作ID
         if (this.currOperId != startOperId) {
             this.nextOperId = startOperId;
         }
-        let tempChapterAB = GameMgr.playerCtr.playerModel.getCurrChapterAB();
         // 开始章节
         if (this.currChapterAB == "") {
             this._resMgr.loadAssetBundle(tempChapterAB, () => {
@@ -173,8 +174,8 @@ export default class StoryCtr extends BaseController {
      * @param branchId 
      */
     public endSelectStory(branchId: number) {
+        GameMgr.mainCtr.showMain();
         if (branchId > 0) {
-            // GameMgr.mainCtr.viewComp.node.active = true;
             this.nextOperId = branchId;
         }
         this.doingNextOperate();
@@ -229,12 +230,12 @@ export default class StoryCtr extends BaseController {
         }
 
         // 校对音乐音效
-        this._checkAudio(currOperObj, event)
+        this._checkAudio(currOperObj)
 
         // 同步当前操作
         if (this.currOperId != -1) {
             GameMgr.playerCtr.playerModel.currOperId = this.currOperId;
-            GameMgr.playerCtr.playerModel.currBgm = this.currBgm;
+            GameMgr.playerCtr.playerModel.currBgm = this._currBgm;
         }
 
         // 加屏幕特效
@@ -243,13 +244,7 @@ export default class StoryCtr extends BaseController {
         }
 
         // 隐藏换装按钮
-        // if (GameMgr.mainCtr.viewComp) {
-        //     if (currOperObj.notopen) {
-        //         (<MainView>GameMgr.mainCtr.viewComp).showClothButton(false);
-        //     } else {
-        //         (<MainView>GameMgr.mainCtr.viewComp).showClothButton(true);
-        //     }
-        // }
+        GameMgr.mainCtr.showClothButton(currOperObj.notopen);
 
         // 关闭独白   
         if (currOperObj.doing != 1 && currOperObj.doing != 4) {
@@ -311,7 +306,7 @@ export default class StoryCtr extends BaseController {
      * @param currOperObj 
      */
     _selectHandler(currOperObj) {
-        // GameMgr.mainCtr.viewComp.node.active = false;
+        GameMgr.mainCtr.hideMain();
         // 第三章结束需要一个特殊的分支选择
         if (this.currOperId == 300629) {
             GameMgr.asideCtr.closeAside();
@@ -444,23 +439,20 @@ export default class StoryCtr extends BaseController {
     /**
      * 检查音乐音效
      * @param operObj 
-     * @param event 
      */
-    private _checkAudio(operObj, event) {
-        // 背景音乐
-        // if (operObj.music != "" && operObj.music != this._currBgm) {
-        //     this._currBgm = operObj.music;
-        //     GameMgr.audioMgr.playMusic("audios/" + this._currBgm)
-        // } else if (operObj.music == "" && this._currBgm == "" && GameMgr.playerCtr.playerModel.currBgm != "") {
-        //     this._currBgm = GameMgr.playerCtr.playerModel.currBgm
-        //     GameMgr.audioMgr.playMusic("audios/" + this._currBgm)
-        // }
-        // // 点击音效 
-        // if (operObj.sound != "") {
-        //     GameMgr.audioMgr.playSound("audios/" + operObj.sound)
-        // } else if (event) {
-        //     this._audioMgr.defaultSound();
-        // }
+    private _checkAudio(operObj) {
+        let tempChapterAB = GameMgr.playerCtr.playerModel.getCurrChapterAB();
+        if (operObj.music != "" && operObj.music != this._currBgm) {
+            this._currBgm = operObj.music;
+            this._audioMgr.playMusic(tempChapterAB, this._currBgm)
+
+        } else if (operObj.music == "" && this._currBgm == "" && GameMgr.playerCtr.playerModel.currBgm != "") {
+            this._currBgm = GameMgr.playerCtr.playerModel.currBgm
+            this._audioMgr.playMusic(tempChapterAB, this._currBgm)
+
+        } else if (operObj.sound != "") {
+            this._audioMgr.playSound(tempChapterAB, operObj.sound);
+        }
     }
 
     /**

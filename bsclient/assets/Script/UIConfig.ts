@@ -44,7 +44,7 @@ export default class UIConfig {
 	/** 章节子界面 */
 	public static UIChapterItem: IUICfg = { prefab: "prefab/ChapterItem", AB: "Chapter" };
 	/** 主界面 */
-	public static UIMainPanel: IUICfg = { prefab: "prefab/MainPanel", AB: "Chapter", delAB: true, zOrder: UIConfig.MAIN_LAYER };
+	public static UIMainPanel: IUICfg = { prefab: "prefab/MainPanel", AB: "Main", delAB: true, zOrder: UIConfig.MAIN_LAYER };
 	/** 人物信息 */
 	public static UIRoleInfoPanel: IUICfg = { prefab: "prefab/RoleInfoPanel", AB: "RoleInfo", delAB: true, zOrder: UIConfig.NORMAL_LAYER };
 	/** 主线男主选择界面 */

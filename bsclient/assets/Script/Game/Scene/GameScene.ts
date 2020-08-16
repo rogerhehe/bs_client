@@ -23,6 +23,7 @@ export default class GameScene extends cc.Component {
                 if (this._checkSdkData()) {
                     UIMgr.getInstance().openUI(UIConfig.UILoginPanel);
                     UIMgr.getInstance().openUI(UIConfig.UIStoryPanel);
+                    UIMgr.getInstance().openUI(UIConfig.UIMainPanel);
                 }
             });
         }

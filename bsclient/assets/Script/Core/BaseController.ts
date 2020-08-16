@@ -1,5 +1,6 @@
 import ResMgr from "./ResMgr"
 import UIMgr from "./UIMgr"
+import AudioMgr from "./AudioMgr"
 
 /**
  * @name BaseController.ts
@@ -20,4 +21,7 @@ export default abstract class BaseController {
 
     /** UI管理器 */
     protected _uiMgr: UIMgr = UIMgr.getInstance();
+
+    /** 音效管理器 */
+    protected _audioMgr: AudioMgr = AudioMgr.getInstance();
 }

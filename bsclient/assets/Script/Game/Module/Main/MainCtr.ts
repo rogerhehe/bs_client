@@ -1,4 +1,4 @@
-import BaseController from "../../../Core/BaseController";
+import BaseController from "../../../Core/BaseController"
 import MainView from "./MainView"
 
 /**
@@ -22,23 +22,47 @@ export default class MainCtr extends BaseController {
         return MainCtr._instance;
     }
 
-    public view: MainView = null;
-    public speed: number = 1;
-
     public init() {
+        
+    }
+
+    /** 主菜单界面 */
+    private _view: MainView = null;
+    set view(view: MainView) {
+        this._view = view;
+        this._speed = 1;
+    }
+
+    /** 自动播放速度 */
+    private _speed: number = null;
+    set speed(speed: number) {
+        this._speed = speed;
         this.speed = 1;
     }
 
-    public setView(view: MainView) {
-        this.view = view;
-        this.speed = 1;
+    public showMain() {
+        if (this._view) {
+            this._view.node.active = true;
+        }
+    }
+
+    public hideMain() {
+        if (this._view) {
+            this._view.node.active = false;
+        }
     }
 
     public setAuto(auto: boolean) {
-        this.view.setAuto(auto);
+        this._view.setAuto(auto);
     }
 
-    public showClothButton(show: boolean) {
-        this.view.showClothButton(show);
+    public showClothButton(show: number) {
+        if (this._view) {
+            if (show) {
+                this._view.showClothButton(true);
+            } else {
+                this._view.showClothButton(false);
+            }
+        }
     }
 }
