@@ -76,47 +76,28 @@ export default class StoryCtr extends BaseController {
         this._view = view;
     }
 
-    public doAuto(data: any) {
-        if (data.pause) {
-            // 暂停操作
-            cc.tween(this._view.node).stop();
-            this.canClick = false;
-            this.isAuto = false;
-        } else if (data.speed) {
-            // 加速自动操作
-            if (GameMgr.mainCtr.speed == 3) {
-                this.speed = 0.25;
-            } else if (GameMgr.mainCtr.speed == 2) {
-                this.speed = 0.55;
-            } else {
-                this.speed = 1.25;
-            }
-            this.isAuto = true;
-            // (<MainView>GameMgr.mainCtr.viewComp).setAuto(true);
-            this.doNext();
+    /**
+     * 加速自动操作
+     */
+    public doAutoSpeed(speed: number) {
+        if (speed == 3) {
+            this.speed = 0.25;
+        } else if (speed == 2) {
+            this.speed = 0.55;
+        } else {
+            this.speed = 1.25;
         }
+        GameMgr.mainCtr.setAuto(true);
+        this.doingNextOperate(true);
     }
 
-    public doNext() {
-        // 是否自动执行下一次操作
-        if (this.isAuto) {
-            this.canClick = true;
-            cc.tween(this._view.node)
-                .delay(this.speed)
-                .call(() => {
-                    if (this._checkEnd()) return;
-                    let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.currOperId];
-                    if (currOperObj && currOperObj.doing != 4) {
-                        this.doNext();
-                    }
-                })
-                .start()
-        } else {
-            cc.tween(this._view.node)
-                .delay(0.5)
-                .call(() => { this.canClick = true; })
-                .start()
-        }
+    /**
+     * 暂停自动操作
+     */
+    public doAutoPause() {
+        cc.tween(this._view.node).stop();
+        this.canClick = false;
+        this.isAuto = false;
     }
 
     /**
@@ -137,7 +118,7 @@ export default class StoryCtr extends BaseController {
         if (this.currChapterAB == "") {
             this._resMgr.loadAssetBundle(tempChapterAB, () => {
                 this.currChapterAB = tempChapterAB;
-                this.doingNextOperate();
+                this.doingNextOperate(true);
             });
             return;
         }
@@ -146,11 +127,11 @@ export default class StoryCtr extends BaseController {
             this._resMgr.removeAssetBundle(this.currChapterAB);
             this._resMgr.loadAssetBundle(tempChapterAB, () => {
                 this.currChapterAB = tempChapterAB;
-                this.doingNextOperate();
+                this.doingNextOperate(true);
             });
             return;
         }
-        this.doingNextOperate();
+        this.doingNextOperate(true);
     }
 
     /**
@@ -166,7 +147,7 @@ export default class StoryCtr extends BaseController {
             GameMgr.playerCtr.saveChapterCurr();
         }
         GameMgr.maskCtr.openMask(true);
-        this.doingNextOperate();
+        this.doingNextOperate(true);
     }
 
     /**
@@ -178,7 +159,7 @@ export default class StoryCtr extends BaseController {
         if (branchId > 0) {
             this.nextOperId = branchId;
         }
-        this.doingNextOperate();
+        this.doingNextOperate(true);
     }
 
     /**
@@ -190,26 +171,51 @@ export default class StoryCtr extends BaseController {
             GameMgr.maskCtr.openMask(true);
             this.nextOperId = branchId;
         }
-        this.doingNextOperate();
+        this.doingNextOperate(true);
     }
 
     /**
      * 执行下一步操作
      */
-    public doingNextOperate() {
+    public doingNextOperate(next: boolean) {
         console.log("doingNextOperate nextOperId = ", this.nextOperId);
-        // 判断是否结束
-        if (this._checkEnd()) return;
-        // 锁定操作
-        this.canClick = false;
-        // 是否切换场景
-        if (this._checkSwitchScene()) {
-            GameMgr.maskCtr.openMask(true);
-            let nextOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.nextOperId];
-            this._view.switchScene(nextOperObj.scene, this._doingHandler.bind(this));
-            this.currSceneId = nextOperObj.scene;
+        // 是否直接继续
+        if (next) {
+            if (this._checkEnd()) return;
+            // 锁定操作
+            this.canClick = false;
+            // 是否切换场景
+            if (this._checkSwitchScene()) {
+                GameMgr.maskCtr.openMask(true);
+                let nextOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.nextOperId];
+                this._view.switchScene(nextOperObj.scene, this._doingHandler.bind(this));
+                this.currSceneId = nextOperObj.scene;
+            } else {
+                this._doingHandler();
+            }
         } else {
-            this._doingHandler();
+            // 解放操作
+            this.canClick = true;
+            // 是否自动执行下一次操作
+            if (this.isAuto) {
+                cc.tween(this._view.node)
+                    .delay(this.speed)
+                    .call(() => {
+                        let currOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.currOperId];
+                        if (currOperObj && currOperObj.doing != 4) {
+                            // 是否切换场景
+                            if (this._checkSwitchScene()) {
+                                GameMgr.maskCtr.openMask(true);
+                                let nextOperObj = GameMgr.playerCtr.playerModel.getCurrChapterCfg().chapters[this.nextOperId];
+                                this._view.switchScene(nextOperObj.scene, this._doingHandler.bind(this));
+                                this.currSceneId = nextOperObj.scene;
+                            } else {
+                                this._doingHandler();
+                            }
+                        }
+                    })
+                    .start()
+            }
         }
     }
 
@@ -390,7 +396,7 @@ export default class StoryCtr extends BaseController {
                 GameMgr.playerCtr.playerModel.currStage = eggObj.stage;
             }
         }
-        this.doingNextOperate();
+        this.doingNextOperate(true);
     }
 
     /**

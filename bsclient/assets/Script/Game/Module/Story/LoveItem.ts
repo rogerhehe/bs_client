@@ -60,6 +60,8 @@ export default class LoveItem extends BaseView {
             })
             .start()
 
-        GameMgr.storyCtr.doNext();
+        this.scheduleOnce(() => {
+            GameMgr.storyCtr.doingNextOperate(false);
+        }, 0.5);
     }
 }

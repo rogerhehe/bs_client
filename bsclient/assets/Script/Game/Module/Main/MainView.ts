@@ -61,7 +61,7 @@ export default class MainView extends BaseView {
         this.txtSpeed.string = GameMgr.mainCtr.speed.toString() + ".0X";
 
         // 加速自动播放
-        GameMgr.storyCtr.doAuto({ "speed": true });
+        GameMgr.storyCtr.doAutoSpeed(GameMgr.mainCtr.speed);
     }
 
     onClickPlayback(event, data) {
@@ -133,13 +133,13 @@ export default class MainView extends BaseView {
     _pauseAuto() {
         this.txtSpeed.string = "";
         this.sprAuto.node.active = false;
-        GameMgr.storyCtr.doAuto({ "pause": true });
+        GameMgr.storyCtr.doAutoPause();
     }
 
     _disableClick() {
         this._canClick = false;
         this.unscheduleAllCallbacks();
-        this.scheduleOnce(()=>{
+        this.scheduleOnce(() => {
             this._canClick = true;
         }, 2);
     }

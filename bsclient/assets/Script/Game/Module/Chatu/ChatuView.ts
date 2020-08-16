@@ -112,6 +112,6 @@ export default class ChatuItem extends BaseView {
     _showChatuEnd() {
         // 切换分支
         this._uiMgr.closeUI(UIConfig.UIChatuPanel);
-        GameMgr.storyCtr.doingNextOperate();
+        GameMgr.storyCtr.doingNextOperate(true);
     }
 }

@@ -1,4 +1,5 @@
 import BaseController from "../../../Core/BaseController"
+import GameMgr from "../../../GameMgr"
 import MainView from "./MainView"
 
 /**
@@ -23,7 +24,7 @@ export default class MainCtr extends BaseController {
     }
 
     public init() {
-        
+
     }
 
     /** 主菜单界面 */
@@ -34,10 +35,12 @@ export default class MainCtr extends BaseController {
     }
 
     /** 自动播放速度 */
-    private _speed: number = null;
+    private _speed: number = 1;
     set speed(speed: number) {
         this._speed = speed;
-        this.speed = 1;
+    }
+    get speed(): number {
+        return this._speed;
     }
 
     public showMain() {
@@ -53,6 +56,7 @@ export default class MainCtr extends BaseController {
     }
 
     public setAuto(auto: boolean) {
+        GameMgr.storyCtr.isAuto = auto;
         this._view.setAuto(auto);
     }
 

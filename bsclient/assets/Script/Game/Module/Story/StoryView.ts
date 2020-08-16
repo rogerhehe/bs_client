@@ -114,7 +114,6 @@ export default class StoryView extends BaseView {
     onClick(event) {
         // 打断自动操作
         if (GameMgr.storyCtr.isAuto) {
-            GameMgr.storyCtr.isAuto = false;
             GameMgr.mainCtr.setAuto(false);
             return;
         }
@@ -122,7 +121,7 @@ export default class StoryView extends BaseView {
         if (!GameMgr.storyCtr.canClick) return;
         this._audioMgr.defaultSound();
         // 下一步
-        GameMgr.storyCtr.doingNextOperate();
+        GameMgr.storyCtr.doingNextOperate(true);
     }
 
     /**
@@ -194,7 +193,7 @@ export default class StoryView extends BaseView {
         // 延时下一步
         this.scheduleOnce(() => {
             this.sprAsideTip.node.active = true;
-            GameMgr.storyCtr.doNext();
+            GameMgr.storyCtr.doingNextOperate(false);
         }, 0.5);
     }
 
@@ -292,7 +291,7 @@ export default class StoryView extends BaseView {
         // 延时下一步
         this.scheduleOnce(() => {
             this.sprAsideTip.node.active = true;
-            GameMgr.storyCtr.doNext();
+            GameMgr.storyCtr.doingNextOperate(false);
         }, 0.5);
     }
 
@@ -325,14 +324,14 @@ export default class StoryView extends BaseView {
                 .to(currSceneObj.dt, { position: cc.v3(this.sprBg.node.x + currSceneObj.x, this.sprBg.node.y) }, { easing: 'sineOut' })
                 .delay(0.8)
                 .call(() => {
-                    GameMgr.storyCtr.doingNextOperate();
+                    GameMgr.storyCtr.doingNextOperate(true);
                 })
                 .start()
         } else {
             cc.tween(this.sprBg.node)
                 .delay(0.5)
                 .call(() => {
-                    GameMgr.storyCtr.doingNextOperate();
+                    GameMgr.storyCtr.doingNextOperate(true);
                 })
                 .start()
         }

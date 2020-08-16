@@ -99,7 +99,7 @@ export default class CGView extends BaseView {
 
         // 切换分支
         this._uiMgr.closeUI(UIConfig.UICGPanel)
-        GameMgr.storyCtr.doingNextOperate();
+        GameMgr.storyCtr.doingNextOperate(true);
     }
 
     _showCG(cgId: number) {

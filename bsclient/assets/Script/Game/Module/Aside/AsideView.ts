@@ -50,7 +50,7 @@ export default class AsideView extends BaseView {
         }, 0.01, content.length - 1);
 
         this.scheduleOnce(() => {
-            GameMgr.storyCtr.doNext();
+            GameMgr.storyCtr.doingNextOperate(false);
         }, 0.5);
     }
 }
