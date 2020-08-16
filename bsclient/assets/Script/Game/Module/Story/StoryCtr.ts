@@ -279,7 +279,7 @@ export default class StoryCtr extends BaseController {
      * @param currOperObj 
      */
     private _moveHandler(currOperObj) {
-        this._view.adjustScene(this.currSceneId)
+        this._view.adjustScene(currOperObj.scene)
     }
 
     /**

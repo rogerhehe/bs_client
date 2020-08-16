@@ -2,10 +2,10 @@
 /** 第一位章节ID,第二位场景ID,其余为状态ID */
 
 let sceneObj = {
-    11000: { bg: "t2", initx: 1000, x: 0, dt: 0 },
+    11000: { bg: "t2", initx: 0, x: 0, dt: 0 },
     11001: { bg: "t2", initx: 0, x: 0, dt: 0 },
-    11002: { bg: "t2", initx: 0, x: -1200, dt: 1 },
-    11003: { bg: "t2", initx: 0, x: 1000, dt: 0.8 },
+    11002: { bg: "t2", initx: 0, x: -50, dt: 1 },
+    11003: { bg: "t2", initx: 0, x: 0, dt: 0.8 },
     11004: { bg: "t2", initx: 0, x: 0, dt: 0 },
 
     12001: { bg: "checkin", initx: 500, x: 0, dt: 0 },

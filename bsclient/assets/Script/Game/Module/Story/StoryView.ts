@@ -307,7 +307,9 @@ export default class StoryView extends BaseView {
             this._currScenePath = "texture/bg/" + sceneObj.bg;
             this._resMgr.loadAsset(GameMgr.storyCtr.currChapterAB, this._currScenePath, cc.SpriteFrame, (spriteFrame) => {
                 this.sprBg.spriteFrame = spriteFrame;
-                // this.sprBg.node.x = sceneObj.initx;
+                console.log("before bg x=", this.sprBg.node.x)
+                this.sprBg.node.x = sceneObj.initx;
+                console.log("after bg x=", this.sprBg.node.x, ", initx=", sceneObj.initx)
                 callbackFun();
             })
         }, 0.5);
@@ -319,11 +321,13 @@ export default class StoryView extends BaseView {
      */
     adjustScene(currSceneId: number) {
         let currSceneObj = CfgMgr.CfgScene.scenes[currSceneId];
+        console.log("11 before bg x=", this.sprBg.node.x, ", x=", currSceneObj.x, ", dt=", currSceneObj.dt)
         if (currSceneObj.x != 0 && currSceneObj.dt > 0) {
             cc.tween(this.sprBg.node)
                 .to(currSceneObj.dt, { position: cc.v3(this.sprBg.node.x + currSceneObj.x, this.sprBg.node.y) }, { easing: 'sineOut' })
                 .delay(0.8)
                 .call(() => {
+                    console.log("11after bg x=", this.sprBg.node.x, ", initx=", currSceneObj.x)
                     GameMgr.storyCtr.doingNextOperate(true);
                 })
                 .start()
@@ -331,6 +335,7 @@ export default class StoryView extends BaseView {
             cc.tween(this.sprBg.node)
                 .delay(0.5)
                 .call(() => {
+                    console.log("22after bg x=", this.sprBg.node.x, ", initx=", currSceneObj.x)
                     GameMgr.storyCtr.doingNextOperate(true);
                 })
                 .start()
